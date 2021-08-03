@@ -1,15 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
+    <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/CommonStyle/reset.css">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_fmjcjts8vzk.css">
-    <script src="./js/jquery-1.11.1-min.js"></script>
-    <link rel="stylesheet" href="./css/CommonStyle/base.css">
+    <script src="js/jquery-1.11.1-min.js"></script>
+    <link rel="stylesheet" href="css/CommonStyle/base.css">
  
     <title>XXX酒店</title>
     <style>
@@ -139,7 +143,7 @@
     <header class="cleafix">
         <div class="top">
             <div class="logo">
-                <img src="./images/logo.png" alt="logo">
+                <img src="images/logo.png" alt="logo">
             </div>
             <div class="top-content">
                 <ul>
@@ -153,11 +157,11 @@
             <div class="top-right">
                 <div>
                     <a href="javascript:;" class="iconfont icon-user" id="iconfont"></a>
-                    <span>XIAOJIE</span>
+                    <span>${user.username}</span>
                     <div class="setUser-list">
                         <ul>
                             <li><a href="#" data-transition="pop" data-inline="true">个人中心</a></li>
-                            <li><a href="./register.html">注册</a></li>
+                            <li><a href="register.html">注册</a></li>
                         </ul>
                     </div>
                 </div>
@@ -180,7 +184,7 @@
         <div class="middle-center cleafix">
             <div class="middle-img cleafix">
                 <div class="cleafix">
-                    <img src="./images/about-img.jpg" alt="">
+                    <img src="images/about-img.jpg" alt="">
                 </div>
             </div>
             <div class="middle-text cleafix">
@@ -263,7 +267,7 @@
                 <a href="#">快速预定</a>
             </div>
             <div class="brief-img cleafix">
-                <img src="./images/reservation-img.jpg" alt="">
+                <img src="images/reservation-img.jpg" alt="">
             </div>
         </div>
     </div>
@@ -276,7 +280,7 @@
             </div>
             <div class="major-center cleafix">
                 <div class="major-img cleafix">
-                    <img src="./images/specialty-img1.jpg" alt="">
+                    <img src="images/specialty-img1.jpg" alt="">
                 </div>
                 <div class="major-list cleafix">
                     <div class="cleafix">
@@ -307,7 +311,7 @@
             </div>
             <div class="room-center cleafix">
                 <div class="content cleafix">
-                    <a href="#"><img src="./images/room-img1.jpg" alt=""></a>
+                    <a href="#"><img src="images/room-img1.jpg" alt=""></a>
                     <div class="text">
                         <a href="#">
                             <h3>单人房</h3>
@@ -327,7 +331,7 @@
                     </div>
                 </div>
                 <div class="content cleafix">
-                    <a href="#"><img src="./images/room-img2.jpg" alt=""></a>
+                    <a href="#"><img src="images/room-img2.jpg" alt=""></a>
                     <div class="text">
                         <a href="#">
                             <h3>单人房</h3>
@@ -346,7 +350,7 @@
                     </div>
                 </div>
                 <div class="content cleafix">
-                    <a href="#"><img src="./images/room-img3.jpg" alt=""></a>
+                    <a href="#"><img src="images/room-img3.jpg" alt=""></a>
                     <div class="text">
                         <a href="#">
                             <h3>单人房</h3>
@@ -365,7 +369,7 @@
                     </div>
                 </div>
                 <div class="content cleafix">
-                    <a href="#"><img src="./images/room-img4.jpg" alt=""></a>
+                    <a href="#"><img src="images/room-img4.jpg" alt=""></a>
                     <div class="text">
                         <a href="#">
                             <h3>单人房</h3>
@@ -384,7 +388,7 @@
                     </div>
                 </div>
                 <div class="content cleafix">
-                    <a href="#"><img src="./images/room-img5.jpg" alt=""></a>
+                    <a href="#"><img src="images/room-img5.jpg" alt=""></a>
                     <div class="text">
                         <a href="#">
                             <h3>单人房</h3>
@@ -403,7 +407,7 @@
                     </div>
                 </div>
                 <div class="content cleafix">
-                    <a href="#"><img src="./images/room-img6.jpg" alt=""></a>
+                    <a href="#"><img src="images/room-img6.jpg" alt=""></a>
                     <div class="text">
                         <a href="#">
                             <h3>单人房</h3>
@@ -441,7 +445,7 @@
                                 <i class="iconfont icon-pinglun"></i>
                                 <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
                                 <ul>
-                                    <li><img src="./images/testimonials-img1.jpg" alt=""></li>
+                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
                                     <li>
                                         <h3>111111111小杰</h3>
                                     </li>
@@ -454,7 +458,7 @@
                                 <i class="iconfont icon-pinglun"></i>
                                 <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
                                 <ul>
-                                    <li><img src="./images/testimonials-img1.jpg" alt=""></li>
+                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
                                     <li>
                                         <h3>小杰</h3>
                                     </li>
@@ -467,7 +471,7 @@
                                 <i class="iconfont icon-pinglun"></i>
                                 <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
                                 <ul>
-                                    <li><img src="./images/testimonials-img1.jpg" alt=""></li>
+                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
                                     <li>
                                         <h3>小杰</h3>
                                     </li>
@@ -480,7 +484,7 @@
                                 <i class="iconfont icon-pinglun"></i>
                                 <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
                                 <ul>
-                                    <li><img src="./images/testimonials-img1.jpg" alt=""></li>
+                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
                                     <li>
                                         <h3>小杰</h3>
                                     </li>
@@ -494,7 +498,7 @@
                                 <i class="iconfont icon-pinglun"></i>
                                 <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
                                 <ul>
-                                    <li><img src="./images/testimonials-img1.jpg" alt=""></li>
+                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
                                     <li>
                                         <h3>小杰</h3>
                                     </li>

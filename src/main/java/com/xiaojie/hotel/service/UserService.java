@@ -5,4 +5,6 @@ import com.xiaojie.hotel.domian.User;
 public interface UserService {
 
     User getUser(User user);
+
+    boolean register(User user);
 }

@@ -1,0 +1,11 @@
+ $.ajax({
+                        url:"",
+                        type:"get",
+                        data:{
+
+                        },
+                        dataType:"json",
+                        success:function (data) {
+
+                        }
+                    })

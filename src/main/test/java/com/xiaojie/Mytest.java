@@ -2,6 +2,8 @@ package com.xiaojie;
 
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.CreateValidateCode;
+import com.xiaojie.hotel.util.MD5Util;
+import com.xiaojie.hotel.util.UUIDUtil;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,6 +16,8 @@ public class Mytest {
         CreateValidateCode c =  CreateValidateCode.Instance();
         System.out.println("图片为"+c.getImage());
         System.out.println("验证码为"+c.getString());
+        String s= MD5Util.getMD5("123");
+        System.out.println(s);
     }
     @Test
     public void test2(){

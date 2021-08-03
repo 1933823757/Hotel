@@ -22,13 +22,17 @@
                         <value>.jsp</value>
                 </property>
         </bean>
-
-        <!--<mvc:interceptors>-->
-                <!--<mvc:interceptor>-->
-                        <!--<mvc:mapping path="/**"/>-->
-                        <!--<bean class="com.xiaojie.Interceptor.MyInterceptor"/>-->
-                <!--</mvc:interceptor>-->
-        <!--</mvc:interceptors>-->
+        <!--注册拦截器-->
+        <mvc:interceptors>
+                <mvc:interceptor>
+                        <mvc:mapping path="/**"/>
+                        <!-- 对哪些资源不起拦截作用 -->
+                        <mvc:exclude-mapping path="/Verifylogin.do" />
+                        <mvc:exclude-mapping path="/getCode.do" />
+                        <mvc:exclude-mapping path="/register.do" />
+                        <bean class="com.xiaojie.hotel.interceptors.MyInterceptor"/>
+                </mvc:interceptor>
+        </mvc:interceptors>
         <!--声明注解驱动-->
         <mvc:annotation-driven/>
         <!--<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />-->

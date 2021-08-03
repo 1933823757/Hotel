@@ -15,5 +15,9 @@
                     from tbl_user
                     where username=#{username} and password=#{password}
         </select>
-
+        <!--添加用户语句-->
+        <insert id="addUser">
+                insert into tbl_user(id,username,password,imgpath,phone)
+                values (#{id},#{username},#{password},#{imgpath},#{phone})
+        </insert>
 </mapper>
