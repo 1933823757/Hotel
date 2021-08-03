@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--settings:控制mybatis全局行为-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--起别名标签，在com.xiaojie.domian包下的类文件，所有的别名都为类名-->
+    <typeAliases>
+        <package name="com.xiaojie.domian"/>
+    </typeAliases>
+
+    <mappers>
+        <package name="com.xiaojie.dao"/>
+    </mappers>
+</configuration>

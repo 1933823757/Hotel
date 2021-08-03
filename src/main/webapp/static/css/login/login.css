@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    background-image: linear-gradient(to right, #fbc2ebb2, #a6c0eecc);
+}
+
+.login-wrapper {
+    background-color: #fff;
+    width: 358px;
+    
+    border-radius: 15px;
+    padding: 0 50px;
+    position: relative;
+    left: 730px;
+    top: 200px;
+    transform: translate(-50%, -50%);
+}
+
+.header {
+    font-size: 38px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 200px;
+}
+
+.input-item {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    border: 0;
+    padding: 10px;
+    border-bottom: 1px solid rgb(128, 125, 125);
+    font-size: 15px;
+    outline: none;
+}
+
+.input-item:placeholder {
+    text-transform: uppercase;
+}
+
+.btn {
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: 40px;
+    background-image: linear-gradient(to right, #a6c0eed2, #fbc2eb);
+    color: #fff;
+    transition: 0.1s;
+}
+
+#ninth:hover button {
+    background-image: linear-gradient(to right, #fbc2ebb2, #a6c0eecc);
+    color: #fff;
+    -webkit-transform: translateY(-4px) translateZ(0);
+    transform: translateY(-4px) translateZ(0);
+    box-shadow: 0px 5px 10px -6px #a392a1;
+}
+
+#ninth:hover button:active {
+    transition: 0.3s;
+    -webkit-transform: translateY(4px) translateZ(0);
+    transform: translateY(4px) translateZ(0);
+    box-shadow: 0px 8px 10px -6px #a392a1;
+}
+
+.msg {
+    text-align: center;
+    line-height: 78px;
+}
+
+a {
+    text-decoration-line: none;
+    color: #abc1ee;
+}
+
+.front {
+    transform: rotateY(0deg);
+}
+
+/* 将back旋转180度，背面朝向用户，我这边选y轴的 */
+.back {
+    transform: rotateY(-180deg);
+
+}
+
+.front,
+.back {
+    position: absolute;
+    /* 然后设置为背面朝向用户时不可见 */
+    backface-visibility: hidden;
+    /* 我觉得用linear顺滑一点 */
+    transition: 0.4s linear;
+}
+
+/* 将front旋转180度 */
+.middle-flip .front {
+    transform: perspective(600px) rotateY(180deg);
+}
+
+/* 将back旋转180度 */
+.middle-flip .back {
+    transform: perspective(600px) rotateY(0deg);
+}
+
+.msg p {
+    width: 378px;
+    height: 50px;
+    line-height: 0px;
+}
+.yanzheng{
+    width: 150px;
+    display: block;
+    float: left;
+}
+.yanzheng-img{
+    width: 150px;
+    height: 50px;
+    margin-left: 30px;
+}
+.xianshi{
+    display: none;
+}
+.prompt span{
+    margin-left: 10px;
+    letter-spacing:1px; 
+    font-family: "黑体";
+}
