@@ -13,17 +13,5 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    @Override
-    public void text() {
-        User user = new User();
-        user.setId("1234578");
-        user.setIdcard("asdfasfdasdfasfdf");
-        user.setPassword("asdfasdfasfasf");
-       int num = userDao.add(user);
-        if (num == 1){
-            System.out.println("添加成功");
-        }else{
-            System.out.println("添加失败");
-        }
-    }
+
 }

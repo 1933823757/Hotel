@@ -4,8 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xiaojie.hotel.dao.UserDao">
-        <insert id="add">
-            insert into tbl_user(id,idcard,password) values(#{id},#{idcard},#{password})
-        </insert>
+
 
 </mapper>
