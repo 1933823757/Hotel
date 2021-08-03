@@ -21,10 +21,10 @@
         <!--动态代理对象-->
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
             <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-            <property name="basePackage" value="com.xiaojie.dao"/>
+            <property name="basePackage" value="com.xiaojie.hotel.dao"/>
         </bean>
 
-        <!--<bean id="studentService" class="com.xiaojie.service.Impl.StudentServiceImpl">-->
-            <!--<property name="studentDao" ref="studentDao"/>-->
-        <!--</bean>-->
+        <bean id="userService" class="com.xiaojie.hotel.service.Impl.UserServiceImpl">
+            <property name="userDao" ref="userDao"/>
+        </bean>
 </beans>

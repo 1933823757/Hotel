@@ -9,10 +9,10 @@
     </settings>
     <!--起别名标签，在com.xiaojie.domian包下的类文件，所有的别名都为类名-->
     <typeAliases>
-        <package name="com.xiaojie.domian"/>
+        <package name="com.xiaojie.hotel.domian"/>
     </typeAliases>
 
     <mappers>
-        <package name="com.xiaojie.dao"/>
+        <package name="com.xiaojie.hotel.dao"/>
     </mappers>
 </configuration>
