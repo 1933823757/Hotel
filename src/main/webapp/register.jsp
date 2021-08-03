@@ -8,9 +8,9 @@
 	<base href="<%=basePath%>">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="static/js/jquery-1.11.1-min.js"></script>
+		<script src="js/jquery-1.11.1-min.js"></script>
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_12op6n1gh1yr.css">
-		<link rel="stylesheet" href="static/css/login/register.css">
+		<link rel="stylesheet" href="css/login/register.css">
 		<title>用户注册</title>
 		<script type="text/javascript">
 			$(function() {
