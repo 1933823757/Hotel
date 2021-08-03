@@ -37,15 +37,15 @@
       <param-value>utf-8</param-value>
     </init-param>
     <!--强制request使用字符集encoding-->
-    <!--<init-param>-->
-      <!--<param-name>forceRequestEncoding</param-name>-->
-      <!--<param-value>true</param-value>-->
-    <!--</init-param>-->
-    <!--&lt;!&ndash;强制response使用字符集encoding&ndash;&gt;-->
-    <!--<init-param>-->
-      <!--<param-name>forceResponseEncoding</param-name>-->
-      <!--<param-value>true</param-value>-->
-    <!--</init-param>-->
+    <init-param>
+      <param-name>forceRequestEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!--强制response使用字符集encoding-->
+    <init-param>
+      <param-name>forceResponseEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>characterEncodingFilter</filter-name>

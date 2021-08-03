@@ -40,7 +40,27 @@
             $("#login-btn").click(function(){
                 if(isInput($("#username"),$("#password"),$("#captcha"))){
                     // 提交函数写这
-                    alert("asdfas")
+                    $.ajax({
+                        url:"Verifylogin.do",
+                        type:"get",
+                        data:{
+                            "username":$("#username").val().trim(),
+                            "password":$("#password").val().trim(),
+                            "captcha":$("#captcha").val().trim()
+                        },
+                        dataType:"json",
+                        success:function (data) {
+                        //    {"title":"","success":"true/false"
+                            console.log(data.success)
+                            if(data.success){
+
+                            }else{
+
+                                $(".prompt>span").html(""+data.title+"")
+                                $(".prompt").removeClass("xianshi")
+                            }
+                        }
+                    })
                     $(".prompt>span").html("")
                 }
             })

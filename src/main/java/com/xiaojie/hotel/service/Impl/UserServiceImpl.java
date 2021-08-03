@@ -14,4 +14,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public User getUser(User user) {
+        User ur = userDao.selectUser(user);
+        return ur;
+    }
 }

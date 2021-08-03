@@ -24,6 +24,5 @@ public class Mytest {
         //ClassPathXmlApplactionContext:表示从类路径加载配置文件
         ApplicationContext ac = new ClassPathXmlApplicationContext(config);
         UserService us = (UserService) ac.getBean("userService");
-         us.text();
     }
 }

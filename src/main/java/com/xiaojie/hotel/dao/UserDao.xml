@@ -4,6 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xiaojie.hotel.dao.UserDao">
-
+        <select id="selectUser" resultType="user">
+            select
+                    id,
+                    username,
+                    phone,
+                    imgpath,
+                    sex,
+                    idcard
+                    from tbl_user
+                    where username=#{username} and password=#{password}
+        </select>
 
 </mapper>

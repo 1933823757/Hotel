@@ -2,9 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
         <!--组件扫描器-->
-        <!--<context:component-scan base-package="com.xiaojie.service"/>-->
+        <context:component-scan base-package="com.xiaojie.hotel.service"/>
+        <context:component-scan base-package=" com.xiaojie.hotel.Exception"/>
+        <!--注解驱动-->
+        <mvc:annotation-driven/>
         <!--引入属性配置文件-->
         <context:property-placeholder location="classpath:conf/jdbc.properties"/>
         <!--配置阿里的Druid数据源-->
