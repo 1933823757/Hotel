@@ -38,7 +38,7 @@
                     return false
                 }
                 // 提交函数写这
-                alert("asfdaf")
+
                 $.ajax({
                     url: "register.do",
                     type: "post",

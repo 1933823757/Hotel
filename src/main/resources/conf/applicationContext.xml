@@ -21,6 +21,20 @@
         <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
             <property name="dataSource" ref="dataSource"/>
             <property name="configLocation" value="classpath:conf/mybatis.xml"/>
+            <!-- 传入PageHelper的插件 -->
+            <property name="plugins">
+                <array>
+                    <!-- 传入插件的对象 -->
+                    <bean class="com.github.pagehelper.PageInterceptor">
+                        <property name="properties">
+                            <props>
+                                <prop key="helperDialect">mysql</prop>
+                                <prop key="reasonable">true</prop>
+                            </props>
+                        </property>
+                    </bean>
+                </array>
+            </property>
         </bean>
         <!--动态代理对象-->
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -31,4 +45,7 @@
         <bean id="userService" class="com.xiaojie.hotel.service.Impl.UserServiceImpl">
             <property name="userDao" ref="userDao"/>
         </bean>
+    <bean id="managerService" class="com.xiaojie.hotel.service.Impl.ManagerServiceImpl">
+        <property name="managerDao" ref="managerDao"/>
+    </bean>
 </beans>

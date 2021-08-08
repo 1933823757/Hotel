@@ -4,7 +4,9 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xiaojie.hotel.Exception.ErrorException;
 import com.xiaojie.hotel.Exception.LoginCodeException;
 import com.xiaojie.hotel.Exception.LoginUserException;
+import com.xiaojie.hotel.domian.Manager;
 import com.xiaojie.hotel.domian.User;
+import com.xiaojie.hotel.service.ManagerService;
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.CreateValidateCode;
 import com.xiaojie.hotel.util.MD5Util;
@@ -51,9 +53,10 @@ public class getValidateCode {
     private UserService userService;
 
     @ResponseBody
-    //登录请求
+    //普通用户登录请求
     @RequestMapping("/Verifylogin.do")
     public Map islogin(String username, String password, String captcha, HttpServletRequest request) throws LoginCodeException, LoginUserException, ErrorException {
+        System.out.println("--------------------------------普通用户请求");
         Map<String,Object> map = new HashMap<>();
         if (username == null && password ==null && captcha == null){
           throw new ErrorException("非法请求");
@@ -75,6 +78,44 @@ public class getValidateCode {
         map.put("url","index.do");
         return map;
     }
+
+    @Autowired
+    private ManagerService managerService;
+
+    @ResponseBody
+    //管理员登录请求
+    @RequestMapping("/managerlogin.do")
+    public Map Managerlogin(String managername, String managerpassword, String captcha2, HttpServletRequest request) throws LoginCodeException, LoginUserException, ErrorException {
+        System.out.println("--------------------------------管理员请求");
+        Map<String,Object> map = new HashMap<>();
+        if (managername == null && managerpassword ==null && captcha2 == null){
+            throw new ErrorException("非法请求");
+        }
+        String code = (String) request.getSession().getAttribute("code");
+        if(!code.equals(captcha2.toLowerCase())){
+            throw new LoginCodeException("验证码错误");
+        }
+        Manager manager = new Manager();
+        manager.setManagerName(managername);
+        manager.setManagerPassword(MD5Util.getMD5(managerpassword));
+        Manager manager1 = managerService.getManager(manager);
+        if (manager1 == null){
+            throw  new LoginUserException("账号密码错误");
+        }
+        request.getSession().setAttribute("manager",manager1);
+
+        map.put("success",true);
+        map.put("url","rootpage.do");
+        return map;
+    }
+    //返回管理主界面请求
+    @RequestMapping("/rootpage.do")
+    public ModelAndView torootpage(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("rootpage/index");
+        return  mv;
+    }
+
     //返回主界面请求
     @RequestMapping("/index.do")
     public ModelAndView toindex(){

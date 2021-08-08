@@ -1,5 +1,8 @@
 package com.xiaojie;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xiaojie.hotel.domian.User;
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.CreateValidateCode;
 import com.xiaojie.hotel.util.MD5Util;
@@ -8,6 +11,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
+
+import java.util.List;
 
 
 public class Mytest {
@@ -28,5 +33,9 @@ public class Mytest {
         //ClassPathXmlApplactionContext:表示从类路径加载配置文件
         ApplicationContext ac = new ClassPathXmlApplicationContext(config);
         UserService us = (UserService) ac.getBean("userService");
+        PageHelper.startPage(1,1);
+        List<User> list = us.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        System.out.println(pageInfo.getList());
     }
 }

@@ -30,6 +30,7 @@
                         <mvc:exclude-mapping path="/Verifylogin.do" />
                         <mvc:exclude-mapping path="/getCode.do" />
                         <mvc:exclude-mapping path="/register.do" />
+                        <mvc:exclude-mapping path="/managerlogin.do" />
                         <bean class="com.xiaojie.hotel.interceptors.MyInterceptor"/>
                 </mvc:interceptor>
         </mvc:interceptors>

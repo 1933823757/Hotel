@@ -76,9 +76,28 @@
             })
             // 管理员按钮提交事件
             $("#administrators-btn").click(function () {
-                if (isInput($("#username2"), $("#password2"), $("#captcha2"))) {
+                if (isInput($("#managername"), $("#managerpassword"), $("#captcha2"))) {
                     // 提交函数写这
-                    alert("asdfas")
+                        $.ajax({
+                            url: "managerlogin.do",
+                            type: "post",
+                            data: {
+                                "managername": $("#managername").val().trim(),
+                                "managerpassword": $("#managername").val().trim(),
+                                "captcha2": $("#captcha2").val().trim()
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                //    {"title":"","success":"true/false"
+                                console.log(data.url)
+                                if (data.success) {
+                                    window.location.href=""+data.url+"";
+                                } else {
+                                    $(".prompt>span").html("" + data.title + "")
+                                    $(".prompt").removeClass("xianshi")
+                                }
+                            }
+                        })
                     $(".prompt>span").html("")
                 }
             })
@@ -156,8 +175,8 @@
         <div class="login-wrapper back">
             <div class="header">管理员登录</div>
             <div class="form-wrapper">
-                <input type="text" id="username2" name="username" placeholder="username" class="input-item">
-                <input type="password" id="password2" name="password" placeholder="password" class="input-item">
+                <input type="text" id="managername" name="username" placeholder="username" class="input-item">
+                <input type="password" id="managerpassword" name="password" placeholder="password" class="input-item">
                 <input type="text" id="captcha2" name="captcha" placeholder="验证码" class="input-item yanzheng">
                 <img src="" alt="验证码" class="yanzheng-img" id="code2">
                 <div class="prompt xianshi">

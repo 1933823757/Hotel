@@ -1,0 +1,244 @@
+   /* 顶部主页按钮布局 */
+   .top {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    z-index: 999;
+}
+
+.top>ul.menu li,
+.top>ul.menu li .sub-menu {
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+}
+
+.top>ul.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.top>ul.menu li {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    background-color: #5f5f5f00;
+    cursor: pointer;
+    left: 0px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top>ul.menu li i {
+    font-size: 30px;
+    color: rgb(230, 230, 230);
+}
+
+.top>ul.menu li a {
+    text-decoration: none;
+}
+
+.top>ul.menu li span {
+    color: #fffefe;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.1px;
+}
+
+.top>ul.menu li .sub-menu {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 100px;
+    background-color: white;
+}
+
+.top>ul.menu li:hover {
+    background-color: #ffffff1f;
+    /* transform: translateY(10px); */
+    box-shadow: 0px 0px 20px rgba(248, 248, 248, 0.685);
+}
+
+.top>ul.menu li#push {
+    z-index: 50;
+    background-color: #ee796c;
+    box-shadow: 0px 0px 16px #9292b4be;
+}
+
+.top>ul.menu li#push span {
+    font-size: 2rem;
+}
+
+.top>ul.menu li#push.move {
+    left: -200px;
+}
+
+.top>ul.menu li#push.rotate {
+    transform: rotate(-360deg);
+}
+
+.top>ul.menu li#pushed-center {
+    z-index: 10;
+}
+
+.top>ul.menu li#pushed-left-1 {
+    z-index: 20;
+}
+
+.top>ul.menu li#pushed-left-1.move {
+    left: -100px;
+}
+
+.top>ul.menu li#pushed-right-1 {
+    z-index: 30;
+}
+
+.top>ul.menu li#pushed-right-1.move {
+    left: 100px;
+}
+
+.top>ul.menu li#pushed-right-2 {
+    z-index: 40;
+}
+
+.top>ul.menu li#pushed-right-2.move {
+    left: 200px;
+}
+
+.heard {
+    width: 100%;
+    height: 400px;
+    background-image: url(../../images/inner-banner2.jpg);
+}
+
+.heard-img {
+    width: 100%;
+    height: 100%;
+    background-color: #1b213270;
+}
+
+.heard-title {
+    width: 80%;
+    height: 100%;
+    margin: 0px auto;
+    color: white;
+}
+
+.heard-title h2 {
+    font-size: 60px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 9%;
+    margin-left: 20%;
+}
+
+.heard-title h3 {
+    font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 23%;
+    margin-top: 10px;
+}
+
+.center {
+    margin-top: 100px;
+    width: 100%;
+    height: 700px;
+}
+
+.center-content {
+    width: 1100px;
+    height: 100%;
+    margin: 0px auto;
+}
+
+.content-left {
+    width: 50%;
+    height: 450px;
+    float: left;
+}
+
+.content-left h3 {
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.content-left img {
+    width: 90%;
+    height: 360px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.content-right {
+    width: 50%;
+    height: 600px;
+    float: left;
+    background-color: #f5f5f5;
+}
+.content-right ul{
+    width: 95%;
+    height: 90%;
+    margin: 40px auto;
+   
+}
+.content-right ul li{
+float: left;
+width: 50%;
+height: 50px;
+margin-top: 30px;
+}
+
+.content-right ul li input{
+    width: 90%;
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    outline-style: none ;
+    border: 0px;
+    border: 1px solid #ebebeb;
+    border-radius: 7px;
+    
+}
+.content-right ul li:nth-child(5){
+    width: 98%;
+    height:170px;
+  
+    margin-left: 5px;
+}
+.content-right ul li textarea{
+    outline-style: none ;
+    border: 0px;
+    width: 100%;
+    font-family: "幼圆";
+    border: 1px solid #ebebeb;
+}
+.content-right ul li button{
+    background-color: #ee786c;
+    width: 100%;
+    height:100%;
+    color: white;
+    border: none;
+    font-family: "幼圆";
+    margin: 0px auto;
+   transition:all 0.7s;
+    box-shadow: 4px 4px 16px #ee796c;
+}
+.content-right ul li button:hover{
+    transition: 0.7s;
+    transform: translateY(7px);
+    box-shadow: none;
+}
+.content-right ul li button:active{
+     transition: 1s;
+    background: linear-gradient(to right,#ebebeb 10%,#ee796c);
+}
+.content-right ul li:last-child{
+   margin-left: 26%;
+}

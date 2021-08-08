@@ -5,6 +5,8 @@ import com.xiaojie.hotel.domian.User;
 import com.xiaojie.hotel.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
@@ -27,5 +29,11 @@ public class UserServiceImpl implements UserService {
             return  false;
         }
         return true;
+    }
+
+    @Override
+    public  List<User>  findAll() {
+        List<User> user = userDao.selectAll();
+        return user;
     }
 }

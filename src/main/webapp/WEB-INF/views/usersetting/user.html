@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/CommonStyle/base.css">
+    <script src="../js/jquery-1.11.1-min.js"></script>
+    <link rel="stylesheet" href="../bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/CommonStyle/reset.css">
+    <link rel="stylesheet" href="../css/usersetting/user.css">
+    <title>用户信息</title>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div class="content cleafix">
+        <div class="content-touxiang cleafix">
+            <span><img src="../images/bg2.png" alt=""></span>
+            <a href="javascript:;" class="a-upload">
+                <input type="file" name="" id="">更换头像
+            </a>
+        </div>
+        <div class="user-text cleafix">
+            <ul class="cleafix">
+                <li><span>昵称:</span><input type="text" readonly="true" value="jfjc" id="username" ></li>
+                <li><span>手机号:</span><input type="text" readonly="true" value="199333" id="phone"></li>
+                <li>
+                    <span>性别:</span>
+                    <input type="radio" name="sex" value="0" disabled checked>女
+                    <input type="radio" name="sex" value="1" disabled>男
+                </li>
+                <li><span>身份证:</span><input type="text" value="23424234" readonly="true" id="idcard"></li>
+            </ul>
+            <div class="user-btn cleafix">
+                <button id="setUserbtn">更改信息</button>
+                <button id="addUserbtn">保存</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            // 更该按钮事件
+            $("#setUserbtn").click(function () {
+                $("input[name=sex]").removeAttr("disabled")
+                $(".user-text input").removeAttr("readonly")
+                $(".user-text input[type=text]").attr("style","border-bottom: 1px solid rgba(10, 10, 10, 0.699);")
+            })
+            // 保存按钮事件
+            $("#addUserbtn").click(function () {
+                $(".user-text input[type=text]").attr("style","")
+                $("input[name=sex]").attr("disabled","true")
+                $(".user-text input").attr("readonly","true")
+              })
+
+        })
+
+    </script>
+</body>
+</html>

@@ -157,7 +157,7 @@
             <div class="top-right">
                 <div>
                     <a href="javascript:;" class="iconfont icon-user" id="iconfont"></a>
-                    <span>${user.username}</span>
+                    <span>${sessionScope.user.phone}</span>
                     <div class="setUser-list">
                         <ul>
                             <li><a href="#" data-transition="pop" data-inline="true">个人中心</a></li>

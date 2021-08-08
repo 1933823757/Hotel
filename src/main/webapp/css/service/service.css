@@ -1,0 +1,419 @@
+   /* 顶部主页按钮布局 */
+   .top {
+    position: fixed;
+    top: 90%;
+    z-index: 999;
+    left: 50%;
+}
+
+.top>ul.menu li,
+.top>ul.menu li .sub-menu {
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+}
+
+.top>ul.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.top>ul.menu li {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    background-color: #5f5f5f00;
+    cursor: pointer;
+    left: 0px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top>ul.menu li i {
+    font-size: 30px;
+    color: rgb(230, 230, 230);
+}
+
+.top>ul.menu li a {
+    text-decoration: none;
+}
+
+.top>ul.menu li span {
+    color: #2b2b2b;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.1px;
+}
+
+.top>ul.menu li .sub-menu {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 100px;
+    background-color: white;
+}
+
+.top>ul.menu li:hover {
+    background-color: #ffffff1f;
+    /* transform: translateY(10px); */
+    box-shadow: 0px 0px 20px rgba(248, 248, 248, 0.685);
+}
+
+.top>ul.menu li#push {
+    z-index: 50;
+    background-color: #757575;
+    box-shadow: 0px 4px 16px #616161;
+}
+
+.top>ul.menu li#push span {
+    font-size: 2rem;
+}
+
+.top>ul.menu li#push.move {
+    left: -200px;
+}
+
+.top>ul.menu li#push.rotate {
+    transform: rotate(-360deg);
+}
+
+.top>ul.menu li#pushed-center {
+    z-index: 10;
+}
+
+.top>ul.menu li#pushed-left-1 {
+    z-index: 20;
+}
+
+.top>ul.menu li#pushed-left-1.move {
+    left: -100px;
+}
+
+.top>ul.menu li#pushed-right-1 {
+    z-index: 30;
+}
+
+.top>ul.menu li#pushed-right-1.move {
+    left: 100px;
+}
+
+.top>ul.menu li#pushed-right-2 {
+    z-index: 40;
+}
+
+.top>ul.menu li#pushed-right-2.move {
+    left: 200px;
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+}
+
+/* 内容布局 */
+.header {
+    width: 100%;
+    height: 550px;
+}
+
+/* 内容图片 */
+.header-content {
+    width: 100%;
+    height: 380px;
+    background-image: url(../../images/inner-banner7.jpg);
+    background-size: cover;
+}
+
+.header-title {
+    width: 100%;
+    height: 500px;
+    margin-top: 10px;
+}
+
+.header-title h3:first-child {
+    margin-top: 40px;
+    font-size: 100px;
+    font-family: "华文中宋";
+    opacity: 0;
+    margin-left: 40%;
+    perspective: 200px;
+}
+
+@media (max-width: 1300px) {
+    .header-title>h3:first-child {
+        font-size: 100px;
+    }
+
+    .header-title>h3:last-child {
+        font-size: 70px;
+    }
+}
+
+.header-title h3 span {
+    transform: rotateY(-90deg);
+    color: rgba(250, 250, 250, 0.856);
+    opacity: 0;
+}
+
+.header-title .title2 {
+    font-size: 80px;
+    font-family: "华文中宋";
+    display: block;
+    margin-left: 30%;
+    margin-top: 60px;
+}
+
+.header-title .title2 {
+    opacity: 0;
+    perspective: 200px;
+}
+
+.header-title .title2 span {
+    transform: rotateY(-90deg) rotateX(45deg);
+    transform-origin: -50% 75%;
+    opacity: 0;
+}
+
+/* 中间部分 */
+.nav-content {
+    width: 100%;
+    height: 900px;
+}
+
+/* 居中布局 */
+.nav-center {
+    width: 1110px;
+    height: 820px;
+    margin: 0px auto;
+}
+
+/* 左边图片布局 */
+.center-left {
+    width: 50%;
+    float: left;
+    height: 700px;
+}
+
+.center-left img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 右边标题 */
+.center-right {
+    width: 50%;
+    height: 500px;
+    background-color: rgb(250, 250, 250);
+    float: left;
+}
+
+/* 标题 */
+.center-right h3 {
+    margin: 0px auto;
+    margin-top: 50px;
+    font-size: 50px;
+    display: block;
+    width: 70%;
+    height: 40%;
+    line-height: 50px;
+    font-family: "华文中宋";
+}
+
+/* 正文内容 */
+.center-right span {
+    display: block;
+    width: 70%;
+    margin: 0px auto;
+    margin-top: 30px;
+    height: 40%;
+    font-size: 14px;
+    line-height: 25px;
+    font-family: "华文中宋";
+}
+
+/* 右边图片div样式 */
+.right-bottom {
+    width: 50%;
+    height: 200px;
+    float: left;
+}
+
+.right-bottom ul {
+    width: 100%;
+    height: 100%;
+}
+
+.right-bottom ul li {
+    width: 33.33%;
+    height: 100%;
+    float: left;
+}
+
+.right-bottom ul li img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 服务总体布局 */
+/* 房间主体布局 */
+.room-layout {
+    width: 100%;
+    height: 1600px;
+
+}
+
+/* 内容布局 */
+.room-content,
+.comment-content {
+    width: 1110px;
+    height: 1020px;
+    margin: 0px auto;
+    margin-top: 50px;
+}
+
+/* div底下布局 */
+.room-center {
+    margin-top: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 六个div布局 */
+.room-center>div {
+    float: left;
+    height: 390px;
+    width: 30%;
+    margin-left: 27px;
+    background-color: rgb(red, green, blue);
+    box-shadow: 0px 0px 10px rgba(223, 204, 220, 0.884);
+    margin-bottom: 27px;
+    transition: 0.7s;
+}
+
+/* 布局移入动画 */
+.room-center>div:hover {
+    background-color: rgb(245, 245, 245);
+    transform: translateY(-6px);
+    box-shadow: 0px 0px 15px rgba(163, 163, 163, 0.658);
+}
+
+
+.room-title span {
+    width: 50px;
+    color: rgb(181, 105, 82);
+    height: 27px;
+    line-height: 27px;
+    font-size: 15px;
+    display: block;
+    margin: 0px auto;
+}
+
+.room-title h3 {
+    font-size: 30px;
+    line-height: 60px;
+    text-align: center;
+    font-family: "黑体";
+    margin-bottom: 30px;
+}
+
+/* 图标底下的圆 */
+.room-center>div>div {
+    margin: 0px auto;
+    margin-top: 30px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+}
+
+/* 图标样式 */
+.room-center>div>div>i {
+    margin-left: 30px;
+    line-height: 90px;
+    font-size: 50px;
+    color: rgb(238, 120, 108);
+}
+
+.room-center>div>h3>a {
+    display: block;
+    font-size: 20px;
+    text-decoration: none;
+    margin-top: 30px;
+    margin-left: 33%;
+    color: black;
+    font-family: "华文中宋";
+    transition: 0.7s;
+}
+
+.room-center>div>h3>a:hover {
+    transition: 0.7s;
+    color: rgb(200, 144, 255);
+}
+
+.room-center>div>span {
+    height: 100px;
+    display: block;
+    line-height: 30px;
+    font-size: 15px;
+    margin: 10px 30px;
+
+}
+
+.room-center>div>button {
+    width: 27%;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 35%;
+    border: none;
+    line-height: 45px;
+    font-family: "华文中宋";
+    background-color: rgba(181, 105, 82, 0);
+    color: rgb(200, 144, 255);
+    transition: 0.7s;
+    border-bottom: 1px solid rgb(181, 105, 82);
+}
+
+.room-center>div>button:hover {
+    transition: 0.7s;
+    color: rgb(230, 230, 230);
+}
+
+
+.bottom {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(51, 51, 51);
+}
+
+.bottom div {
+    margin: 0px auto;
+    width: 1110px;
+    height: 100px;
+}
+
+.bottom div h3 {
+
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-family: "华文中宋";
+    color: rgba(250, 250, 250, 0.664);
+}
+
+.bottom div>span {
+    font-size: 15px;
+    font-family: "华文中宋";
+    color: rgba(250, 250, 250, 0.678);
+    text-align: center;
+    margin-left: 450px;
+}
+
+.bottom div>span>a {
+    color: rgb(191, 209, 248);
+}

@@ -20,4 +20,8 @@
                 insert into tbl_user(id,username,password,imgpath,phone)
                 values (#{id},#{username},#{password},#{imgpath},#{phone})
         </insert>
+
+        <select id="selectAll" resultType="user">
+                select * from tbl_user
+        </select>
 </mapper>
