@@ -30,6 +30,12 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+    <!--jstl依赖-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
 
     <!--图片加载需要的配置文件-->
     <dependency>

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaojie.hotel.domian.User;
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.CreateValidateCode;
+import com.xiaojie.hotel.util.DeleteFile;
 import com.xiaojie.hotel.util.MD5Util;
 import com.xiaojie.hotel.util.UUIDUtil;
 import org.junit.Test;
@@ -37,5 +38,9 @@ public class Mytest {
         List<User> list = us.findAll();
         PageInfo pageInfo = new PageInfo(list);
         System.out.println(pageInfo.getList());
+    }
+    @Test
+    public void test3(){
+        DeleteFile.deleteFile("images/roomImgs/w.jpg;images/roomImgs/q.png");
     }
 }

@@ -2,6 +2,7 @@ package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.Floor;
 import com.xiaojie.hotel.domian.Room;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +17,16 @@ public interface RoomDao {
 
     int addRoom(Room room);
 
-    Room getRoomByRoomId(String roomId);
+    int getRoomByRoomId(@Param("roomId") String roomId,@Param("floorId") String floorId);
+
+    List<Floor> selectRoomAll(Room room);
+
+
+    Room getRoomById(String id);
+
+    int updateRoom(Room room);
+
+    int isRoomId(@Param("floorId") String floorId, @Param("roomId") String roomId);
+
+    int deleteRoomById(String[] id);
 }

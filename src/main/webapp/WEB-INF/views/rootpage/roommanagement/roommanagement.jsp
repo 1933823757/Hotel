@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
 %>
@@ -14,9 +15,14 @@
     <script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <%--图片上传插件--%>
     <script src="bootstrap-fileinput/fileinput.min.js"></script>
     <script src="bootstrap-fileinput/zh.js"></script>
     <link rel="stylesheet" href="bootstrap-fileinput/fileinput.min.css">
+    <%--分页插件--%>
+    <link rel="stylesheet" type="text/css" href="js/bs_pagination/jquery.bs_pagination.min.css">
+    <script type="text/javascript" src="js/bs_pagination/jquery.bs_pagination.min.js"></script>
+    <script type="text/javascript" src="js/bs_pagination/en.js"></script>
     <title>房间管理</title>
 </head>
 <style>
@@ -66,6 +72,8 @@
 </style>
 <script>
     $(function () {
+        pageList(1,5)
+
         //创建按钮打开模态窗口前事件
         $("#addBtn").click(function () {
             $.ajax({
@@ -100,17 +108,14 @@
                         dataType:"json",
                         success:function (data) {
                             if (data.success){
-                                alert("添加成功")
+                                alert(data.title)
+                                pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                                 $("#createActivityModal").modal("hide")
                                 $roomId.val("")
                                 $roomPrice.val("")
                                 $roomSuggest.val("")
                             } else{
-                               if (data.title == null){
-                                   alert("添加失败")
-                               } else{
-                                   alert(data.title)
-                               }
+                              alert(data.title)
                             }
                         }
                     })
@@ -120,8 +125,14 @@
             }
 
         })
-
-        //头像上传插件
+        //添加按钮关闭模态窗口事件
+        $("#closeBtn").click(function () {
+            $("#createActivityModal").modal("hide")
+            $("#roomId").val("")
+            $("#roomPrice").val("")
+            $("#roomSuggest").val("")
+        })
+        //房间图片上传插件
         $(".myfile").fileinput({
             language : 'zh',
             uploadUrl:"uploadFile.do", //接受请求地址
@@ -158,7 +169,157 @@
         $('.myfile').on('filepreupload', function(event, data, previewId, index) {
             console.log("filepreupload");
         });
+        //查询按钮事件
+        $("#roomFindBtn").click(function () {
+           pageList(1,5)
+        })
+
+        //修改按钮点击打开模态窗口前事件
+        $("#editBtn").click(function () {
+            if($("input[name=dx]:checked").length>0){
+                if($("input[name=dx]:checked").length>1){
+                    alert("请选择一条记录")
+                }else{
+                    $.ajax({
+                        url:"getRoomAll.do",
+                        type:"get",
+                        data:{
+                        "id":$("input[name=dx]:checked").val()
+                        },
+                        dataType:"json",
+                        success:function (data) {
+                            console.log(data)
+                            $("#editroomId").val(data.roomId)
+                            $("#editRoomPrice").val(data.roomPrice)
+                            $("#editRoomSuggest").val(data.roomSuggest)
+                            $("#editFloorId").val(data.floorId)
+                            $("#editId").val(data.id)
+                            $("#editActivityModal").modal("show")
+                        }
+                    })
+
+                }
+            }else{
+                alert("请选择你需要更改的记录")
+            }
+        })
+
+        $("input[name=qx]").click(function () {
+            $("input[name=dx]").prop("checked",this.checked)
+        })
+        $("#roomList").on("click",$("input[name=dx]"),function(){
+            $("input[name=qx]").prop("checked",$("input[name=dx]").length==$("input[name=dx]:checked").length)
+        })
+        //删除按钮事件
+        $("#deleteRoomBtn").click(function () {
+            if ($("input[name=dx]:checked").length>0){
+                var $input =$("input[name=dx]:checked");
+                var param=''
+                for (var i=0;i<$input.length;i++){
+                    param+="id="+$input[i].value
+                    if (i<$input.length-1){
+                        param+="&"
+                    }
+                }
+                if (confirm("确定删除吗？")) {
+
+                    $.ajax({
+                        url:"deleteRoom.do",
+                        type:"get",
+                        data:param,
+                        dataType:"json",
+                        success:function (data) {
+                            if (data.success){
+                                alert("删除成功")
+                                pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+                            } else{
+                                alert("删除失败")
+                            }
+                        }
+                    })
+                }
+            } else{
+                alert("请选择你需要删除的记录")
+            }
+        })
+
+        //修改模态窗口的更新按钮事件
+        $("#editAddBtn").click(function () {
+            $.ajax({
+                url:"updateRoom.do",
+                type:"post",
+                data:{
+                "id":$("#editId").val(),
+                "roomPrice":$("#editRoomPrice").val(),
+                "roomSuggest":$("#editRoomSuggest").val(),
+                "floorId":$("#editFloorId").val(),
+                "roomId":$("#editroomId").val()
+                },
+                dataType:"json",
+                success:function (data) {
+                    if (data.success){
+                        alert(data.title)
+                        pageList(1,5)
+                        $("#editActivityModal").modal("hide")
+                    } else{
+                        alert(data.title)
+                    }
+                }
+            })
+        })
     })
+
+    //分页查询事件
+    function pageList(pageNo,pageSize) {
+        $.ajax({
+            url:"RoomPagelist.do",
+            type:"post",
+            data:{
+                "roomId":$("#findroomId").val().trim(),
+                "roomType":$("#roomType").val(),
+                "pageNo":pageNo,
+                "pageSize":pageSize
+            },
+            dataType:"json",
+            success:function (data) {
+                var  html=""
+                $.each(data.roomList,function (i,n) {
+                    html+='<tr class="active text-nowrap">'
+                    html+='<td><input type="checkbox" value="'+n.object.id+'" name="dx"/></td>'
+                    html+='<td>'+n.object.roomId+'</td>'
+                    html+='<td>'+n.object.roomType+'</td>'
+                    html+='<td>'+n.object.roomPrice+'</td>'
+                    html+='<td><span>'+n.object.roomSuggest+'</span></td>'
+                    html+='<td>'
+                    $.each(n.imgPathList,function (i,n) {
+                        html+='<img src="'+n+'" alt="" class="img-rounded"style="width: 50px; height: 50px;">'
+                    });
+                    html+='</td>'
+                    html+='</tr>'
+                })
+                $("#roomList").html(html);
+
+                //分页插件
+                $("#activityPage").bs_pagination({
+                    currentPage: pageNo, // 页码
+                    rowsPerPage: pageSize, // 每页显示的记录条数
+                    maxRowsPerPage: 20, // 每页最多显示的记录条数
+                    totalPages: data.pages, // 总页数
+                    totalRows: data.total, // 总记录条数
+                    visiblePageLinks: 3, // 显示几个卡片
+                    showGoToPage: true,
+                    showRowsPerPage: true,
+                    showRowsInfo: true,
+                    showRowsDefaultInfo: true,
+
+                    onChangePage : function(event, data){
+                        pageList(data.currentPage , data.rowsPerPage);
+                    }
+                });
+            }
+        })
+    }
+
 </script>
 
 <body>
@@ -209,14 +370,14 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-default" id="closeBtn">关闭</button>
                     <button type="button" class="btn btn-primary" id="createBtn">创建</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 修改预定客房的模态窗口 -->
+    <!-- 修改房间的模态窗口 -->
     <div class="modal fade" id="editActivityModal" role="dialog">
         <div class="modal-dialog" role="document" style="width: 85%;">
             <div class="modal-content">
@@ -231,37 +392,35 @@
                     <form class="form-horizontal" role="form">
 
                         <div class="form-group">
+                            <input type="hidden" id="editId">
                             <label for="create-marketActivityOwner" class="col-sm-2 control-label">房间号</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" id="editroomId">
                             </div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">楼层号</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <select class="form-control">
+                                <select class="form-control" id="editFloorId" >
                                     <option></option>
-                                    <option>普通单间</option>
-                                    <option>普通双人间</option>
-                                    <option>豪华大床房</option>
-                                    <option>豪华双人间</option>
-                                    <option>总统套房</option>
-                                    <option>商务房</option>
+                                    <c:forEach items="${sessionScope.floor}" var="a">
+                                        <option value="${a.id}">${a.floorId}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="create-marketActivityOwner" class="col-sm-2 control-label">房间价格</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" id="editRoomPrice">
                             </div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">房间图片</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <input type="file" class="myfile">
+                                <input type="file" name="file"  class="myfile" multiple/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="create-marketActivityOwner" class="col-sm-2 control-label">房间介绍</span></label>
                             <div class="col-sm-9" style="width: 600px;">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" id="editRoomSuggest"></textarea>
                             </div>
                         </div>
                     </form>
@@ -269,7 +428,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                    <button type="button" class="btn btn-primary" id="editAddBtn">保存</button>
                 </div>
             </div>
         </div>
@@ -294,25 +453,23 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">房间号</div>
-                            <input class="form-control" type="text">
+                            <input class="form-control" type="text" id="findroomId">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">客房类型</div>
-                            <select class="form-control">
+                            <select class="form-control" id="roomType">
                                 <option></option>
-                                <option>普通单间</option>
-                                <option>普通双人间</option>
-                                <option>豪华大床房</option>
-                                <option>豪华双人间</option>
-                                <option>总统套房</option>
-                                <option>商务房</option>
+                                <c:forEach items="${sessionScope.floor}" var="a">
+                                    <option value="${a.roomType}">${a.roomType}</option>
+                                </c:forEach>
+
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-default">查询</button>
+                    <button type="button" class="btn btn-default" id="roomFindBtn">查询</button>
 
                 </form>
             </div>
@@ -320,10 +477,8 @@
                 style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
                 <div class="btn-group" style="position: relative; top: 18%;">
                     <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建房间</button>
-                    <button type="button" class="btn btn-default" data-toggle="modal"
-                        data-target="#editActivityModal"><span class="glyphicon glyphicon-pencil"></span> 修改房间</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                        data-target="#deleteActivityModal"><span class="glyphicon glyphicon-minus"></span> 删除房间</button>
+                    <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改房间</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" id="deleteRoomBtn"><span class="glyphicon glyphicon-minus"></span> 删除房间</button>
                 </div>
 
             </div>
@@ -331,7 +486,7 @@
                 <table class=" table-hover">
                     <thead>
                         <tr style="color: #B3B3B3;">
-                            <td><input type="checkbox" /></td>
+                            <td><input type="checkbox" name="qx"/></td>
                             <td>房间号</td>
                             <td>房型</td>
                             <td>价格</td>
@@ -339,85 +494,15 @@
                             <td>房间图片</td>
                         </tr>
                     </thead>
-                    <tbody class="tbody-list">
-                        <tr class="active text-nowrap">
-                            <td><input type="checkbox" /></td>
-                            <td>101</td>
-                            <td>总统套房</td>
-                            <td>2342</td>
-                            <td><span>非常不错good，建议预定</span></td>
-                            <td><img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                                <img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                                <img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                            </td>
-                        </tr>
-                        <tr class="active text-nowrap">
-                            <td><input type="checkbox" /></td>
-                            <td>101</td>
-                            <td>总统套房</td>
-                            <td>2342</td>
-                            <td><span>非常不错good，建议预定</span></td>
-                            <td><img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                                <img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                                <img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                            </td>
-                        </tr>
-                        <tr class="active text-nowrap">
-                            <td><input type="checkbox" /></td>
-                            <td>101</td>
-                            <td>总统套房</td>
-                            <td>2342</td>
-                            <td><span>非常不错good，建议预定</span></td>
-                            <td><img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                                <img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                                <img src="images/room-img2.jpg" alt="" class="img-rounded"
-                                    style="width: 50px; height: 50px;">
-                            </td>
-                        </tr>
+                    <tbody class="tbody-list" id="roomList">
+
                     </tbody>
                 </table>
             </div>
 
             <div style="height: 50px; position: relative;top: 30px;">
-                <div>
-                    <button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-                </div>
-                <div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-                    <button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            10
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">20</a></li>
-                            <li><a href="#">30</a></li>
-                        </ul>
-                    </div>
-                    <button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-                </div>
-                <div style="position: relative;top: -88px; left: 285px;">
-                    <nav>
-                        <ul class="pagination">
-                            <li class="disabled"><a href="#">首页</a></li>
-                            <li class="disabled"><a href="#">上一页</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li class="disabled"><a href="#">末页</a></li>
-                        </ul>
-                    </nav>
+                <div id="activityPage">
+
                 </div>
             </div>
 

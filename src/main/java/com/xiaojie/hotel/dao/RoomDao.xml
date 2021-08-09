@@ -30,7 +30,67 @@
         values (#{id},#{roomSuggest},#{roomId},#{roomType},#{roomPrice},#{roomImgPath},#{floorId})
     </insert>
     <!--根据房间的号码查询房间是否存在-->
-    <select id="getRoomByRoomId" resultType="room">
-        select  * from tbl_room where roomId=#{roomId}
+    <select id="getRoomByRoomId" resultType="int">
+        select  count(*) from tbl_room where roomId=#{roomId} and floorId=#{floorId}
     </select>
+
+
+
+    <!--房间分页查询语句-->
+    <select id="selectRoomAll" resultType="room">
+        select roomSuggest,id,roomId,roomType,roomPrice,roomImgpath,floorId from tbl_room
+        <where>
+            <if test="roomId!=null and roomId!=''">
+                roomId like "%" #{roomId} "%"
+            </if>
+            <if test="roomType!=null and roomType!=''">
+                and roomType like "%" #{roomType} "%"
+            </if>
+        </where>
+        order by roomId asc
+    </select>
+
+    <!--通过id查询房间信息-->
+    <select id="getRoomById" resultType="room">
+        select r.roomSuggest,r.id,r.roomId,r.roomType,r.roomPrice,r.roomImgpath,r.floorId from tbl_room r join tbl_floor f on r.floorId=f.id where r.id=#{id}
+    </select>
+
+    <!--判断房间是否存在-->
+    <select id="isRoomId" resultType="int">
+        select count(*) from tbl_room where floorId=#{floorId} and roomId=#{roomId}
+    </select>
+
+    <!--更新房间信息-->
+    <update id="updateRoom">
+        update tbl_room
+        <set>
+            <if test="roomSuggest!=null and roomSuggest!=''">
+                roomSuggest=#{roomSuggest},
+            </if>
+            <if test="roomId!=null and roomId!=''">
+                roomId=#{roomId},
+            </if>
+            <if test="roomType!=null and roomType!=''">
+                roomType=#{roomType},
+            </if>
+            <if test="roomPrice!=null and roomPrice!=''">
+                roomPrice=#{roomPrice},
+            </if>
+            <if test="roomImgPath!=null and roomImgPath!=''">
+                roomImgPath=#{roomImgPath},
+            </if>
+            <if test="floorId!=null and floorId!=''">
+                floorId=#{floorId},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--删除房间语句-->
+    <delete id="deleteRoomById">
+        delete from tbl_room where id in
+        <foreach collection="array" item="i" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </delete>
 </mapper>

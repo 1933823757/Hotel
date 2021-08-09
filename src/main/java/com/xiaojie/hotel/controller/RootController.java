@@ -133,13 +133,13 @@ public class RootController {
             uploadData.put("error", "上传失败，请检查网络连接或联系管理员");
         }
         //将路径存入全局变量
-        String path = "headimgs/" + newFileName;
+        String path = "images/roomImgs/" + newFileName;
         imgPaths.add(path);
         System.out.println("string图片存放------------------------" + imgPaths.toString());
         return uploadData;
     }
 
-    //添加房子的请求
+    //添加房间的请求
     @RequestMapping("/addRoom.do")
     @ResponseBody
     public Map<String, Object> addRoom(Room room) {
@@ -166,14 +166,71 @@ public class RootController {
             }
             room.setId(UUIDUtil.getUUID());
             room.setRoomImgPath(roomImgPath);
-            boolean flag = roomManagermentService.addRoom(room);
+            map= roomManagermentService.addRoom(room);
             //当执行完sql语句后，把全局变量里list的数量清空，这样下一次上传图片就不是原先的
-            if (flag){
+            if ((boolean)map.get("success")){
                imgPaths.clear();
             }
-            map.put("success", flag);
             return map;
         }
 
+    }
+
+
+    //房间分页查询
+    @RequestMapping("/RoomPagelist.do")
+    @ResponseBody
+    public Map<String,Object> RoomPageList(Room room,String pageNo,String pageSize,HttpServletRequest request){
+        Integer pageNo1 = Integer.valueOf(pageNo);
+        Integer pageSize1 = Integer.valueOf(pageSize);
+        roomManagermentService.getFloorType(request);
+        Map<String,Object> map = roomManagermentService.RoomPageList(room,pageNo1,pageSize1);
+        return map;
+    }
+
+    //房间修改按钮打开模态窗口前的事件
+    @RequestMapping("/getRoomAll.do")
+    @ResponseBody
+    public Room getRoomAllById(String id){
+        Room room = roomManagermentService.getRoomById(id);
+        return room;
+    }
+
+    //更新房间信息
+    @RequestMapping("/updateRoom.do")
+    @ResponseBody
+    public Map<String,Object> updateRoom(Room room){
+        if (imgPaths.size()>0){
+            //把list集合里的图片路径拼接一起存放在数据库里
+            String roomImgPath = "";
+            Iterator i = imgPaths.iterator();
+            int index = 0;
+            while (i.hasNext()) {
+                String name = (String) i.next();
+                roomImgPath += name;
+                if (index < imgPaths.size() - 1) {
+                    roomImgPath += ";";
+                }
+                index += 1;
+            }
+            //说明有上传图片，则需要更新图片
+            room.setRoomImgPath(roomImgPath);
+        }
+        Map<String,Object> map= roomManagermentService.updateRoom(room);
+        if ((boolean)map.get("success")){
+            imgPaths.clear();
+        }
+        return map;
+    }
+
+    //删除房间信息
+    @RequestMapping("/deleteRoom.do")
+    @ResponseBody
+    public Map<String, Object> deleteRoom(HttpServletRequest request) {
+        String[] id = request.getParameterValues("id");
+        Map<String, Object> map = new HashMap<>();
+        Boolean flag = roomManagermentService.deleteRoom(id);
+        map.put("success", flag);
+        return map;
     }
 }
