@@ -66,43 +66,97 @@
 </style>
 <script>
     $(function () {
+        //创建按钮打开模态窗口前事件
+        $("#addBtn").click(function () {
+            $.ajax({
+                url:"getFloorId.do",
+                type:"get",
+                dataType:"json",
+                success:function (data) {
+                    var html="";
+                    $.each(data.success,function (i,n) {
+                        html+='<option value="'+n.id+'">'+n.floorId+'</option>'
+                    })
+                    $("#floorId").html(html);
+                    $("#createActivityModal").modal("show");
+                }
+            })
+        })
+        //创建按钮事件
+        $("#createBtn").click(function () {
+           var $roomId =  $("#roomId");
+            var $roomPrice =  $("#roomPrice");
+            var $roomSuggest =  $("#roomSuggest");
+            if ($roomId.val() !='' && $roomPrice.val() !='' && $roomSuggest.val() !=''){
+                    $.ajax({
+                        url:"addRoom.do",
+                        type:"get",
+                        data:{
+                        "roomId":$roomId.val().trim(),
+                        "roomPrice":$roomPrice.val().trim(),
+                        "roomSuggest":$roomSuggest.val().trim(),
+                        "floorId":$("#floorId").val().trim()
+                        },
+                        dataType:"json",
+                        success:function (data) {
+                            if (data.success){
+                                alert("添加成功")
+                                $("#createActivityModal").modal("hide")
+                                $roomId.val("")
+                                $roomPrice.val("")
+                                $roomSuggest.val("")
+                            } else{
+                               if (data.title == null){
+                                   alert("添加失败")
+                               } else{
+                                   alert(data.title)
+                               }
+                            }
+                        }
+                    })
+                $("#floorId").val()
+            }else{
+                alert("请完善信息")
+            }
+
+        })
+
+        //头像上传插件
         $(".myfile").fileinput({
-            uploadUrl: "text.html", //接受请求地址
-            uploadAsync: true, //默认异步上传
-            showUpload: true, //是否显示上传按钮,跟随文本框的那个
-            showRemove: false, //显示移除按钮,跟随文本框的那个
-            showCaption: true,//是否显示标题,就是那个文本框
-            showPreview: true, //是否显示预览,不写默认为true
-            dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+            language : 'zh',
+            uploadUrl:"uploadFile.do", //接受请求地址
+            showUpload : true, //是否显示上传按钮,跟随文本框的那个
+            showRemove : false, //显示移除按钮,跟随文本框的那个
+            showCaption : true,//是否显示标题,就是那个文本框
+            showPreview : true, //是否显示预览,不写默认为true
+            dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
             //minImageWidth: 50, //图片的最小宽度
             //minImageHeight: 50,//图片的最小高度
             //maxImageWidth: 1000,//图片的最大宽度
             //maxImageHeight: 1000,//图片的最大高度
             //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
             //minFileCount: 0,
-            maxFileCount: 3, //表示允许同时上传的最大文件个数
-            enctype: 'multipart/form-data',
-            validateInitialCount: true,
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-            allowedFileTypes: ['image'],//配置允许文件上传的类型
-            allowedPreviewTypes: ['image'],//配置所有的被预览文件类型
-            allowedPreviewMimeTypes: ['jpg', 'png', 'gif'],//控制被预览的所有mime类型
-            language: 'zh'
+            maxFileCount: 10,//表示允许同时上传的最大文件个数
+            enctype : 'multipart/form-data',
+            validateInitialCount : true,
+            previewFileIcon : "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany : "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            allowedFileTypes : [ 'image' ],//配置允许文件上传的类型
+            allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
+            allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ]//控制被预览的所有mime类型
         })
         //异步上传返回结果处理
-        $('.myfile').on('fileerror', function (event, data, msg) {
+        $('.myfile').on('fileerror', function(event, data, msg) {
             console.log("fileerror");
-            console.log("文件上传错误"+data);
+            console.log(data);
         });
-
         //异步上传返回结果处理
-        $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
+        $(".myfile").on("fileuploaded", function(event, data, previewId, index) {
             console.log("fileuploaded");
-            var ref = $(this).attr("data-ref");
-            $("input[name='" + ref + "']").val(data.response.url);
-            console.log("上传成功"+data.respone.url)
-
+        })
+        //上传前
+        $('.myfile').on('filepreupload', function(event, data, previewId, index) {
+            console.log("filepreupload");
         });
     })
 </script>
@@ -120,41 +174,35 @@
                 </div>
                 <div class="modal-body">
 
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" enctype="multipart/form-data">
 
                         <div class="form-group">
                             <label for="create-marketActivityOwner" class="col-sm-2 control-label">房间号</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" id="roomId" name="roomId">
                             </div>
-                            <label for="create-marketActivityName" class="col-sm-2 control-label">房型</span></label>
+                            <label for="create-marketActivityName" class="col-sm-2 control-label">楼层号</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <select class="form-control">
-                                    <option></option>
-                                    <option>普通单间</option>
-                                    <option>普通双人间</option>
-                                    <option>豪华大床房</option>
-                                    <option>豪华双人间</option>
-                                    <option>总统套房</option>
-                                    <option>商务房</option>
+                                <select class="form-control" id="floorId">
+
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="create-marketActivityOwner" class="col-sm-2 control-label">房间价格</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" id="roomPrice">
                             </div>
                             <label for="create-marketActivityName" class="col-sm-2 control-label">房间图片</span></label>
                             <div class="col-sm-9" style="width: 300px;">
-                                <input type="file" class="myfile">
+                                <input type="file" name="file"  class="myfile" multiple/>
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label for="create-marketActivityOwner" class="col-sm-2 control-label">房间介绍</span></label>
                             <div class="col-sm-9" style="width: 600px;">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" id="roomSuggest"></textarea>
                             </div>
                         </div>
                     </form>
@@ -162,7 +210,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+                    <button type="button" class="btn btn-primary" id="createBtn">创建</button>
                 </div>
             </div>
         </div>
@@ -187,7 +235,7 @@
                             <div class="col-sm-9" style="width: 300px;">
                                 <input type="text" class="form-control" id="name">
                             </div>
-                            <label for="create-marketActivityName" class="col-sm-2 control-label">房型</span></label>
+                            <label for="create-marketActivityName" class="col-sm-2 control-label">楼层号</span></label>
                             <div class="col-sm-9" style="width: 300px;">
                                 <select class="form-control">
                                     <option></option>
@@ -271,8 +319,7 @@
             <div class="btn-toolbar" role="toolbar"
                 style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
                 <div class="btn-group" style="position: relative; top: 18%;">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#createActivityModal"><span class="glyphicon glyphicon-plus"></span> 创建房间</button>
+                    <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建房间</button>
                     <button type="button" class="btn btn-default" data-toggle="modal"
                         data-target="#editActivityModal"><span class="glyphicon glyphicon-pencil"></span> 修改房间</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal"

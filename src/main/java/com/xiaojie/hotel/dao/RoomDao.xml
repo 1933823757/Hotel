@@ -5,5 +5,32 @@
 
 <mapper namespace="com.xiaojie.hotel.dao.RoomDao">
 
+       <select id="getCountRoom" resultType="java.lang.Integer">
+           select count(*) from  tbl_room where floorId=#{id}
+       </select>
 
+        <!--查询需要删除的个数-->
+        <select id="getDeleteCount" resultType="java.lang.Integer">
+            select count(*) from  tbl_room where floorId in
+            <foreach collection="array" item="i" open="("  close=")" separator=",">
+                #{i}
+            </foreach>
+        </select>
+    <!--实际删除个数-->
+        <delete id="deleteRoom">
+            delete from tbl_room where floorId in
+            <foreach collection="array" item="i" open="(" close=")" separator=",">
+                #{i}
+            </foreach>
+        </delete>
+
+    <!--添加房间语句-->
+    <insert id="addRoom">
+        insert into tbl_room (id,roomSuggest,roomId,roomType,roomPrice,roomImgpath,floorId)
+        values (#{id},#{roomSuggest},#{roomId},#{roomType},#{roomPrice},#{roomImgPath},#{floorId})
+    </insert>
+    <!--根据房间的号码查询房间是否存在-->
+    <select id="getRoomByRoomId" resultType="room">
+        select  * from tbl_room where roomId=#{roomId}
+    </select>
 </mapper>

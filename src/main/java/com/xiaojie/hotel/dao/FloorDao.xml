@@ -4,6 +4,48 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xiaojie.hotel.dao.FloorDao">
+         <insert id="insertFloor" >
+             insert into tbl_floor(id,floorId,roomType) values (#{id},#{floorId},#{roomType})
+         </insert>
 
+        <!--分页结合按钮查询sql-->
+        <select id="selectFloorAll" resultType="floor">
+            select id,floorId,roomType from tbl_floor
+            <where>
+                <if test="floorId!=null and floorId!=''">
+                    floorId like "%" #{floorId} "%"
+                </if>
+                <if test="roomType!=null and roomType!=''">
+                    and roomType like "%" #{roomType} "%"
+                </if>
+            </where>
+            order  by floorId asc
+        </select>
 
+    <!--根据id查信息-->
+    <select id="selectFloorById" resultType="floor">
+        select id,floorId,roomType from tbl_floor where id=#{id}
+    </select>
+
+    <!--判断floor是否存在-->
+    <select id="getFloor" resultType="floor">
+        select * from tbl_floor where floorId=#{floorId}
+    </select>
+
+    <!--更新楼层信息语句-->
+    <update id="updateFloorAll">
+        update tbl_floor set floorId=#{floorId},roomType=#{roomType} where id=#{id}
+    </update>
+
+    <!--删除楼层-->
+    <delete id="deleteFloor">
+        delete from tbl_floor where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getFloorId" resultType="floor">
+        select id,floorId,roomType from tbl_floor
+    </select>
 </mapper>

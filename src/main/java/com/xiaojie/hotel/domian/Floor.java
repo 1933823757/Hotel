@@ -4,6 +4,15 @@ public class Floor {
     private String id;
     private String floorId;
     private String roomType;
+    private String roomCount;
+
+    public String getRoomCount() {
+        return roomCount;
+    }
+
+    public void setRoomCount(String roomCount) {
+        this.roomCount = roomCount;
+    }
 
     public String getId() {
         return id;
@@ -35,6 +44,7 @@ public class Floor {
                 "id='" + id + '\'' +
                 ", floorId='" + floorId + '\'' +
                 ", roomType='" + roomType + '\'' +
+                ", roomCount='" + roomCount + '\'' +
                 '}';
     }
 }
