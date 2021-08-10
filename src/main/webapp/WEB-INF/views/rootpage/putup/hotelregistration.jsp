@@ -1,14 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
+	<base href="<%=basePath%>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../bootstrap_3.3.0/css/bootstrap.min.css">
-    <script src="../../js/jquery-1.11.1-min.js"></script>
-    <script src="../../bootstrap_3.3.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../css/CommonStyle/base.css">
-    <link rel="stylesheet" href="../../css/CommonStyle/reset.css">
+    <link rel="stylesheet" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <script src="js/jquery-1.11.1-min.js"></script>
+    <script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/CommonStyle/base.css">
+    <link rel="stylesheet" href="css/CommonStyle/reset.css">
     <title>住宿登记</title>
 </head>
 <body>
@@ -31,18 +36,7 @@
 							<div class="col-sm-9" style="width: 300px;">
                                 <input type="text" class="form-control" id="name">
 							</div>
-                            <label for="create-marketActivityName" class="col-sm-2 control-label">房型</span></label>
-                            <div class="col-sm-9" style="width: 300px;">
-                                <select class="form-control">
-                                    <option></option>
-                                    <option>普通单间</option>
-                                    <option>普通双人间</option>
-                                    <option>豪华大床房</option>
-                                    <option>豪华双人间</option>
-                                    <option>总统套房</option>
-                                    <option>商务房</option>
-                                </select>
-                            </div>
+
 						</div>
 						
 						<div class="form-group">
@@ -118,18 +112,7 @@
 							<div class="col-sm-9" style="width: 300px;">
                                 <input type="text" class="form-control" id="name">
 							</div>
-                            <label for="create-marketActivityName" class="col-sm-2 control-label">房型</span></label>
-                            <div class="col-sm-9" style="width: 300px;">
-                                <select class="form-control">
-                                    <option></option>
-                                    <option>普通单间</option>
-                                    <option>普通双人间</option>
-                                    <option>豪华大床房</option>
-                                    <option>豪华双人间</option>
-                                    <option>总统套房</option>
-                                    <option>商务房</option>
-                                </select>
-                            </div>
+
 						</div>
 						
 						<div class="form-group">

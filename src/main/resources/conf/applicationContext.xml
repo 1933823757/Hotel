@@ -4,58 +4,65 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-        <!--组件扫描器-->
-        <context:component-scan base-package="com.xiaojie.hotel.service"/>
-        <context:component-scan base-package=" com.xiaojie.hotel.Exception"/>
-        <!--注解驱动-->
-        <mvc:annotation-driven/>
-        <!--引入属性配置文件-->
-        <context:property-placeholder location="classpath:conf/jdbc.properties"/>
-        <!--配置阿里的Druid数据源-->
-        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-            <property name="url" value="${jdbc.url}"/>
-            <property name="username" value="${jdbc.username}"/>
-            <property name="password" value="${jdbc.password}"/>
-        </bean>
-        <!--注册SqlSessionFactoryBean-->
-        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-            <property name="dataSource" ref="dataSource"/>
-            <property name="configLocation" value="classpath:conf/mybatis.xml"/>
-            <!-- 传入PageHelper的插件 -->
-            <property name="plugins">
-                <array>
-                    <!-- 传入插件的对象 -->
-                    <bean class="com.github.pagehelper.PageInterceptor">
-                        <property name="properties">
-                            <props>
-                                <prop key="helperDialect">mysql</prop>
-                                <prop key="reasonable">true</prop>
-                            </props>
-                        </property>
-                    </bean>
-                </array>
-            </property>
-        </bean>
-        <!--使用spring的事务处理-->
-        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource"/>
-        </bean>
+    <!--组件扫描器-->
+    <context:component-scan base-package="com.xiaojie.hotel.service"/>
+    <context:component-scan base-package=" com.xiaojie.hotel.Exception"/>
+    <!--注解驱动-->
+    <mvc:annotation-driven/>
+    <!--引入属性配置文件-->
+    <context:property-placeholder location="classpath:conf/jdbc.properties"/>
+    <!--配置阿里的Druid数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--注册SqlSessionFactoryBean-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:conf/mybatis.xml"/>
+        <!-- 传入PageHelper的插件 -->
+        <property name="plugins">
+            <array>
+                <!-- 传入插件的对象 -->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <props>
+                            <prop key="helperDialect">mysql</prop>
+                            <prop key="reasonable">true</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!--使用spring的事务处理-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
     <!--开启事务注解驱动-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
-        <!--动态代理对象-->
-        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-            <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-            <property name="basePackage" value="com.xiaojie.hotel.dao"/>
-        </bean>
+    <!--动态代理对象-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.xiaojie.hotel.dao"/>
+    </bean>
 
-        <bean id="userService" class="com.xiaojie.hotel.service.Impl.UserServiceImpl">
-            <property name="userDao" ref="userDao"/>
-        </bean>
-        <bean id="managerService" class="com.xiaojie.hotel.service.Impl.ManagerServiceImpl">
-            <property name="managerDao" ref="managerDao"/>
-        </bean>
+    <bean id="userService" class="com.xiaojie.hotel.service.Impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="managerService" class="com.xiaojie.hotel.service.Impl.ManagerServiceImpl">
+        <property name="managerDao" ref="managerDao"/>
+    </bean>
     <bean id="roomManagermentService" class="com.xiaojie.hotel.service.Impl.RoomManagermentServiceImpl">
         <property name="roomDao" ref="roomDao"/>
         <property name="floorDao" ref="floorDao"/>
     </bean>
+    <bean id="putUpService" class="com.xiaojie.hotel.service.Impl.PutUpServiceImpl">
+        <property name="engageDao" ref="engageDao"></property>
+        <property name="roomDao" ref="roomDao"></property>
+        <property name="moveRoomDao" ref="moveRoomDao"></property>
+        <property name="orderInformAtionDao" ref="orderInformAtionDao"></property>
+    </bean>
+
 </beans>

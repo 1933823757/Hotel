@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiaojie.hotel.dao.MoveRoomDao">
+
+    <select id="selectMoveRoomByStage" resultType="moveroom">
+        select * from tbl_moveroom where state in (#{stage},#{stage2})
+    </select>
+
+    <!--添加预定房子的信息-->
+    <insert id="addMoveRoom">
+        insert into tbl_moveRoom(id,roomPrice,c_tel,idCard,state,fix_time,roomId,managerName,c_name,engageId)
+        values (#{id},#{roomPrice},#{c_tel},#{idCard},#{state},#{fix_time},#{roomId},#{managerName},#{c_name},#{engageId})
+    </insert>
+
+    <!--修改预定房的信息-->
+    <update id="updateMoveRoom">
+        update tbl_moveroom set roomPrice=#{roomPrice},c_tel=#{c_tel},idCard=#{idCard},fix_time=#{fix_time},roomId=#{roomId},c_name=#{c_name}
+        where id=#{id}
+    </update>
+
+    <!--修改预定房信息，没有修改房间号时执行-->
+    <update id="updateMoveRoomNotRoom">
+        update tbl_moveroom set roomPrice=#{roomPrice},c_tel=#{c_tel},idCard=#{idCard},fix_time=#{fix_time},c_name=#{c_name}
+         where id=#{id}
+    </update>
+    <!--根据id删除信息-->
+    <delete id="deleteMoveRoomByEngageId">
+        delete from tbl_moveroom where engageId=#{engageId}
+    </delete>
+</mapper>

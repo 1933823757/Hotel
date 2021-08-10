@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/*
+    房间管理模块控制器
+ */
 @Controller
 public class RootController {
 

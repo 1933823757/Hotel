@@ -210,10 +210,10 @@
 					<a href="#no2" class="collapsed" data-toggle="collapse"><span
 							class="glyphicon glyphicon-time"></span> 住宿管理</a>
 					<ul id="no2" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="putup/putupbook.html"
+						<li class="liClass"><a href="putup/toputupbook.do"
 								target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
 									class="glyphicon glyphicon-chevron-right"></span> 客房预定</a></li>
-						<li class="liClass"><a href="putup/hotelregistration.html"
+						<li class="liClass"><a href="putup/toHotelRegistraTion.do"
 								target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
 									class="glyphicon glyphicon-chevron-right"></span> 住宿登记</a></li>
 					</ul>

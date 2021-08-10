@@ -93,4 +93,27 @@
             #{i}
         </foreach>
     </delete>
+
+    <!--查询所有房间号-->
+    <select id="getRoomIdAll" resultType="room" >
+        select  roomSuggest,id,roomId,roomType,roomPrice,roomImgpath,floorId from tbl_room
+        <where>
+        <if test="flag!=null and flag!=''">
+         roomId not in
+       <foreach collection="list" item="i" open="(" close=")" separator=",">
+           #{i.roomId}
+       </foreach>
+        </if>
+        </where>
+        order by roomId asc
+    </select>
+
+    <!--根据房间号查询房间类型-->
+    <select id="selectRoomType" resultType="room">
+        select * from tbl_room where id=#{roomId}
+    </select>
+
+    <select id="getRoomByRoom" resultType="room">
+        select * from tbl_room where roomId=#{roomId}
+    </select>
 </mapper>

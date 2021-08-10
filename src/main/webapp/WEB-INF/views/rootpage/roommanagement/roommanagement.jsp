@@ -16,9 +16,10 @@
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
     <%--图片上传插件--%>
+    <link rel="stylesheet" href="bootstrap-fileinput/fileinput.min.css">
     <script src="bootstrap-fileinput/fileinput.min.js"></script>
     <script src="bootstrap-fileinput/zh.js"></script>
-    <link rel="stylesheet" href="bootstrap-fileinput/fileinput.min.css">
+
     <%--分页插件--%>
     <link rel="stylesheet" type="text/css" href="js/bs_pagination/jquery.bs_pagination.min.css">
     <script type="text/javascript" src="js/bs_pagination/jquery.bs_pagination.min.js"></script>

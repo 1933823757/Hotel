@@ -15,5 +15,8 @@ public class DateTimeUtil {
 		return dateStr;
 		
 	}
+	public static String getOrderId(){
+		return String.valueOf(System.currentTimeMillis());
+	}
 	
 }

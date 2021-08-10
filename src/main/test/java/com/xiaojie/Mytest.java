@@ -43,4 +43,11 @@ public class Mytest {
     public void test3(){
         DeleteFile.deleteFile("images/roomImgs/w.jpg;images/roomImgs/q.png");
     }
+    @Test
+    public void test4(){
+        String s1 = "101";
+        String s2 = "1cd1e761c854493388350c6604c8c96f";
+        System.out.println("s1----------------"+s1.length());
+        System.out.println("s2----------------"+s2.length());
+    }
 }

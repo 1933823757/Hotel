@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiaojie.hotel.dao.OrderInformAtionDao">
+
+ <!--创建订单信息-->
+    <insert id="addOrderInformAtion">
+        insert into tbl_orderinformation
+        values(#{id},#{c_name},#{start_time},#{order_id},#{roomId},#{totalPrice},#{userId},#{orderState})
+    </insert>
+    <!--更新订单信息-->
+    <update id="updateOrder">
+        update tbl_orderinformation set
+        c_name=#{c_name},roomId=#{roomId},totalPrice=#{totalPrice}
+        where userId=#{id}
+    </update>
+    <!--没有更改房间时修改的订单语句-->
+    <update id="updateOrderNotRoom">
+          update tbl_orderinformation set
+        c_name=#{c_name},totalPrice=#{totalPrice}
+        where userId=#{id}
+    </update>
+
+    <!--更改信息-->
+    <update id="updateOrderStage">
+        update tbl_orderinformation set orderState=#{orderState} where userId=#{userId}
+    </update>
+</mapper>
