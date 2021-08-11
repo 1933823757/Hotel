@@ -64,7 +64,6 @@
 						},
 						dataType:"json",
 						success:function (data) {
-							console.log(data)
 							$("#create-roomId").val(data.roomId)
 							$("#create-roomType").val(data.roomType)
 							$("#create-roomPrice").val(data.roomPrice)
@@ -117,6 +116,7 @@
 								$("#createActivityModal").modal("hide")
 							} else{
 								alert("登记失败")
+								$("input[name=dx]").prop("checked",false);
 							}
 						}
 					})
@@ -145,7 +145,6 @@
 						},
 						dataType:"json",
 						success:function (data) {
-							console.log(data)
 							$("#edit-roomId").val(data.roomId)
 							$("#edit-roomType").val(data.roomType)
 							$("#edit-roomPrice").val(data.roomPrice)
@@ -213,6 +212,38 @@
 				}
 			}
 
+		})
+		//退房按钮事件
+		$("#tuifangBtn").click(function () {
+			if($("input[name=dx]:checked").length>0){
+				if($("input[name=dx]:checked").length>1){
+					alert("请选择需要一条记录")
+				}else{
+					if (confirm("确定要退房吗？")) {
+						$.ajax({
+							url:"putup/checkout.do",
+							type:"post",
+							data:{
+								"id":$("input[name=dx]:checked").val()
+							},
+							dataType:"json",
+							success:function (data) {
+								if (data.success){
+									alert(data.title)
+									$("input[name=dx]").prop("checked",false);
+									pageList(1,10)
+								} else {
+									alert(data.title)
+									$("input[name=dx]").prop("checked",false);
+								}
+
+							}
+						})
+					}
+				}
+			}else{
+				alert("请选择你需要登记的记录")
+			}
 		})
 	})
 
@@ -518,8 +549,6 @@
                         <option></option>
 						 <option value="1">已预定</option>
                         <option value="2">入住中</option>
-                        <option value="0">已退房</option>
-                      
                     </select>
 				    </div>
 				  </div>
@@ -531,7 +560,7 @@
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addMoveRoomBtn"><span class="glyphicon glyphicon-plus"></span> 登记入住</button>
 				  <button type="button" class="btn btn-default" data-toggle="modal" id="editOpenModel"><span class="glyphicon glyphicon-pencil"></span> 修改入住</button>
-				  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteActivityModal"><span class="glyphicon glyphicon-minus"></span> 登记退房</button>
+				  <button type="button" class="btn btn-danger" data-toggle="modal" id="tuifangBtn"><span class="glyphicon glyphicon-minus"></span> 登记退房</button>
 				</div>
 				
 			</div>
@@ -553,45 +582,7 @@
 						</tr>
 					</thead>
 					<tbody id="moveRoomList">
-						<%--<tr class="active">--%>
-							<%--<td><input type="checkbox" /></td>--%>
-							<%--<td>101</td>--%>
-                            <%--<td>总统套房</td>--%>
-							<%--<td>1090</td>--%>
-							<%--<td>李四</td>--%>
-                            <%--<td>34531212</td>--%>
-                            <%--<td>3452342342</td>--%>
-                            <%--<td>2021-02-19</td>--%>
-                            <%--<td>2021-03-01</td>--%>
-                            <%--<td>已退房</td>--%>
-                            <%--<td>2021-01-01</td>--%>
-						<%--</tr>--%>
-                        <%--<tr class="active">--%>
-                            <%--<td><input type="checkbox" /></td>--%>
-							<%--<td>101</td>--%>
-                            <%--<td>总统套房</td>--%>
-							<%--<td>1090</td>--%>
-							<%--<td>李四</td>--%>
-                            <%--<td>34531212</td>--%>
-                            <%--<td>3452342342</td>--%>
-                            <%--<td>2021-02-19</td>--%>
-                            <%--<td>2021-03-01</td>--%>
-                            <%--<td>已退房</td>--%>
-                            <%--<td>2021-01-01</td>--%>
-                        <%--</tr>--%>
-                        <%--<tr class="active">--%>
-                            <%--<td><input type="checkbox" /></td>--%>
-							<%--<td>101</td>--%>
-                            <%--<td>总统套房</td>--%>
-							<%--<td>1090</td>--%>
-							<%--<td>李四</td>--%>
-                            <%--<td>34531212</td>--%>
-                            <%--<td>3452342342</td>--%>
-                            <%--<td>2021-02-19</td>--%>
-                            <%--<td>2021-03-01</td>--%>
-                            <%--<td>已退房</td>--%>
-                            <%--<td>2021-01-01</td>--%>
-                        <%--</tr>--%>
+
 					</tbody>
 				</table>
 			</div>

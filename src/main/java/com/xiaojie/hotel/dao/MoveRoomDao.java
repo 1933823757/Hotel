@@ -26,4 +26,6 @@ public interface MoveRoomDao {
     int updateRuZhu(MoveRoom moveRoom);
 
     int updateRuZhuPrice(MoveRoom moveRoom);
+
+    int deleteMoveROomById(String id);
 }

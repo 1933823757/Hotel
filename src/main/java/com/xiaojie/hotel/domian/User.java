@@ -8,6 +8,15 @@ public class User {
     private String imgpath;
     private String sex;
     private String idcard;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public User(String id, String username, String password, String phone, String imgpath, String sex, String idcard) {
         this.id = id;
@@ -78,16 +87,5 @@ public class User {
         this.idcard = idcard;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", imgpath='" + imgpath + '\'' +
-                ", sex='" + sex + '\'' +
-                ", idcard='" + idcard + '\'' +
-                '}';
-    }
+
 }

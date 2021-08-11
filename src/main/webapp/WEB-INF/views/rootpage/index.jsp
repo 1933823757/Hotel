@@ -233,7 +233,7 @@
 							class="glyphicon glyphicon-user"></span> 用户管理</a>
 
 					<ul id="no4" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="./userlist/userlist.html"
+						<li class="liClass"><a href="userlist/touserList.do"
 								target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
 									class="glyphicon glyphicon-chevron-right"></span> 用户列表</a></li>
 					</ul>

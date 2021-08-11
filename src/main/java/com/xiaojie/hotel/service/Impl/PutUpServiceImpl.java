@@ -348,4 +348,27 @@ public class PutUpServiceImpl implements PutUpService {
         return map;
     }
 
+    //退房业务
+    @Transactional
+    @Override
+    public Map<String, Object> checkOut(String id) {
+        Map<String, Object> map = new HashMap<>();
+        //先拿id去判断用户的状态，已预定还是入住中，如果在入住的话，则需删除记录，如果是预定，则提示前此用户还未入住
+        MoveRoom moveRoom = moveRoomDao.selectMoveRoomById(id);
+        String state = "1";
+        if (state.equals(moveRoom.getState())){
+            //说明此用户处于预定状态，则提示前台
+            map.put("success",false);
+            map.put("title",moveRoom.getC_name()+"客户还未入住，登记退房失败");
+        }else{
+            //删除入住信息记录
+            int num = moveRoomDao.deleteMoveROomById(id);
+            if (num == 1){
+                map.put("title",moveRoom.getC_name()+"退房成功");
+                map.put("success",true);
+            }
+        }
+        return map;
+    }
+
 }

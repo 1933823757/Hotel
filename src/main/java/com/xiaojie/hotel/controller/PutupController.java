@@ -141,4 +141,11 @@ public class PutupController {
         Map<String,Object> map = putUpService.moveUpdate(moveRoom);
         return map;
     }
+    //退房登记
+    @RequestMapping("/checkout.do")
+    @ResponseBody
+    public Map<String,Object> checkOut(String id){
+        Map<String,Object> map = putUpService.checkOut(id);
+        return map;
+    }
 }

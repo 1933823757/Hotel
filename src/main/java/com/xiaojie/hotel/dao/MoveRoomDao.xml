@@ -75,4 +75,9 @@
         update tbl_moveroom set c_name=#{c_name},c_tel=#{c_tel},idCard=#{idCard},start_time=#{start_time},close_time=#{close_time},state=#{state},roomPrice=#{roomPrice}
         where id=#{id}
     </update>
+
+    <!--删除入住信息-->
+    <delete id="deleteMoveROomById">
+        delete from tbl_moveroom where id=#{id}
+    </delete>
 </mapper>
