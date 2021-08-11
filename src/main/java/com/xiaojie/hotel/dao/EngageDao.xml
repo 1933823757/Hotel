@@ -71,4 +71,10 @@
     <delete id="deleteEngageById">
         delete from tbl_engage where id=#{engageId}
     </delete>
+
+    <!--入住时更改的信息-->
+    <update id="updateEngage">
+        update tbl_engage set idCard=#{idCard},close_time=#{close_time},c_name=#{c_name},c_tel=#{c_tel}
+        where id=#{id}
+    </update>
 </mapper>

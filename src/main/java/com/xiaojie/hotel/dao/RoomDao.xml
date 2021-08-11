@@ -116,4 +116,12 @@
     <select id="getRoomByRoom" resultType="room">
         select * from tbl_room where roomId=#{roomId}
     </select>
+
+    <select id="getRoomByList" resultType="room">
+        select id,roomId from  tbl_room where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+        order by roomId asc
+    </select>
 </mapper>

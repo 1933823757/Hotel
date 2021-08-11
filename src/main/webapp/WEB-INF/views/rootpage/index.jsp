@@ -17,7 +17,7 @@
 	<script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="css/CommonStyle/base.css">
 	<link rel="stylesheet" href="css/CommonStyle/reset.css">
-	<title>Document</title>
+	<title>酒店管理后台</title>
 </head>
 <script type="text/javascript">
 

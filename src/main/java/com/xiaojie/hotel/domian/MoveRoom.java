@@ -13,6 +13,15 @@ public class MoveRoom {
    private String  managerName;
    private String c_name;
    private String engageId;
+   private String roomType;
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
 
     public String getEngageId() {
         return engageId;

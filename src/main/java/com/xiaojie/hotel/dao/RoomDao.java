@@ -36,4 +36,6 @@ public interface RoomDao {
     Room selectRoomType(String roomId);
 
     Room getRoomByRoom(String roomId);
+
+    List<Room> getRoomByList(List<MoveRoom> list);
 }

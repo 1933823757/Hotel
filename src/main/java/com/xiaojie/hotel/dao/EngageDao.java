@@ -16,4 +16,6 @@ public interface EngageDao {
     int updateEngageAll(Engage engage);
 
     int deleteEngageById(String engageId);
+
+    int updateEngage(Engage engage);
 }

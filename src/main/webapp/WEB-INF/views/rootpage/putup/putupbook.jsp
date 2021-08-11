@@ -313,7 +313,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<div class="col-sm-9" style="width: 300px;">
                                 <input type="text" class="form-control" id="create-cname">
 							</div>
-                            <label for="create-marketActivityName" class="col-sm-2 control-label">入住时间<span style="font-size: 15px; color: red;">*</span></label>
+                            <label for="create-marketActivityName" class="col-sm-2 control-label">预定时间<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-9" style="width: 300px;">
                                 <input type="text" class="form-control time" id="create-fixTime">
                             </div>
@@ -372,7 +372,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<div class="col-sm-9" style="width: 300px;">
 								<input type="text" class="form-control" id="edit-cname">
 							</div>
-							<label for="create-marketActivityName" class="col-sm-2 control-label">入住时间<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="create-marketActivityName" class="col-sm-2 control-label">预定时间<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-9" style="width: 300px;">
 								<input type="text" class="form-control time" id="edit-fixTime">
 							</div>

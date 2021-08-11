@@ -1,5 +1,6 @@
 package com.xiaojie.hotel.dao;
 
+import com.xiaojie.hotel.domian.Engage;
 import com.xiaojie.hotel.domian.MoveRoom;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +16,14 @@ public interface MoveRoomDao {
     int updateMoveRoomNotRoom(MoveRoom moveRoom);
 
     int deleteMoveRoomByEngageId(String engageId);
+
+    List<MoveRoom> getMoveRoomAll();
+
+    List<Engage> getMoveRoomFenYe(MoveRoom moveRoom);
+
+    MoveRoom selectMoveRoomById(String id);
+
+    int updateRuZhu(MoveRoom moveRoom);
+
+    int updateRuZhuPrice(MoveRoom moveRoom);
 }

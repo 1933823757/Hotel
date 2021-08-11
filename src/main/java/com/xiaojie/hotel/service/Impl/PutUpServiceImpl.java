@@ -46,15 +46,15 @@ public class PutUpServiceImpl implements PutUpService {
     @Transactional
     @Override
     public List<Room> getRoomIdAll() {
-        String  stage = "1";
+        String stage = "1";
         String stage2 = "2";
         String flag = "";
         //如果房间状态为1 的话，则说明房间有人入住，则排除此房间
-        List<MoveRoom> moveRoomList = moveRoomDao.selectMoveRoomByStage(stage,stage2);
-        if (moveRoomList.size()>0){
-            flag +="1";
+        List<MoveRoom> moveRoomList = moveRoomDao.selectMoveRoomByStage(stage, stage2);
+        if (moveRoomList.size() > 0) {
+            flag += "1";
         }
-        List<Room> list = roomDao.getRoomIdAll(moveRoomList,flag);
+        List<Room> list = roomDao.getRoomIdAll(moveRoomList, flag);
         return list;
     }
 
@@ -62,19 +62,19 @@ public class PutUpServiceImpl implements PutUpService {
     @Transactional
     @Override
     public Map<String, Object> addEngage(Engage engage) {
-        Map<String,Object> map = new HashMap<>();
-        boolean flag =false;
+        Map<String, Object> map = new HashMap<>();
+        boolean flag = false;
         //实体类里面还缺少一个房间类型属性值，则需要去查询
         Room room = roomDao.selectRoomType(engage.getRoomId());
         engage.setRoomType(room.getRoomType());
         String moveRoomId = UUIDUtil.getUUID();
         engage.setMoveRoomId(moveRoomId);
         int num = engageDao.addMoveRoom(engage);
-        if (num == 1){
+        if (num == 1) {
             //总预定天数
-            Integer totalDay = (Integer.valueOf(engage.getClose_time().replace("-",""))-Integer.valueOf(engage.getStart_time().replace("-","")));
+            Integer totalDay = (Integer.valueOf(engage.getClose_time().replace("-", "")) - Integer.valueOf(engage.getStart_time().replace("-", "")));
             //总价格
-            Integer totalPrice = Integer.valueOf(room.getRoomPrice())*totalDay;
+            Integer totalPrice = Integer.valueOf(room.getRoomPrice()) * totalDay;
             //添加成功后，还需修改房间状态
             //"0" 休闲状态 "1" 预定状态  "2" 已入住
             //新建入住信息,把添加的预定信息添加进去
@@ -90,18 +90,20 @@ public class PutUpServiceImpl implements PutUpService {
             moveRoom.setRoomId(room.getRoomId());
             moveRoom.setRoomPrice(String.valueOf(totalPrice));
             moveRoom.setEngageId(engage.getId());
+            moveRoom.setClose_time(engage.getClose_time());
+            moveRoom.setRoomType(room.getRoomType());
             int num2 = moveRoomDao.addMoveRoom(moveRoom);
-            if (num2 == 1){
+            if (num2 == 1) {
                 //添加订单信息
-                OrderInformAtion orderInformAtion = new OrderInformAtion(UUIDUtil.getUUID(),engage.getC_name(), DateTimeUtil.getSysTime(),DateTimeUtil.getOrderId(),engage.getRoomId(),String.valueOf(totalPrice),engage.getId(),"1");
+                OrderInformAtion orderInformAtion = new OrderInformAtion(UUIDUtil.getUUID(), engage.getC_name(), DateTimeUtil.getSysTime(), DateTimeUtil.getOrderId(), engage.getRoomId(), String.valueOf(totalPrice), engage.getId(), "1");
                 int num3 = orderInformAtionDao.addOrderInformAtion(orderInformAtion);
-                if (num3 ==1){
-                    flag=true;
+                if (num3 == 1) {
+                    flag = true;
                 }
 
             }
         }
-        map.put("success",flag);
+        map.put("success", flag);
         return map;
     }
 
@@ -131,18 +133,18 @@ public class PutUpServiceImpl implements PutUpService {
     @Transactional
     @Override
     public Map<String, Object> editEngage(Engage engage) {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         boolean flag = false;
-        Room room=null;
-        if (engage.getRoomId().length()==32){
+        Room room = null;
+        if (engage.getRoomId().length() == 32) {
             room = roomDao.getRoomById(engage.getRoomId());
-        }else{
-             room = roomDao.getRoomByRoom(engage.getRoomId());
+        } else {
+            room = roomDao.getRoomByRoom(engage.getRoomId());
         }
         //总预定天数
-        Integer totalDay = (Integer.valueOf(engage.getClose_time().replace("-",""))-Integer.valueOf(engage.getStart_time().replace("-","")));
+        Integer totalDay = (Integer.valueOf(engage.getClose_time().replace("-", "")) - Integer.valueOf(engage.getStart_time().replace("-", "")));
         //总价格
-        Integer totalPrice = Integer.valueOf(room.getRoomPrice())*totalDay;
+        Integer totalPrice = Integer.valueOf(room.getRoomPrice()) * totalDay;
         MoveRoom moveRoom = new MoveRoom();
         //通过预定的id拿到住宿的id
         Engage engage1 = engageDao.getEngageById(engage.getId());
@@ -152,73 +154,197 @@ public class PutUpServiceImpl implements PutUpService {
         moveRoom.setC_tel(engage.getC_tel());
         moveRoom.setIdCard(engage.getIdCard());
         moveRoom.setFix_time(engage.getStart_time());
-        if (engage.getRoomId().length()==32){
+        moveRoom.setClose_time(engage.getClose_time());
+        if (engage.getRoomId().length() == 32) {
             //如果等于32，则说明前台改了房间号，
             //设置最新的房间类型
             engage.setRoomType(room.getRoomType());
             int num2 = engageDao.updateEngageAll(engage);
-            if (num2 == 1){
-                //更新住宿表
+            if (num2 == 1) {
+                //更新住宿表和房间类型
+                moveRoom.setRoomType(room.getRoomType());
                 moveRoom.setRoomId(room.getRoomId());
                 int num3 = moveRoomDao.updateMoveRoom(moveRoom);
-                if (num3 == 1){
+                if (num3 == 1) {
                     //更改订单信息
-                    OrderInformAtion orderInformAtion = new OrderInformAtion(engage.getId(),engage.getC_name(),null,null,engage.getRoomId(),String.valueOf(totalPrice),null,null);
+                    OrderInformAtion orderInformAtion = new OrderInformAtion(engage.getId(), engage.getC_name(), null, null, engage.getRoomId(), String.valueOf(totalPrice), null, null);
                     int num4 = orderInformAtionDao.updateOrder(orderInformAtion);
-                    if (num4 == 1){
-                        flag=true;
+                    if (num4 == 1) {
+                        flag = true;
                     }
 
                 }
             }
-        }else{
+        } else {
             //则说明没改房间号,则房间信息不用更该
             int num = engageDao.updateEngageNoRoomId(engage);
-            if (num == 1){
+            if (num == 1) {
 
                 int num5 = moveRoomDao.updateMoveRoomNotRoom(moveRoom);
-                if (num5 == 1){
+                if (num5 == 1) {
                     OrderInformAtion orderInformAtion = new OrderInformAtion();
                     orderInformAtion.setId(engage.getId());
                     orderInformAtion.setC_name(engage.getC_name());
                     orderInformAtion.setTotalPrice(String.valueOf(totalPrice));
                     int num6 = orderInformAtionDao.updateOrderNotRoom(orderInformAtion);
-                    if (num6 == 1){
+                    if (num6 == 1) {
                         flag = true;
                     }
 
                 }
 
+            }
         }
-        }
-        map.put("success",flag);
+        map.put("success", flag);
         return map;
     }
 
+    @Transactional
     //删除预定信息所有东西
     @Override
     public Map<String, Object> deleteEngage(String[] id) {
-        Map<String, Object> map =new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         boolean flag = false;
         int index = 0;
-        for (int i=0;i<id.length;i++){
+        for (int i = 0; i < id.length; i++) {
             String engageId = id[i];
             String orderState = "0";
             int num = engageDao.deleteEngageById(engageId);
-            if (num == 1){
+            if (num == 1) {
+                //1代表预定状态的房间
+                String state = "1";
                 int num2 = moveRoomDao.deleteMoveRoomByEngageId(engageId);
-                if (num2 == 1){
-                    int num3 = orderInformAtionDao.updateOrderStage(engageId,orderState);
-                    if (num3 == 1){
-                        index+=1;
-                    }
+                int num3 = orderInformAtionDao.updateOrderStage(engageId, orderState);
+                if (num3 == 1) {
+                    index += 1;
                 }
             }
         }
-        if (index == id.length){
-            flag=true;
+        if (index == id.length) {
+            flag = true;
         }
-        map.put("success",flag);
+        map.put("success", flag);
+        return map;
+    }
+
+    //--------------------入住业务
+    @Override
+    public Map<String, Object> getRoomAll() {
+        Map<String, Object> map = new HashMap<>();
+        List<MoveRoom> list = moveRoomDao.getMoveRoomAll();
+        List<Room> room = roomDao.getRoomByList(list);
+        map.put("success", room);
+        return map;
+    }
+
+    //分页查询业务
+    @Override
+    public Map<String, Object> getMoveRoomFenYe(MoveRoom moveRoom, Integer pageNo1, Integer pageSize1) {
+        //分页
+        Map<String, Object> map = new HashMap<>();
+
+        if (moveRoom.getRoomId().length() != 0) {
+            Room room = roomDao.getRoomById(moveRoom.getRoomId());
+            moveRoom.setRoomId(room.getRoomId());
+        }
+        PageHelper.startPage(pageNo1, pageSize1);
+        List<Engage> list = moveRoomDao.getMoveRoomFenYe(moveRoom);
+        PageInfo pageInfo = new PageInfo(list);
+        map.put("total", pageInfo.getTotal());
+        map.put("pages", pageInfo.getPages());
+        map.put("list", pageInfo.getList());
+        return map;
+    }
+
+
+    //把预定信息转为住宿信息
+    @Override
+    public MoveRoom getMr(String id) {
+        MoveRoom moveRoom = moveRoomDao.selectMoveRoomById(id);
+        return moveRoom;
+    }
+
+    //登记入住信息
+    @Transactional
+    @Override
+    public Map<String, Object> updateRoom(MoveRoom moveRoom) {
+        boolean flag = false;
+        Map<String, Object> map = new HashMap<>();
+        //通过传过来的id查询到预定信息的id
+        MoveRoom moveRoom1 = moveRoomDao.selectMoveRoomById(moveRoom.getId());
+        int num = moveRoomDao.updateRuZhu(moveRoom);
+        //更改订单信息
+        OrderInformAtion orderInformAtion = new OrderInformAtion();
+        orderInformAtion.setC_name(moveRoom.getC_name());
+        orderInformAtion.setUserId(moveRoom1.getEngageId());
+        int num3 = orderInformAtionDao.update(orderInformAtion);
+        if (num3 == 1) {
+            flag = true;
+        }
+        if (num == 1) {
+            //如果此时的状态不一样的话，说明前台改了入住状态，则需要删除预定信息表里的数据
+            if(Integer.valueOf(moveRoom1.getState()) !=Integer.valueOf(moveRoom.getState())){
+                engageDao.deleteEngageById(moveRoom1.getEngageId());
+                flag = true;
+            }else {
+                Engage engage = new Engage();
+                engage.setC_name(moveRoom.getC_name());
+                engage.setC_tel(moveRoom.getC_tel());
+                engage.setClose_time(moveRoom.getClose_time());
+                engage.setIdCard(moveRoom.getIdCard());
+                engage.setId(moveRoom1.getEngageId());
+                int num2 = engageDao.updateEngage(engage);
+                if (num2 == 1) {
+                  flag = true;
+                }
+            }
+        }
+        map.put("success", flag);
+        return map;
+    }
+
+    @Transactional
+    //更新入住信息业务
+    @Override
+    public Map<String, Object> moveUpdate(MoveRoom moveRoom) {
+        boolean flag = false;
+        Map<String, Object> map = new HashMap<>();
+        //预定的时间
+        String fix_time = moveRoom.getFix_time().replace("-", "");
+        //前台修改的退房时间
+        String close_time = moveRoom.getClose_time().replace("-", "");
+        //通过房间的roomID去查询房间的价格
+        Room room = roomDao.getRoomByRoom(moveRoom.getRoomId());
+        //计算总价格
+        Integer roomPrice = (Integer.valueOf(close_time) - Integer.valueOf(fix_time)) * Integer.valueOf(room.getRoomPrice());
+        moveRoom.setRoomPrice(String.valueOf(roomPrice));
+        //通过传过来的id查询到预定信息的id
+        MoveRoom moveRoom1 = moveRoomDao.selectMoveRoomById(moveRoom.getId());
+        int num = moveRoomDao.updateRuZhuPrice(moveRoom);
+        //更改订单信息
+        OrderInformAtion orderInformAtion = new OrderInformAtion();
+        orderInformAtion.setC_name(moveRoom.getC_name());
+        orderInformAtion.setId(moveRoom1.getEngageId());
+        orderInformAtion.setTotalPrice(moveRoom.getRoomPrice());
+        int num3 = orderInformAtionDao.updateOrderNotRoom(orderInformAtion);
+        if (num3 == 1) {
+            flag = true;
+        }
+        if(Integer.valueOf(moveRoom1.getState()) !=Integer.valueOf(moveRoom.getState())){
+            engageDao.deleteEngageById(moveRoom1.getEngageId());
+        }else{
+            Engage engage = new Engage();
+            engage.setC_name(moveRoom.getC_name());
+            engage.setC_tel(moveRoom.getC_tel());
+            engage.setClose_time(moveRoom.getClose_time());
+            engage.setIdCard(moveRoom.getIdCard());
+            engage.setId(moveRoom1.getEngageId());
+            int num2 = engageDao.updateEngage(engage);
+            if (num2 == 1) {
+                flag=true;
+            }
+        }
+        map.put("success", flag);
         return map;
     }
 

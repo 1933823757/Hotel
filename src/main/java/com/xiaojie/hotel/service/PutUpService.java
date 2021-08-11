@@ -1,6 +1,7 @@
 package com.xiaojie.hotel.service;
 
 import com.xiaojie.hotel.domian.Engage;
+import com.xiaojie.hotel.domian.MoveRoom;
 import com.xiaojie.hotel.domian.Room;
 
 import java.util.List;
@@ -18,4 +19,14 @@ public interface PutUpService {
     Map<String, Object> editEngage(Engage engage);
 
     Map<String, Object> deleteEngage(String[] id);
+
+    Map<String, Object> getRoomAll();
+
+    Map<String, Object> getMoveRoomFenYe(MoveRoom moveRoom, Integer pageNo1, Integer pageSize1);
+
+    MoveRoom getMr(String id);
+
+    Map<String, Object> updateRoom(MoveRoom moveRoom);
+
+    Map<String, Object> moveUpdate(MoveRoom moveRoom);
 }

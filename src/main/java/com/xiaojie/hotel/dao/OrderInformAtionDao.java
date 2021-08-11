@@ -11,4 +11,7 @@ public interface OrderInformAtionDao {
     int updateOrderNotRoom(OrderInformAtion orderInformAtion);
 
     int updateOrderStage(@Param("userId") String engageId,@Param("orderState") String orderState);
+
+    int update(OrderInformAtion orderInformAtion);
+
 }

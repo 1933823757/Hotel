@@ -27,4 +27,11 @@
     <update id="updateOrderStage">
         update tbl_orderinformation set orderState=#{orderState} where userId=#{userId}
     </update>
+
+    <!--更改姓名-->
+    <update id="update">
+        update tbl_orderinformation set c_name=#{c_name} where userId=#{userId}
+    </update>
+
+
 </mapper>
