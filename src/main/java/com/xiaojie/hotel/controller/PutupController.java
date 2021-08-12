@@ -25,9 +25,17 @@ public class PutupController {
     @Autowired
     private PutUpService putUpService;
 
+    //跳转到主页
     @RequestMapping("/toindex.do")
     public String toindex(){
         return "/rootpage/main/index";
+    }
+
+    @RequestMapping("/getRoomList.do")
+    @ResponseBody
+    public Map getRoomList(){
+        Map<String,Object> map = putUpService.getRoomList();
+        return map;
     }
 
     //跳转到住宿预定界面

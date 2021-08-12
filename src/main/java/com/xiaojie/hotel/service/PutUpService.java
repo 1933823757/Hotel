@@ -31,4 +31,6 @@ public interface PutUpService {
     Map<String, Object> moveUpdate(MoveRoom moveRoom);
 
     Map<String, Object> checkOut(String id);
+
+    Map<String, Object> getRoomList();
 }

@@ -28,4 +28,6 @@ public interface MoveRoomDao {
     int updateRuZhuPrice(MoveRoom moveRoom);
 
     int deleteMoveROomById(String id);
+
+    List<MoveRoom> getRoomList();
 }

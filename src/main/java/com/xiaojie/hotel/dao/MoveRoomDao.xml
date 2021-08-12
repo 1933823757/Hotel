@@ -80,4 +80,10 @@
     <delete id="deleteMoveROomById">
         delete from tbl_moveroom where id=#{id}
     </delete>
+
+    <!--主页查询房间状态，利用左外连接查询-->
+    <select id="getRoomList" resultType="moveroom">
+        select r.roomType,m.state,r.roomId as c_name from tbl_room r LEFT JOIN tbl_moveroom m ON r.roomId=m.roomId
+        order by c_name asc
+    </select>
 </mapper>

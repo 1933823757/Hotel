@@ -421,4 +421,14 @@ public class PutUpServiceImpl implements PutUpService {
         return map;
     }
 
+
+    //主页展示所有房间状态的业务
+    @Override
+    public Map<String, Object> getRoomList() {
+        List<MoveRoom> list = moveRoomDao.getRoomList();
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",list);
+        return map;
+    }
+
 }

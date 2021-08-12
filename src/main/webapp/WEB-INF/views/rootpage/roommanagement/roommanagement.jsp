@@ -285,7 +285,7 @@
             success:function (data) {
                 var  html=""
                 $.each(data.roomList,function (i,n) {
-                    html+='<tr >'
+                    html+='<tr class="text-nowrap">'
                     html+='<td><input type="checkbox" value="'+n.object.id+'" name="dx"/></td>'
                     html+='<td>'+n.object.roomId+'</td>'
                     html+='<td>'+n.object.roomType+'</td>'
