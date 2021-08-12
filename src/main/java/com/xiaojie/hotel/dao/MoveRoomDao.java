@@ -15,7 +15,7 @@ public interface MoveRoomDao {
 
     int updateMoveRoomNotRoom(MoveRoom moveRoom);
 
-    int deleteMoveRoomByEngageId(String engageId);
+    int deleteMoveRoomByEngageId(@Param("engageId") String engageId,@Param("state") String state);
 
     List<MoveRoom> getMoveRoomAll();
 

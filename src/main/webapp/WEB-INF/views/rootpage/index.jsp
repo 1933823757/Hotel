@@ -46,7 +46,7 @@
 		});
 
 
-		window.open("main/index.html", "workareaFrame")
+		window.open("putup/toindex.do", "workareaFrame")
 
 	});
 
@@ -192,7 +192,7 @@
 		<div id="navigation" style="top:27px;left: 0px; width: 18%; position: relative; height: 100%; overflow:auto;">
 
 			<ul id="no1" class="nav nav-pills nav-stacked">
-				<li class="liClass"><a href="main/index.html" target="workareaFrame"><span
+				<li class="liClass"><a href="putup/toindex.do" target="workareaFrame"><span
 							class="glyphicon glyphicon-home"></span> 工作台</a></li>
 				<li class="liClass">
 					<a href="#n1" class="collapsed" data-toggle="collapse"><span
@@ -223,7 +223,7 @@
 							class="glyphicon glyphicon-usd"></span> 财务管理</a>
 
 					<ul id="no3" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="chart/activity/index.html"
+						<li class="liClass"><a href="toCountPrice.do"
 								target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
 									class="glyphicon glyphicon-chevron-right"></span> 财务统计</a></li>
 					</ul>
@@ -243,7 +243,7 @@
 							class="glyphicon glyphicon-user"></span> 客户管理</a>
 
 					<ul id="no5" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="chart/activity/index.html"
+						<li class="liClass"><a href="customer/tocustomer.do"
 								target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
 									class="glyphicon glyphicon-chevron-right"></span> 客户列表</a></li>
 					</ul>

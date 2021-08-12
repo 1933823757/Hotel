@@ -33,5 +33,35 @@
         update tbl_orderinformation set c_name=#{c_name} where userId=#{userId}
     </update>
 
+    <select id="getRoomType" resultType="com.xiaojie.hotel.vo.InvalidOder">
+        select
+        r.roomType as roomType,
+        sum(o.totalPrice) as totalPrice
+        from tbl_room r
+        join
+        tbl_orderinformation o
+        on o.roomId=r.id
+        where orderState=#{state}
+        GROUP BY r.roomType
+    </select>
 
+    <select id="selectCount" resultType="int">
+        select count(*) from tbl_orderinformation where  orderState=#{state}
+    </select>
+
+    <select id="selectMoney" resultType="int">
+        select sum(totalPrice) from tbl_orderinformation where orderState=#{state}
+    </select>
+
+    <select id="selectMap" resultType="java.util.HashMap">
+        select
+         r.roomType as name,
+        sum(o.totalPrice) as value
+        from tbl_room r
+        join
+        tbl_orderinformation o
+        on o.roomId=r.id
+        where orderState=#{state}
+        GROUP BY r.roomType
+    </select>
 </mapper>

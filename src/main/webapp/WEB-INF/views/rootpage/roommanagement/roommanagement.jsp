@@ -260,7 +260,7 @@
                 success:function (data) {
                     if (data.success){
                         alert(data.title)
-                        pageList(1,5)
+                        pageList(1,10)
                         $("#editActivityModal").modal("hide")
                     } else{
                         alert(data.title)
@@ -285,7 +285,7 @@
             success:function (data) {
                 var  html=""
                 $.each(data.roomList,function (i,n) {
-                    html+='<tr class="active text-nowrap">'
+                    html+='<tr >'
                     html+='<td><input type="checkbox" value="'+n.object.id+'" name="dx"/></td>'
                     html+='<td>'+n.object.roomId+'</td>'
                     html+='<td>'+n.object.roomType+'</td>'

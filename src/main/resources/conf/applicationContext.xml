@@ -63,6 +63,13 @@
         <property name="roomDao" ref="roomDao"></property>
         <property name="moveRoomDao" ref="moveRoomDao"></property>
         <property name="orderInformAtionDao" ref="orderInformAtionDao"></property>
+        <property name="customerDao" ref="customerDao"></property>
     </bean>
-
+    <bean id="customerService" class="com.xiaojie.hotel.service.Impl.CustomerServiceImpl">
+        <property name="customerDao" ref="customerDao"></property>
+    </bean>
+    <bean id="countPriceService" class="com.xiaojie.hotel.service.Impl.CountPriceServiceImpl">
+        <property name="orderInformAtionDao" ref="orderInformAtionDao"></property>
+        <property name="roomDao" ref="roomDao"></property>
+    </bean>
 </beans>

@@ -21,7 +21,7 @@
     <title>楼层管理</title>
     <script type="text/javascript">
         $(function () {
-             pagelist(1,5);
+             pagelist(1,10);
 
              //多选框事件
             $("input[name=qx]").click(function () {
@@ -167,7 +167,7 @@
                 //    data:[{"1"},{"2}]
                     var html=''
                 $.each(data.floorList,function (i,n) {
-                        html+='<tr class="active">'
+                        html+='<tr >'
                         html+='<td><input type="checkbox" name="dx" value="'+n.id+'"/></td>'
                         html+='<td>'+n.floorId+'</td>'
                         html+='<td>'+n.roomType+'</td>'

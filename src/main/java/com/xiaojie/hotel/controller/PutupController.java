@@ -25,6 +25,11 @@ public class PutupController {
     @Autowired
     private PutUpService putUpService;
 
+    @RequestMapping("/toindex.do")
+    public String toindex(){
+        return "/rootpage/main/index";
+    }
+
     //跳转到住宿预定界面
     @RequestMapping("/toputupbook.do")
     public String toPutupBook() {

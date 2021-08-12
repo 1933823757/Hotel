@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiaojie.hotel.dao.CustomerDao">
+
+    <insert id="addCustomer">
+        insert into tbl_customer(id,c_name,c_tel,c_start_time,idCard,engageId,roomId,order_id,state)
+        values (#{id},#{c_name},#{c_tel},#{c_start_time},#{idCard},#{engageId},#{roomId},#{order_id},#{state})
+    </insert>
+
+    <update id="updateCustomer">
+        update tbl_customer set c_name=#{c_name},c_tel=#{c_tel},idCard=#{idCard},roomId=#{roomId}
+        where engageId=#{engageId}
+    </update>
+    <update id="updateCustomerNotRoomId">
+         update tbl_customer set c_name=#{c_name},c_tel=#{c_tel},idCard=#{idCard}
+        where engageId=#{engageId}
+    </update>
+    <delete id="deleteCustomer">
+        delete from tbl_customer where engageId=#{engageId}
+    </delete>
+    <update id="updateCustomerState">
+         update tbl_customer set c_name=#{c_name},c_tel=#{c_tel},idCard=#{idCard},state=#{state}
+        where engageId=#{engageId}
+    </update>
+    <update id="updateCustomerByState">
+         update tbl_customer set state=#{state}
+        where engageId=#{engageId}
+    </update>
+
+    <!--分页查询-->
+    <select id="selectCustomerAll" resultType="customer">
+        select * from tbl_customer
+        <where>
+            <if test="c_name!=null and c_name!=''">
+                c_name like "%" #{c_name} "%"
+            </if>
+            <if test="c_tel!=null and c_tel!=''">
+                and c_tel like "%" #{c_tel} "%"
+            </if>
+            <if test="idCard!=null and idCard!=''">
+                and idCard like "%" #{idCard} "%"
+            </if>
+        </where>
+        order by c_tel asc
+    </select>
+
+    <!--根据id查询信息-->
+    <select id="selectCustomerById" resultType="customer">
+        select  * from tbl_customer where id=#{customerId}
+    </select>
+
+    <!--根据id删除客户信息-->
+    <delete id="deleteCustomerById">
+        delete from tbl_customer where id=#{customerId}
+    </delete>
+</mapper>

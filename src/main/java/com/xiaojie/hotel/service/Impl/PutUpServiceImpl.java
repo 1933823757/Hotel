@@ -2,14 +2,8 @@ package com.xiaojie.hotel.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiaojie.hotel.dao.EngageDao;
-import com.xiaojie.hotel.dao.MoveRoomDao;
-import com.xiaojie.hotel.dao.OrderInformAtionDao;
-import com.xiaojie.hotel.dao.RoomDao;
-import com.xiaojie.hotel.domian.Engage;
-import com.xiaojie.hotel.domian.MoveRoom;
-import com.xiaojie.hotel.domian.OrderInformAtion;
-import com.xiaojie.hotel.domian.Room;
+import com.xiaojie.hotel.dao.*;
+import com.xiaojie.hotel.domian.*;
 import com.xiaojie.hotel.service.PutUpService;
 import com.xiaojie.hotel.util.DateTimeUtil;
 import com.xiaojie.hotel.util.UUIDUtil;
@@ -19,12 +13,18 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class PutUpServiceImpl implements PutUpService {
     private EngageDao engageDao;
     private RoomDao roomDao;
     private MoveRoomDao moveRoomDao;
     private OrderInformAtionDao orderInformAtionDao;
+    private CustomerDao customerDao;
+
+    public void setCustomerDao(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
 
     public void setOrderInformAtionDao(OrderInformAtionDao orderInformAtionDao) {
         this.orderInformAtionDao = orderInformAtionDao;
@@ -67,6 +67,7 @@ public class PutUpServiceImpl implements PutUpService {
         //实体类里面还缺少一个房间类型属性值，则需要去查询
         Room room = roomDao.selectRoomType(engage.getRoomId());
         engage.setRoomType(room.getRoomType());
+
         String moveRoomId = UUIDUtil.getUUID();
         engage.setMoveRoomId(moveRoomId);
         int num = engageDao.addMoveRoom(engage);
@@ -94,11 +95,26 @@ public class PutUpServiceImpl implements PutUpService {
             moveRoom.setRoomType(room.getRoomType());
             int num2 = moveRoomDao.addMoveRoom(moveRoom);
             if (num2 == 1) {
+                String orderId = DateTimeUtil.getOrderId();
                 //添加订单信息
-                OrderInformAtion orderInformAtion = new OrderInformAtion(UUIDUtil.getUUID(), engage.getC_name(), DateTimeUtil.getSysTime(), DateTimeUtil.getOrderId(), engage.getRoomId(), String.valueOf(totalPrice), engage.getId(), "1");
+                OrderInformAtion orderInformAtion = new OrderInformAtion(UUIDUtil.getUUID(), engage.getC_name(), DateTimeUtil.getSysTime(),orderId, engage.getRoomId(), String.valueOf(totalPrice), engage.getId(), "1");
                 int num3 = orderInformAtionDao.addOrderInformAtion(orderInformAtion);
                 if (num3 == 1) {
-                    flag = true;
+                    //创建客户信息
+                    Customer customer = new Customer();
+                    customer.setId(UUIDUtil.getUUID());
+                    customer.setC_name(engage.getC_name());
+                    customer.setC_start_time(DateTimeUtil.getSysTime());
+                    customer.setC_tel(engage.getC_tel());
+                    customer.setEngageId(engage.getId());
+                    customer.setIdCard(engage.getIdCard());
+                    customer.setOrder_id(orderId);
+                    customer.setRoomId(room.getRoomId());
+                    customer.setState("1");
+                    int num4 = customerDao.addCustomer(customer);
+                    if (num4 == 1){
+                        flag = true;
+                    }
                 }
 
             }
@@ -155,6 +171,12 @@ public class PutUpServiceImpl implements PutUpService {
         moveRoom.setIdCard(engage.getIdCard());
         moveRoom.setFix_time(engage.getStart_time());
         moveRoom.setClose_time(engage.getClose_time());
+        //修改客户信息
+        Customer customer = new Customer();
+        customer.setC_name(engage.getC_name());
+        customer.setC_tel(engage.getC_tel());
+        customer.setEngageId(engage.getId());
+        customer.setIdCard(engage.getIdCard());
         if (engage.getRoomId().length() == 32) {
             //如果等于32，则说明前台改了房间号，
             //设置最新的房间类型
@@ -170,7 +192,12 @@ public class PutUpServiceImpl implements PutUpService {
                     OrderInformAtion orderInformAtion = new OrderInformAtion(engage.getId(), engage.getC_name(), null, null, engage.getRoomId(), String.valueOf(totalPrice), null, null);
                     int num4 = orderInformAtionDao.updateOrder(orderInformAtion);
                     if (num4 == 1) {
-                        flag = true;
+                        //修改客户信息
+                        customer.setRoomId(room.getRoomId());
+                        int num5 = customerDao.updateCustomer(customer);
+                        if (num5 == 1){
+                            flag = true;
+                        }
                     }
 
                 }
@@ -188,6 +215,7 @@ public class PutUpServiceImpl implements PutUpService {
                     orderInformAtion.setTotalPrice(String.valueOf(totalPrice));
                     int num6 = orderInformAtionDao.updateOrderNotRoom(orderInformAtion);
                     if (num6 == 1) {
+                        int num7 = customerDao.updateCustomerNotRoomId(customer);
                         flag = true;
                     }
 
@@ -213,8 +241,11 @@ public class PutUpServiceImpl implements PutUpService {
             if (num == 1) {
                 //1代表预定状态的房间
                 String state = "1";
-                int num2 = moveRoomDao.deleteMoveRoomByEngageId(engageId);
+                int num2 = moveRoomDao.deleteMoveRoomByEngageId(engageId,state);
                 int num3 = orderInformAtionDao.updateOrderStage(engageId, orderState);
+                if (num2 == 1){
+                    int num4 = customerDao.deleteCustomer(engageId);
+                }
                 if (num3 == 1) {
                     index += 1;
                 }
@@ -277,6 +308,14 @@ public class PutUpServiceImpl implements PutUpService {
         OrderInformAtion orderInformAtion = new OrderInformAtion();
         orderInformAtion.setC_name(moveRoom.getC_name());
         orderInformAtion.setUserId(moveRoom1.getEngageId());
+        //更改客户信息
+        Customer customer = new Customer();
+        customer.setC_name(moveRoom.getC_name());
+        customer.setIdCard(moveRoom.getIdCard());
+        customer.setState(moveRoom.getState());
+        customer.setC_tel(moveRoom.getC_tel());
+        customer.setEngageId(moveRoom1.getEngageId());
+        int num4 = customerDao.updateCustomerState(customer);
         int num3 = orderInformAtionDao.update(orderInformAtion);
         if (num3 == 1) {
             flag = true;
@@ -326,6 +365,14 @@ public class PutUpServiceImpl implements PutUpService {
         orderInformAtion.setC_name(moveRoom.getC_name());
         orderInformAtion.setId(moveRoom1.getEngageId());
         orderInformAtion.setTotalPrice(moveRoom.getRoomPrice());
+        //更改客户信息
+        Customer customer = new Customer();
+        customer.setC_name(moveRoom.getC_name());
+        customer.setIdCard(moveRoom.getIdCard());
+        customer.setState(moveRoom.getState());
+        customer.setC_tel(moveRoom.getC_tel());
+        customer.setEngageId(moveRoom1.getEngageId());
+        int num4 = customerDao.updateCustomerState(customer);
         int num3 = orderInformAtionDao.updateOrderNotRoom(orderInformAtion);
         if (num3 == 1) {
             flag = true;
@@ -363,6 +410,9 @@ public class PutUpServiceImpl implements PutUpService {
         }else{
             //删除入住信息记录
             int num = moveRoomDao.deleteMoveROomById(id);
+            //删除入住记录后去更改客户的入住状态
+            String customerState = "0";
+            int num3 = customerDao.updateCustomerByState(customerState,moveRoom.getEngageId());
             if (num == 1){
                 map.put("title",moveRoom.getC_name()+"退房成功");
                 map.put("success",true);

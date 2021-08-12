@@ -33,7 +33,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </style>
 <script>
 	$(function () {
-		pageList(1,5)
+		pageList(1,10)
 		//日期插件初始化
 		$(".time").datetimepicker({
 			minView: "month",
@@ -257,7 +257,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			success:function (data) {
 				var  html=""
 				$.each(data.list,function (i,n) {
-							html+='<tr class="active">'
+							html+='<tr >'
 							html+='<td><input type="checkbox" value="'+n.id+'" name="dx"/></td>'
 							html+='<td>'+n.c_name+'</td>'
 							html+='<td>'+n.idCard+'</td>'

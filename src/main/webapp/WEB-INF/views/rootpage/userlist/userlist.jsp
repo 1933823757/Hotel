@@ -238,7 +238,7 @@
             success: function (data) {
                 var html = ""
                 $.each(data.list, function (i, n) {
-                    html += '<tr class="active">'
+                    html += '<tr >'
                     html += '<td><input type="checkbox" name="dx" value="' + n.id + '"/></td>'
                     html += '<td>' + n.username + '</td>'
                     html += '<td>' + n.phone + '</td>'

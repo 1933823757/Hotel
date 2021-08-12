@@ -274,7 +274,7 @@
 					} else{
 						State="已退房"
 					}
-					html+='<tr class="active">'
+					html+='<tr >'
 					html+='<td><input type="checkbox" value="'+n.id+'" name="dx"/></td>'
 					html+='<td>'+n.c_name+'</td>'
 					html+='<td>'+n.c_tel+'</td>'
@@ -324,7 +324,7 @@
 				html+='<option value="'+n.id+'">'+n.roomId+'</option>'
 				})
 				$("#fint-roomId").html(html)
-				pageList(1,5)
+				pageList(1,10)
 			}
 		})
 	}
