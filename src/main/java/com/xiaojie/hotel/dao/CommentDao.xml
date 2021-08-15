@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiaojie.hotel.dao.CommentDao">
+
+    <select id="getCommentList" resultType="comment">
+        select c.id,c.c_name,c.c_phone,c.comment,u.username as userId,r.roomId as roomId,c.start_time from
+        tbl_comment c join tbl_room r on c.roomId=r.id join tbl_user u on u.id=c.userId
+        <where>
+            <if test="c_name!=null and c_name!=''">
+                c.c_name like "%" #{c_name} "%"
+            </if>
+            <if test="c_phone!=null and c_phone!=''">
+                and c.c_phone like "%" #{c_phone} "%"
+            </if>
+        </where>
+        order by roomId asc
+    </select>
+
+    <select id="getCommentById" resultType="comment">
+        select * from tbl_comment where id=#{id}
+    </select>
+
+    <update id="updateComment">
+        update tbl_comment set comment=#{comment} where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from tbl_comment where id in
+        <foreach collection="array" item="i" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </delete>
+
+    <select id="getComment" resultType="comment">
+        select
+        u.username as c_name,
+        u.phone as c_phone,
+        c.comment,
+        r.roomId as roomId,
+        u.imgpath as start_time,
+        c.start_time as id
+        from tbl_comment c
+        join  tbl_user u
+        on  c.userId=u.id
+        join tbl_room r
+        on c.roomId=r.id
+    </select>
+
+    <!--添加评论-->
+    <insert id="addComment">
+        insert into tbl_comment(id,c_name,c_phone,comment,userId,roomId,start_time)
+        values (#{id},#{c_name},#{c_phone},#{comment},#{userId},#{roomId},#{start_time})
+    </insert>
+
+    <!--根据房间id查询评论-->
+    <select id="getCommentByIdList" resultType="comment">
+        select
+        c.c_name,
+        c.c_phone,
+        c.comment,
+        u.imgpath as userId,
+        c.start_time
+         from tbl_comment c
+        join tbl_user u
+        on c.userId=u.id
+        where c.roomId=#{roomId}
+    </select>
+
+    <!--查询需要删除的个数-->
+    <select id="selectByRoomId" resultType="java.lang.Integer">
+        select count(*) from tbl_comment where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.id}
+        </foreach>
+    </select>
+    <!--实际删除的个数-->
+    <delete id="deleteByRoomId">
+        delete from tbl_comment where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.id}
+        </foreach>
+    </delete>
+</mapper>
