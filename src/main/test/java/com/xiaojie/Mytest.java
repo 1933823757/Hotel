@@ -1,19 +1,13 @@
 package com.xiaojie;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.xiaojie.hotel.domian.User;
-import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.CreateValidateCode;
 import com.xiaojie.hotel.util.DeleteFile;
 import com.xiaojie.hotel.util.MD5Util;
-import com.xiaojie.hotel.util.UUIDUtil;
+import com.xiaojie.hotel.service.Impl.MailSenderSrvServiceImpl;
+import com.xiaojie.hotel.service.MailSenderSrvServices;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
-
-import java.util.List;
 
 
 public class Mytest {
@@ -33,11 +27,16 @@ public class Mytest {
         //ApplicationContext就是表示spring容器，通过容器获取对象
         //ClassPathXmlApplactionContext:表示从类路径加载配置文件
         ApplicationContext ac = new ClassPathXmlApplicationContext(config);
-        UserService us = (UserService) ac.getBean("userService");
-        PageHelper.startPage(1,1);
-        List<User> list = us.findAll();
-        PageInfo pageInfo = new PageInfo(list);
-        System.out.println(pageInfo.getList());
+        MailSenderSrvServices s = new MailSenderSrvServiceImpl();
+        String to = "1933823757@qq.com";
+        String subject = "测试，这是一部新邮件";
+        String cotent = "今天天气正不错，测试";
+        s.sendEmail(to,subject,cotent);
+//        UserService us = (UserService) ac.getBean("userService");
+//        PageHelper.startPage(1,1);
+//        List<User> list = us.findAll();
+//        PageInfo pageInfo = new PageInfo(list);
+//        System.out.println(pageInfo.getList());
     }
     @Test
     public void test3(){

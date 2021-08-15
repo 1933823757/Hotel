@@ -337,7 +337,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel1">添加用户</h4>
+                <h4 class="modal-title" id="myModalLabel1">修改用户</h4>
             </div>
             <div class="modal-body">
 

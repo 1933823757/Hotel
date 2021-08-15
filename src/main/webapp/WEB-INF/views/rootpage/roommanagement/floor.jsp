@@ -34,33 +34,35 @@
             //创建楼层按钮事件
             $("#createbtn").click(function () {
                $("#createFloorModal").modal("show")
-                //保存按钮事件
-                $("#addFloorbtn").click(function () {
-                    //判断输入是否为空
-                    if ($("#floorId").val().trim() ==''  || $("#roomType").val().trim() == ''){
-                        alert("请填写内容")
-                    } else{
-                        //保存ajax
-                        $.ajax({
-                            url:"addFloor.do",
-                            type:"post",
-                            data:{
-                                "floorId":$("#floorId").val().trim(),
-                                "roomType":$("#roomType").val().trim()
-                            },
-                            dataType:"json",
-                            success:function (data) {
-                               if (data.success){
-                                   alert("添加成功")
-                                   pagelist(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
-                                   $("#createFloorModal").modal("hide")
-                               }else{
-                                   alert("添加失败，楼层不能重复添加")
-                               }
+            })
+            //保存按钮事件
+            $("#addFloorbtn").click(function () {
+                //判断输入是否为空
+                if ($("#floorId").val().trim() ==''  || $("#roomType").val().trim() == ''){
+                    alert("请填写内容")
+                } else{
+                    //保存ajax
+                    $.ajax({
+                        url:"addFloor.do",
+                        type:"post",
+                        data:{
+                            "floorId":$("#floorId").val().trim(),
+                            "roomType":$("#roomType").val().trim()
+                        },
+                        dataType:"json",
+                        success:function (data) {
+                            if (data.success){
+                                alert("添加成功")
+                                pagelist(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+                                $("#floorId").val('')
+                                $("#roomType").val('')
+                                $("#createFloorModal").modal("hide")
+                            }else{
+                                alert("添加失败，楼层不能重复添加")
                             }
-                        })
-                    }
-                })
+                        }
+                    })
+                }
             })
             //查询按钮事件
             $("#findBtn").click(function () {

@@ -1,18 +1,22 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
+    <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/jquery-1.11.1-min.js"></script>
-    <script src="../js/textyleF.js"></script>
-    <script src="../css/fenye/jqPaginator.js"></script>
-    <link rel="stylesheet" type="text/css" href="../bootstrap_3.3.0/css/bootstrap.min.css">
+    <script src="js/jquery-1.11.1-min.js"></script>
+    <script src="js/textyleF.js"></script>
+    <script src="css/fenye/jqPaginator.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap_3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_2rfwrqa5xsn.css">
-    <link rel="stylesheet" href="../css/CommonStyle/base.css">
-    <link rel="stylesheet" href="../css/CommonStyle/reset.css">
-    <link rel="stylesheet" href="../css/readmore/readmore.css">
+    <link rel="stylesheet" href="css/CommonStyle/base.css">
+    <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <link rel="stylesheet" href="css/readmore/readmore.css">
     <title>酒店详情</title>
     <script>
         $(function () {
@@ -27,7 +31,6 @@
                         color: 'rgb(238, 120, 108)',
                         transition: '1s',
                     });
-
                 }
             });
             // 导航栏动画
@@ -49,23 +52,23 @@
                 <i class="iconfont icon-shouye"></i>
             </li>
             <li id="pushed-left-1">
-                <a href="../index.html"> <span>
+                <a href="index.do"> <span>
                         首页
                     </span></a>
 
             </li>
             <li id="pushed-center">
-                <a href="#"><span>
+                <a href="frontend/toservices.do"><span>
                         服务
                     </span></a>
             </li>
             <li id="pushed-right-1">
-                <a href="../usersetting/userorder.html"><span>
+                <a href="frontend/touserorder.do"><span>
                         订单
                     </span></a>
             </li>
             <li id="pushed-right-2">
-                <a href="../usersetting/userlist.html"><span>
+                <a href="frontend/touserlist.do"><span>
                         信息
                     </span></a>
             </li>
@@ -87,7 +90,7 @@
             <div class="content-title cleafix">
                 <h2>现代风格</h2>
                 <h3>Modern style</h3>
-                <img src="../images/d733302d101b0f5d5e6455486e01dcfe.jpg" alt="">
+                <img src="images/d733302d101b0f5d5e6455486e01dcfe.jpg" alt="">
             </div>
         </div>
     </div>
@@ -120,9 +123,9 @@
                 <span>简单配色，带来视觉盛宴</span>
             </div>
            <ul class="img-list">
-               <li><img src="../images/pexels-photo-3965505.jpeg"></li>
-               <li><img src="../images/pexels-photo-3965511.jpeg"></li>
-               <li><img src="../images/pexels-photo-3965509.jpeg"></li>
+               <li><img src="images/pexels-photo-3965505.jpeg"></li>
+               <li><img src="images/pexels-photo-3965511.jpeg"></li>
+               <li><img src="images/pexels-photo-3965509.jpeg"></li>
            </ul>
         </div>
     </div>

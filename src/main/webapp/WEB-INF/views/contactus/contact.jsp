@@ -1,17 +1,21 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
+    <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/jquery-1.11.1-min.js"></script>
+    <script src="js/jquery-1.11.1-min.js"></script>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_dk6znqsmu64.css">
-    <link rel="stylesheet" type="text/css" href="../bootstrap_3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/CommonStyle/base.css">
-    <link rel="stylesheet" href="../css/CommonStyle/reset.css">
-    <link rel="stylesheet" href="../css/room/room.css">
-    <link rel="stylesheet" href="../css/contactus/contact.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/CommonStyle/base.css">
+    <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <link rel="stylesheet" href="css/room/room.css">
+    <link rel="stylesheet" href="css/contactus/contact.css">
     <title>联系我们</title>
     <style>
      
@@ -46,7 +50,25 @@
                      return false
                }
               //提交函数写这 
-
+                $.ajax({
+                    url:"frontend/toemail.do",
+                    type:"post",
+                    data:{
+                        "name":$("#name").val(),
+                        "email":$("#email").val(),
+                        "phone":$("#phone").val(),
+                        "type":$("#type").val(),
+                        "textarea":$("#textarea").val()
+                    },
+                    dataType:"json",
+                    success:function (data) {
+                        if (data.success){
+                            alert("发送成功")
+                        } else{
+                            alert("发送失败")
+                        }
+                    }
+                })
 
               })
             $("li>input").click(function () {
@@ -65,23 +87,23 @@
                 <i class="iconfont icon-shouye"></i>
             </li>
             <li id="pushed-left-1">
-                <a href="../index.html"> <span>
+                <a href="index.do"> <span>
                         首页
                     </span></a>
 
             </li>
             <li id="pushed-center">
-                <a href=""><span>
+                <a href="frontend/toservices.do"><span>
                         服务
                     </span></a>
             </li>
             <li id="pushed-right-1">
-                <a href=""><span>
+                <a href="frontend/touserorder.do"><span>
                         订单
                     </span></a>
             </li>
             <li id="pushed-right-2">
-                <a href=""><span>
+                <a href="frontend/touserlist.do"><span>
                         信息
                     </span></a>
             </li>
@@ -103,7 +125,7 @@
         <div class="center-content cleafix">
             <div class="content-left cleafix">
                 <h3>给我们留言</h3>
-                <img src="../images/contact-img1.jpg" alt="">
+                <img src="images/contact-img1.jpg" alt="">
             </div>
             <div class="content-right cleafix">
                 <ul>

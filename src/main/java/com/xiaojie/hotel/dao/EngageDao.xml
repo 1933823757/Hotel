@@ -12,6 +12,23 @@
         values (#{id},#{c_name},#{c_tel},#{roomId},#{start_time},#{close_time},#{managerName},#{idCard},#{roomType},#{moveRoomId})
     </insert>
 
+    <!--根据roomId查询需要修改的数量-->
+    <select id="getEngageByRoom" resultType="engage">
+        select * from tbl_engage where roomType=#{roomType}
+    </select>
+    <!--实际更新的数据-->
+    <update id="updateEngageAllByRoom">
+        <foreach collection="list" item="i" separator=";">
+          update tbl_engage
+          <set>
+          roomType=#{roomType}
+          </set>
+          <where>
+              id=#{i.id}
+          </where>
+        </foreach>
+    </update>
+
     <!--分页查询-->
     <select id="getEngage" resultType="engage">
         select
@@ -70,6 +87,20 @@
     <!--根据id删除信息-->
     <delete id="deleteEngageById">
         delete from tbl_engage where id=#{engageId}
+    </delete>
+    <!--查询需要删除的条数-->
+    <select id="getDeleteCount" resultType="java.lang.Integer">
+        select count(*) from tbl_engage where roomType in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomType}
+        </foreach>
+    </select>
+    <!--实际删除的数量-->
+    <delete id="deleteEngage">
+        delete from tbl_engage where roomType in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomType}
+        </foreach>
     </delete>
 
     <!--入住时更改的信息-->

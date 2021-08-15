@@ -2,11 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--组件扫描器-->
     <context:component-scan base-package="com.xiaojie.hotel.service"/>
     <context:component-scan base-package=" com.xiaojie.hotel.Exception"/>
+
     <!--注解驱动-->
     <mvc:annotation-driven/>
     <!--引入属性配置文件-->
@@ -50,6 +52,7 @@
 
     <bean id="userService" class="com.xiaojie.hotel.service.Impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
+        <property name="commentDao" ref="commentDao"></property>
     </bean>
     <bean id="managerService" class="com.xiaojie.hotel.service.Impl.ManagerServiceImpl">
         <property name="managerDao" ref="managerDao"/>
@@ -57,6 +60,11 @@
     <bean id="roomManagermentService" class="com.xiaojie.hotel.service.Impl.RoomManagermentServiceImpl">
         <property name="roomDao" ref="roomDao"/>
         <property name="floorDao" ref="floorDao"/>
+        <property name="engageDao" ref="engageDao"/>
+        <property name="moveRoomDao" ref="moveRoomDao"/>
+        <property name="orderInformAtionDao" ref="orderInformAtionDao"/>
+        <property name="customerDao" ref="customerDao"/>
+        <property name="commentDao" ref="commentDao" />
     </bean>
     <bean id="putUpService" class="com.xiaojie.hotel.service.Impl.PutUpServiceImpl">
         <property name="engageDao" ref="engageDao"></property>
@@ -72,4 +80,25 @@
         <property name="orderInformAtionDao" ref="orderInformAtionDao"></property>
         <property name="roomDao" ref="roomDao"></property>
     </bean>
+    <bean id="frontservice" class="com.xiaojie.hotel.service.Impl.FrontEndServiceImpl">
+        <property name="roomDao" ref="roomDao"></property>
+        <property name="commentDao" ref="commentDao"></property>
+        <property name="userDao" ref="userDao"></property>
+        <property name="orderInformAtionDao" ref="orderInformAtionDao"></property>
+    </bean>
+    <!--邮件发送配置-->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.qq.com"/>
+        <property name="port" value="587"/>
+        <property name="username" value="2292095461@qq.com"/>
+        <property name="password" value="zbeswamtyaphdija"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.ssl.enable">20000</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="mailSenderSrvServices" class="com.xiaojie.hotel.service.Impl.MailSenderSrvServiceImpl"></bean>
 </beans>

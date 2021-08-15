@@ -1,6 +1,7 @@
 package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.Customer;
+import com.xiaojie.hotel.domian.Room;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -26,4 +27,8 @@ public interface CustomerDao {
     Customer selectCustomerById(String customerId);
 
     int deleteCustomerById(String customerId);
+
+    Integer selectByRoomId(List<Room> roomList);
+
+    int deleteByRoomId(List<Room> roomList);
 }

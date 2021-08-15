@@ -1,26 +1,31 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+   String[] imgpaths = (String[]) request.getAttribute("imgpaths");
+%>
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
+    <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/jquery-1.11.1-min.js"></script>
-    <script src="../js/textyleF.js"></script>
-    <script src="../bootstrap_3.3.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../bootstrap_3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/room/room-order.css">
+    <script src="js/jquery-1.11.1-min.js"></script>
+    <script src="js/textyleF.js"></script>
+    <script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/room/room-order.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_tgb8uoz038r.css">
-    <link rel="stylesheet" href="../css/CommonStyle/base.css">
-    <link rel="stylesheet" href="../css/CommonStyle/reset.css">
+    <link rel="stylesheet" href="css/CommonStyle/base.css">
+    <link rel="stylesheet" href="css/CommonStyle/reset.css">
 
 
     <!-- <%--日期插件--%> -->
-    <link href="../js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css"
+    <link href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css"
         rel="stylesheet" />
-    <script type="text/javascript" src="../js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript"
-        src="../js/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+        src="js/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
     <title>房间详情</title>
 
 
@@ -34,23 +39,23 @@
                 <i class="iconfont icon-shouye"></i>
             </li>
             <li id="pushed-left-1">
-                <a href="../index.html"> <span>
+                <a href="index.do"> <span>
                         首页
                     </span></a>
 
             </li>
             <li id="pushed-center">
-                <a href="../service/services.html"><span>
+                <a href="frontend/toservices.do"><span>
                         服务
                     </span></a>
             </li>
             <li id="pushed-right-1">
-                <a href="../usersetting/userorder.html"><span>
+                <a href="frontend/touserorder.do"><span>
                         订单
                     </span></a>
             </li>
             <li id="pushed-right-2">
-                <a href="../usersetting/userlist.html"><span>
+                <a href="frontend/touserlist.do"><span>
                         信息
                     </span></a>
             </li>
@@ -76,6 +81,7 @@
                     <div class="left-content-top cleafix">
                         <h3>预定表</h3>
                         <form>
+                            <input type="hidden" id="roomId" value="${requestScope.room.id}">
                             <h4>登记</h4>
                             <input type="text" class="time " id="register" autocomplete="off"/><i class="iconfont icon-rili1"></i>
                             <h4>退房</h4>
@@ -84,14 +90,6 @@
                             <input type="text" id="idcard" autocomplete="off"/><i class="iconfont icon-shenfenzheng"></i>
                             <h4>人数</h4>
                             <select class="select" id="select1">
-                                <option value="1">01</option>
-                                <option value="2">02</option>
-                                <option value="3">03</option>
-                                <option value="4">04</option>
-                                <option value="5">05</option>
-                            </select>
-                            <h4>客房数量</h4>
-                            <select class="select" id="select2">
                                 <option value="1">01</option>
                                 <option value="2">02</option>
                                 <option value="3">03</option>
@@ -144,13 +142,13 @@
                         <!-- 图片区-->
                         <div class="carousel-inner" style="border-radius: 20px;" role="listbox">
                             <div class="item active">
-                                <img src="../images/bg3.png" style="width: 700px; height: 400px;" alt="...">
+                                <img src="<%=imgpaths[0]%>" style="width: 700px; height: 400px;" alt="...">
                             </div>
                             <div class="item">
-                                <img src="../images/bg2.png" style="width: 700px; height: 400px; " alt="...">
+                                <img src="<%=imgpaths[1]%>" style="width: 700px; height: 400px; " alt="...">
                             </div>
                             <div class="item">
-                                <img src="../images/bg3.png" style="width: 700px; height: 400px;" alt="...">
+                                <img src="<%=imgpaths[2]%>" style="width: 700px; height: 400px;" alt="...">
                             </div>
                         </div>
 
@@ -167,18 +165,16 @@
                 </div>
                 <!-- 正文标题 -->
                 <div class="right-title">
-                    <h3>双人床超级复式</h3>
+                    <h3>${requestScope.room.roomType}</h3>
                     <!-- 总价格 -->
                     <input id="zongMoney" type="hidden" />
-                    <h4>￥<span id="money">120</span>/晚</h4>
+                    <h4>￥<span id="money">${requestScope.room.roomPrice}</span>/晚</h4>
                     <hr />
                 </div>
                 <!-- 正文内容 -->
                 <div class="right-content">
-                    <p>洛伦 · 伊普苏姆 · 多洛坐在阿梅特， 康塞图尔 · 阿迪皮斯 · 埃利特， 塞德做 eiusmod 临时工不分娩和多洛雷 · 马格纳 · 阿利夸。乌特埃尼姆广告迷你维尼亚姆，
-                        奎斯鼻孔兴奋乌拉姆科劳动是尼西乌特阿利奎普前 ea 共产主义康塞夸特。杜伊斯 · 奥特 · 伊鲁雷 · 多洛尔在革命的威斯 · 埃塞 · 西卢姆 · 多洛尔的重新渲染</p>
-                    <p>洛伦 · 伊普苏姆 · 多洛坐在阿梅特， 康塞图尔 · 阿迪皮斯 · 埃利特， 塞德做 eiusmod 临时工不分娩和多洛雷 · 马格纳 · 阿利夸。乌特埃尼姆广告迷你维尼亚姆，
-                        奎斯鼻孔兴奋乌拉姆科劳动是尼西乌特阿利奎普前 ea 共产主义康塞夸特。杜伊斯 · 奥特 · 伊鲁雷 · 多洛尔在革命的威斯 · 埃塞 · 西卢姆 · 多洛尔的重新渲染</p>
+                    <p>${requestScope.room.roomSuggest}</p>
+                    <p></p>
                     <hr />
                 </div>
                 <!-- 评论 -->
@@ -206,10 +202,10 @@
                     </div>
                     <div class="rows">
                         <div class="rows-content">
-                            <textarea class="textcontent" name="message" id="" cols="30" rows="10"
+                            <textarea class="textcontent" name="message" id="comment" cols="30" rows="10"
                                 placeholder="您的评论"></textarea>
                         </div>
-                        <button class="rows-button">提交审核</button>
+                        <button class="rows-button" id="commentBtn">提交审核</button>
                     </div>
                 </div>
             </div>
@@ -226,73 +222,8 @@
             <div class="content-list cleafix">
                 <div class="owl-stage-outer cleafix">
 
-                    <div class="owl-stage cleafix">
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="../images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>111111111小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="../images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="../images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="../images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="owl-stage cleafix" id="commentList">
 
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="../images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="slide">
@@ -302,74 +233,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 优惠房间 -->
-    <div class="foot cleafix">
-        <div class="foot-content cleafix">
-            <h3>我们的相关优惠</h3>
-            <!-- 左边div -->
-            <div class="foot-left cleafix">
-                <img src="../images/room-style-img1.jpg" alt="">
-                <h3>豪华客房</h3>
-                <div class="price cleafix">
-                    <span>xxx/每晚</span>
-                    <ul>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                    </ul>
-                </div>
-                <span>洛伦 · 伊普苏姆 · 多洛坐在阿米特， 阿asdfasdfasdf 迪皮斯 · 埃利特。暂停和浮华费利斯， 塞德脉冲纯。</span>
-                <ul>
-                    <li><i class="iconfont icon-user"></i></li>
-                    <li><span>3人</span></li>
-                    <li><i class="iconfont icon-home" style="margin-left: 20px;"></i></li>
-                    <li><span>30平方米</span></li>
-                </ul>
-                <ul>
-                    <li><i class="iconfont icon-jiuba"></i></li>
-                    <li><span>迷你吧</span></li>
-                    <li><i class="iconfont icon-jiudian1" style="margin-left: 20px;"></i></li>
-                    <li><span>户外阳台</span></li>
-                </ul>
-                <button class="reserve-button">立即预定</button>
-            </div>
-            <!-- 右边div -->
-            <div class="foot-right cleafix">
-                <img src="../images/room-style-img1.jpg" alt="">
-                <h3>豪华客房</h3>
-                <div class="price cleafix">
-                    <span>xxx/每晚</span>
-                    <ul>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                        <li> <i class="iconfont icon-xingxing"></i></li>
-                    </ul>
-                </div>
-                <span>洛伦 · 伊普苏姆 · 多洛坐在阿米特， 阿asdfasdfasdf 迪皮斯 · 埃利特。暂停和浮华费利斯， 塞德脉冲纯。</span>
-                <ul>
-                    <li><i class="iconfont icon-user"></i></li>
-                    <li><span>3人</span></li>
-                    <li><i class="iconfont icon-home" style="margin-left: 20px;"></i></li>
-                    <li><span>30平方米</span></li>
-                </ul>
-                <ul>
-                    <li><i class="iconfont icon-jiuba"></i></li>
-                    <li><span>迷你吧</span></li>
-                    <li><i class="iconfont icon-jiudian1" style="margin-left: 20px;"></i></li>
-                    <li><span>户外阳台</span></li>
-                </ul>
-                <button class="reserve-button">立即预定</button>
-            </div>
-        </div>
-    </div>
-
-
-
 
     <!-- 底部 -->
     <div class="bottom cleafix">
@@ -384,6 +247,42 @@
 <script>
 
     $(function () {
+        getComment()
+        //提交审核按钮事件
+        $("#commentBtn").click(function () {
+            var comment = $("#comment").val()
+            if (comment == ''){
+                alert("请输入你的评价")
+            } else{
+                $.ajax({
+                    url:"frontend/addComment.do",
+                    type:"get",
+                    data:{
+                    "c_name":"${sessionScope.user.username}",
+                    "c_phone":"${sessionScope.user.phone}",
+                    "comment":comment,
+                    "userId":"${sessionScope.user.id}",
+                    "roomId":$("#roomId").val()
+                    },
+                    dataType:"json",
+                    success:function (data) {
+                        if (data.success){
+                            getComment()
+                            $("#comment").val('')
+                            alert("添加成功")
+
+                        }else{
+                            alert("添加失败")
+                        }
+                    }
+                })
+            }
+
+        })
+
+
+
+
               //总距离
               var totalDistance1 = 310;
             // 滑动动画标记
@@ -422,6 +321,9 @@
                 var distance = $(".owl-stage").position().left;
                 // 获取div的个数
                 var q = $(".owl-item").length
+                if (q<=3){
+                    return
+                }
                 if (isdirection) {
                     // 判断divleft是否为零，是的话换回到最右边
                     if (distance == -0) {
@@ -468,17 +370,42 @@
             var $checkout = $("#checkout")
             var $idcard = $("#idcard")
             if ($register.val() != '' && $checkout.val() != '' && $idcard.val() != '') {
+                var nowTime = show().replace(/\-/g, "")
                 var register = $register.val().replace(/\-/g, "")
                 var checkout = $checkout.val().replace(/\-/g, "")
-                if (checkout > register) {
-                    var zongMoney = $("#money").html() * (checkout - register)*$("#select2 option:selected").val()
-                    $("#zongMoney").val(zongMoney)
-                    console.log(zongMoney)
-
-                    // 提交函数写这
-
+                if (register >= nowTime){
+                    if (checkout >register) {
+                        $.ajax({
+                            url:"frontend/addEngage.do",
+                            type:"post",
+                            data:{
+                                "start_time":$("#register").val(),
+                                "close_time":$("#checkout").val(),
+                                "c_name":"${sessionScope.user.username}",
+                                "c_tel":"${sessionScope.user.phone}",
+                                "roomId":$("#roomId").val(),
+                                "managerName":"${sessionScope.user.username}",
+                                "idCard":$("#idcard").val(),
+                            },
+                            dataType:"json",
+                            success:function (data) {
+                                if (data.success){
+                                    $("#register").val('')
+                                    $("#checkout").val('')
+                                    $("#idcard").val('')
+                                    alert("预定成功")
+                                } else{
+                                    alert("预定失败")
+                                }
+                            }
+                        })
+                        return false
+                } else{
+                        $register.attr("style", "  border: 2px solid red;")
+                        return false
+                    }
                 } else {
-                    $register.attr("style", "  border: 2px solid red;")
+                  alert("预定开始时间不能小于现在时间")
                     return false
                 }
             } else if ($register.val() == '') {
@@ -493,15 +420,6 @@
             }
         })
 
-
-        // 客房数量的总价格
-        $("#select2 option").click(function () {
-            var money = $("#moneyValue").val()
-            console.log(money)
-            var zong = money * $(this).val()
-            $("#money").html(zong)
-            $("#zongMoney").val(zong)
-        })
         // 星星评分函数
         var XxValue;
         $(".rating-star").mouseenter(function () {
@@ -570,6 +488,50 @@
             });
         });
     })
+    function getComment() {
+        $.ajax({
+            url:"frontend/getCommentById.do",
+            type:"get",
+            data:{
+                "roomId":$("#roomId").val()
+            },
+            dataType:"json",
+            success:function (data) {
+                var html2=''
+                if (data.list == ''){
+                    html2+='<h2 style="font-size: 20px; text-align: center;color: red; margin-top: 30px">还没有人发表评论哦~</h2>'
+                }else{
+                    $.each(data.commentlist,function (i,n) {
+                        html2+='<div class="owl-item cleafix">'
+                        html2+='<div class="testimonials-item cleafix">'
+                        html2+='<i class="iconfont icon-pinglun"></i>'
+                        html2+='<p>'+n.comment+'</p>'
+                        html2+='<ul>'
+                        html2+='<li><img src="'+n.userId+'" alt=""></li>'
+                        html2+='<li>'
+                        html2+='<h3>'+n.c_name+'</h3>'
+                        html2+='</li>'
+                        html2+='<li><span>'+n.start_time+'</span></li>'
+                        html2+='</ul>'
+                        html2+='</div>'
+                        html2+='</div>'
+                    })
+                }
+
+
+                $("#commentList").html(html2)
+
+            }
+        })
+    }
+    //获取时间js函数
+    function show(){
+        var mydate = new Date();
+        var str = "" + mydate.getFullYear() + "-";
+        str += (mydate.getMonth()+1)<10?"0"+(mydate.getMonth()+1):(mydate.getMonth()+1) + "-";
+        str += mydate.getDate() + "-";
+        return str;
+    }
 </script>
 
 </html>

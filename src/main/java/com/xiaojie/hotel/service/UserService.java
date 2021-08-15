@@ -1,5 +1,7 @@
 package com.xiaojie.hotel.service;
 
+import com.xiaojie.hotel.domian.Comment;
+import com.xiaojie.hotel.domian.Manager;
 import com.xiaojie.hotel.domian.User;
 
 import java.util.List;
@@ -21,4 +23,14 @@ public interface UserService {
     Map<String, Object> updateUser(User user);
 
     Map<String, Object> deleteUser(String[] id);
+
+    Map<String, Object> getCommentList(Comment comment, Integer pageNo1, Integer pageSize1);
+
+    Comment getCommentById(String id);
+
+    Map<String, Object> updateComment(Comment comment);
+
+    Map<String, Object> delete(String[] id);
+
+
 }

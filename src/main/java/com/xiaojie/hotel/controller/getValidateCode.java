@@ -108,6 +108,25 @@ public class getValidateCode {
         map.put("url","rootpage.do");
         return map;
     }
+    //管理员修改密码请求
+    @RequestMapping("/updateManager.do")
+    @ResponseBody
+    public Map updateManager(HttpServletRequest request,String oldPwd,String newPwd){
+        Map<String,Object> map = new HashMap<>();
+        boolean flag = false;
+        Manager manager = (Manager)request.getSession().getAttribute("manager");
+        String oldPwd1 = manager.getManagerPassword();
+        if (MD5Util.getMD5(oldPwd).equals(oldPwd1)){
+            manager.setManagerPassword(MD5Util.getMD5(newPwd));
+            map = managerService.updateManager(manager);
+            return map;
+        }else{
+            map.put("success",flag);
+            map.put("title","原密码错误");
+            return map;
+        }
+    }
+
     //返回管理主界面请求
     @RequestMapping("/rootpage.do")
     public ModelAndView torootpage(){

@@ -11,7 +11,8 @@
                     phone,
                     imgpath,
                     sex,
-                    idcard
+                    idcard,
+                    name
                     from tbl_user
                     where username=#{username} and password=#{password}
         </select>
@@ -63,10 +64,21 @@
         where id=#{id}
     </update>
 
+    <update id="updateUserNotPwd">
+       update tbl_user set
+        phone=#{phone},sex=#{sex},idcard=#{idcard},name=#{name},imgpath=#{imgpath}
+        where id=#{id}
+    </update>
+
     <delete id="deleteUser">
         delete from tbl_user where id in
         <foreach collection="array" item="i" open="(" close=")" separator=",">
             #{i}
         </foreach>
     </delete>
+    <update id="updateUserNOtImgAndPwd">
+         update tbl_user set
+        phone=#{phone},sex=#{sex},idcard=#{idcard},name=#{name}
+        where id=#{id}
+    </update>
 </mapper>

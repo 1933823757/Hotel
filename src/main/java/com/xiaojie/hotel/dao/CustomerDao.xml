@@ -56,4 +56,18 @@
     <delete id="deleteCustomerById">
         delete from tbl_customer where id=#{customerId}
     </delete>
+    <!--查询需要删除的个数-->
+    <select id="selectByRoomId" resultType="java.lang.Integer">
+        select count(*) from tbl_customer where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+    </select>
+    <!--实际删除的个数-->
+    <delete id="deleteByRoomId">
+        delete from tbl_customer where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+    </delete>
 </mapper>

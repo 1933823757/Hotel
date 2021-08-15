@@ -38,4 +38,17 @@ public interface RoomDao {
     Room getRoomByRoom(String roomId);
 
     List<Room> getRoomByList(List<MoveRoom> list);
+
+    List<Room> getRooms(Integer num);
+
+    List<Room> getRoomFenYe(List<Room> list);
+
+    List<Room> getDeluse(@Param("list") List<Room> roomList,@Param("roomType") String name);
+
+    int updateRoomByFlooId(Floor id);
+
+    Integer seletRoomByFloor(Floor floor);
+
+
+    List<Room> getRoomId(String[] id);
 }

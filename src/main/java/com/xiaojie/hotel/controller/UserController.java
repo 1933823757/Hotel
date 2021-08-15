@@ -1,5 +1,6 @@
 package com.xiaojie.hotel.controller;
 
+import com.xiaojie.hotel.domian.Comment;
 import com.xiaojie.hotel.domian.User;
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.DeleteFile;
@@ -133,5 +134,43 @@ public class UserController {
         String[] id =request.getParameterValues("id");
         Map<String,Object> map = userService.deleteUser(id);
         return map;
+    }
+
+    //跳转到评论界面
+    @RequestMapping("/tocomment.do")
+    public String tocomment(){
+        return "rootpage/comment/comment";
+    }
+
+    //获取评论请求
+    @RequestMapping("/getComment.do")
+    @ResponseBody
+    public Map getComment(Comment comment,String pageNo,String pageSize){
+        Integer pageNo1 = Integer.valueOf(pageNo);
+        Integer pageSize1 = Integer.valueOf(pageSize);
+        Map<String,Object> map = userService.getCommentList(comment,pageNo1,pageSize1);
+        return map;
+    }
+
+    @RequestMapping("/getCommentById.do")
+    @ResponseBody
+    public Comment getCommentById(String id){
+        Comment comment = userService.getCommentById(id);
+        return comment;
+    }
+
+    @RequestMapping("/updateComment.do")
+    @ResponseBody
+    public Map updateComment(Comment comment){
+        Map<String,Object> map = userService.updateComment(comment);
+        return map;
+    }
+
+    @RequestMapping("/deleteComment.do")
+    @ResponseBody
+    public Map deleteComment(HttpServletRequest request){
+        String [] id = request.getParameterValues("id");
+        Map<String,Object> map = userService.delete(id);
+        return  map;
     }
 }

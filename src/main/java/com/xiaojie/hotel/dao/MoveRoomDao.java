@@ -2,6 +2,7 @@ package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.Engage;
 import com.xiaojie.hotel.domian.MoveRoom;
+import com.xiaojie.hotel.domian.Room;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,4 +31,12 @@ public interface MoveRoomDao {
     int deleteMoveROomById(String id);
 
     List<MoveRoom> getRoomList();
+
+    List<MoveRoom> selectMoveRoomByEngage(String roomType);
+
+    int updateMoveRoomByEngage(@Param("list") List<MoveRoom> moveList,@Param("roomType") String roomType);
+
+    Integer findMoveRoom(List<Room> roomList);
+
+    int deleteMoveROomByRoomType(List<Room> roomList);
 }

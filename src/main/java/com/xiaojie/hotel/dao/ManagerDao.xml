@@ -9,4 +9,8 @@
         <select id="getManager" resultType="manager">
             select id,managerId,managerName,managerPassword from  tbl_manager where managerName=#{managerName} and managerPassword=#{managerPassword}
         </select>
+
+    <update id="updateManager">
+        update tbl_manager set managerPassword=#{managerPassword} where id=#{id}
+    </update>
 </mapper>

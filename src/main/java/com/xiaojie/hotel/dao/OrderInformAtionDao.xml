@@ -64,4 +64,42 @@
         where orderState=#{state}
         GROUP BY r.roomType
     </select>
+
+    <!--根据用户id查询订单信息-->
+    <select id="selectByUserId" resultType="orderinformation">
+        select
+        o.id,
+        o.c_name,
+        o.start_time,
+        o.order_id,
+        r.roomType as roomId,
+        o.totalPrice,
+        u.phone as userId
+        from tbl_room r
+        join tbl_orderinformation o
+        on r.id=o.roomId
+        join tbl_user u
+        on u.id=o.userId
+        where o.userId=#{id} and o.orderState=#{state}
+    </select>
+
+    <!--根据id拿到所有的值-->
+    <select id="select" resultType="orderinformation">
+        select * from tbl_orderinformation where id=#{id}
+    </select>
+
+    <!--查询需要删除的个数-->
+    <select id="selectByRoomId" resultType="java.lang.Integer">
+        select count(*) from tbl_orderinformation where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.id}
+        </foreach>
+    </select>
+    <!--实际删除的个数-->
+    <delete id="deleteOrder">
+        delete from tbl_orderinformation where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.id}
+        </foreach>
+    </delete>
 </mapper>

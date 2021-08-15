@@ -1,16 +1,20 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
+    <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../usercss/style.min.css">
-    <link rel="stylesheet" href="../css/CommonStyle/base.css">
-    <script src="../js/jquery-1.11.1-min.js"></script>
-    <link rel="stylesheet" href="../bootstrap_3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/CommonStyle/reset.css">
-    <script src="../usercss/materialMenu.min.js"></script>
+    <link rel="stylesheet" href="usercss/style.min.css">
+    <link rel="stylesheet" href="css/CommonStyle/base.css">
+    <script src="js/jquery-1.11.1-min.js"></script>
+    <link rel="stylesheet" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <script src="usercss/materialMenu.min.js"></script>
     <title>个人中心</title>
     <style>
         body {
@@ -43,18 +47,18 @@
         </div>
         <ul class="mm-menu__items ">
             <li class="mm-menu__item ">
-                <a class="mm-menu__link " href="../usersetting/user.html" target="workareaFrame">
+                <a class="mm-menu__link " href="frontend/touser.do" target="workareaFrame">
                     <span class="mm-menu__link-text"><i class="md md-inbox"></i> 个人主页</span>
                 </a>
             </li>
             <li class="mm-menu__item">
-                <a class="mm-menu__link" href="userorder.html" target="workareaFrame">
+                <a class="mm-menu__link" href="frontend/touserorder.do" target="workareaFrame">
                     <span class="mm-menu__link-text"><i class="md md-person"></i> 个人订单</span>
                 </a>
             </li>
            
             <li class="mm-menu__item">
-                <a class="mm-menu__link" href="../index.html" >
+                <a class="mm-menu__link" href="index.do" >
                     <span class="mm-menu__link-text"><i class="md md-home"></i> 主页</span>
                 </a>
             </li>
@@ -73,7 +77,9 @@
 			$(".mm-menu__item").removeClass("active");
 			//当前项目被选中
 			$(this).addClass("active");
-		
+
+			//拿订单信息
+
 		});
 		
         })

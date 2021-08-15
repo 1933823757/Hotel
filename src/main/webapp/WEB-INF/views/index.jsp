@@ -21,6 +21,8 @@
     </style>
     <script>
         $(function () {
+
+            getRoom()
             //总距离
             var totalDistance1 = 310;
             // 滑动动画标记
@@ -59,6 +61,9 @@
                 var distance = $(".owl-stage").position().left;
                 // 获取div的个数
                 var q = $(".owl-item").length
+                if (q<=3){
+                    return
+                }
                 if (isdirection) {
                     // 判断divleft是否为零，是的话换回到最右边
                     if (distance == -0) {
@@ -128,13 +133,64 @@
             }, 600)
             //订购按钮事件
             $(".text3").click(function () {
-                alert("sdf")
+                //订购房间跳转
+                    location.href="frontend/toroom.do"
             })
             // 淡入动画函数
             function jiazai(next) {
                 next.slideDown(1300)
             }
         })
+        //获取正在空闲的房间
+        function getRoom() {
+            $.ajax({
+                url:"frontend/getRooms.do",
+                type:"get",
+                dataType:"json",
+                success:function (data) {
+                    var html=''
+                    var html2=''
+                $.each(data.list,function (i,n) {
+                        html+='<div class="content cleafix">'
+                        html+='<a href="frontend/toroom.do"><img src="'+n.roomImgPath+'" alt=""></a>'
+                        html+='<div class="text">'
+                        html+='<a href="frontend/toroom.do">'
+                        html+='<h3>'+n.roomType+'</h3>'
+                        html+='</a>'
+                        html+='<div class="rating">'
+                        // html+='<i class="iconfont icon-xingxing"></i>'
+                        // html+='<i class="iconfont icon-xingxing"></i>'
+                        // html+='<i class="iconfont icon-xingxing"></i>'
+                        // html+='<i class="iconfont icon-xingxing"></i>'
+                        // html+='<i class="iconfont icon-xingxing"></i>'
+                        html+='</div>'
+                        html+='<ul>'
+                        html+='<li>'+n.roomPrice+'</li>'
+                        html+='<li> / 每晚</li>'
+                        html+='</ul>'
+                        html+='</div>'
+                        html+='</div>'
+                })
+                    $.each(data.commentlist,function (i,n) {
+                            html2+='<div class="owl-item cleafix">'
+                            html2+='<div class="testimonials-item cleafix">'
+                            html2+='<i class="iconfont icon-pinglun"></i>'
+                            html2+='<p>'+n.comment+'</p>'
+                            html2+='<ul>'
+                            html2+='<li><img src="'+n.start_time+'" alt=""></li>'
+                            html2+='<li>'
+                            html2+='<h3>'+n.c_name+'</h3>'
+                            html2+='</li>'
+                            html2+='<li><span>'+n.id+'</span></li>'
+                            html2+='</ul>'
+                            html2+='</div>'
+                            html2+='</div>'
+                        })
+                    $("#roomList").html(html);
+                    $("#commentList").html(html2);
+                }
+            })
+        }
     </script>
 </head>
 
@@ -147,21 +203,21 @@
             </div>
             <div class="top-content">
                 <ul>
-                    <li><a href="#">酒店首页</a></li>
-                    <li><a href="#">房间订购</a></li>
-                    <li><a href="#">新闻资讯</a></li>
-                    <li><a href="#">合作资讯</a></li>
-                    <li><a href="#">联系我们</a></li>
+                    <li><a href="index.do">酒店首页</a></li>
+                    <li><a href="frontend/toroom.do">房间订购</a></li>
+                    <li><a href="frontend/todeluxe_room.do">豪华套房</a></li>
+                    <%--<li><a href="">合作资讯</a></li>--%>
+                    <li><a href="frontend/tocontact.do">联系我们</a></li>
                 </ul>
             </div>
             <div class="top-right">
                 <div>
                     <a href="javascript:;" class="iconfont icon-user" id="iconfont"></a>
-                    <span>${sessionScope.user.phone}</span>
+                    <span>${sessionScope.user.username}</span>
                     <div class="setUser-list">
                         <ul>
-                            <li><a href="#" data-transition="pop" data-inline="true">个人中心</a></li>
-                            <li><a href="register.html">注册</a></li>
+                            <li><a href="frontend/touserlist.do" data-transition="pop" data-inline="true">个人中心</a></li>
+                            <li><a href="login.jsp">退出系统</a></li>
                         </ul>
                     </div>
                 </div>
@@ -173,10 +229,10 @@
                 <p>为你打造舒适的生活环境</p>
             </div>
             <div class="text2">
-                <p>XXX酒店 舒兴生活</p>
+                <p>小七酒店 舒兴生活</p>
             </div>
             <div class="text3 cleafix">
-                <button>订购房间</button>
+                <button id="orderBtn">订购房间</button>
             </div>
         </div>
     </header>
@@ -191,7 +247,7 @@
                 <div class="middle-content cleafix">
                     <div class="middle-title cleafix">
                         <span>关于我们</span>
-                        <h2>我们有超过20%的全球经验,我们有很多理由选择我们</h2>
+                        <h2>我们有超过20%的全球经验,有很多理由选择我们</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique augue quis
                             neque ornare fermentum. In sit amet mattis diam. Sed id aliquam nulla. In porttitor et
                             turpis non pretium.</p>
@@ -201,18 +257,18 @@
                             <i class="iconfont icon-home"></i>
                             <div>
                                 <h3>餐厅设施</h3>
-                                <span>我们是全球市场上最好的公司之一，我们为所有导游和所有客人提供餐厅设施。</span>
+                                <span>餐饮庆典的尊荣之选，调动品位，运用感官，小七酒店，给你舒适的用餐环境</span>
                             </div>
                         </li>
                         <li>
                             <i class="iconfont icon-wifi"></i>
                             <div>
-                                <h3>免费无线设施</h3>
-                                <span>这是一个地方，你会得到一个免费的wifi区在一个合理的价格，这将有助于你使一个丰富多彩的快乐时刻。</span>
+                                <h3>wifi覆盖</h3>
+                                <span>我们在每个房间里面部署了wifi热点发射器，力求确保整个房间都有wifi网络信号的覆盖</span>
                             </div>
                         </li>
                     </ul>
-                    <a href="javascript:;"><span>阅读更多</span></a>
+                    <a href="frontend/toreadmore.do"><span>阅读更多</span></a>
                 </div>
             </div>
         </div>
@@ -226,33 +282,33 @@
         <div class="service-content">
             <div>
                 <div><i class="iconfont icon-jiudiancanting-1"></i></div>
-                <a href="#" class="service">
-                    <h3>度假村预订进入合适的地方</h3>
+                <a href="frontend/toservices.do" class="service">
+                    <h3>豪华酒吧</h3>
                 </a>
                 <p>
-                    您可以根据需要在合适的地方轻松预订度假客房。这样就能产生好的感觉了。
+                    一饰情真，为爱沉醉，七七酒吧，缔造一生的承诺，纵享恒久的情缘
                 </p>
-                <a href="#" >获取服务</a>
+                <a href="frontend/toservices.do" >获取服务</a>
             </div>
             <div>
                 <div><i class="iconfont icon-jiudiancanting-2"></i></div>
-                <a href="#" class="service">
-                    <h3>酒店客房预订进入欲望的地方</h3>
+                <a href="frontend/toservices.do" class="service">
+                    <h3>随时入住</h3>
                 </a>
                 <p>
-                    您可以根据需要在合适的地方轻松预订酒店客房。这样就能产生好的感觉了。
+                    行走万水千山，小七如影相伴，用今夜的好梦来充电白天的疲劳
                 </p>
-                <a href="#">获取服务</a>
+                <a href="frontend/toservices.do">获取服务</a>
             </div>
             <div>
                 <div><i class="iconfont icon-jiudiancanting-"></i></div>
-                <a href="#" class="service">
-                    <h3>在适当的地方预订杂草大厅</h3>
+                <a href="frontend/toservices.do" class="service">
+                    <h3>办公娱乐</h3>
                 </a>
                 <p>
-                    杂草大厅预订是可能的，在一个合适的地方，你想。这样就能产生好的感觉了。
+                    大、中、小型会议室、现代化办公空间充分满足各类商务聚会的需要，一流的硬件配置和人性化服务为你精心准备
                 </p>
-                <a href="#">获取服务</a>
+                <a href="frontend/toservices.do">获取服务</a>
             </div>
         </div>
     </div>
@@ -261,10 +317,10 @@
         <div class="brief-content cleafix">
             <div class="content-text cleafix">
                 <a href="#">
-                    <h3>你很容易保留哪些让你所有幸福快乐的东西</h3>
+                    <h3>拉近成功的距离，放大格调生活的细节</h3>
                 </a>
-                <p>这是最重要和最关键的事实之一，有助于我们轻松预订。此预订将帮助您轻松完成旅程和旅行周期。这将帮助你使旅行更容易，更容易的旅行对你更有用。那么，让我们开始吧！</p>
-                <a href="#">快速预定</a>
+                <p>光线抚摸出天鹅绒窗帘的温柔，儒雅桃木椅上的精致镂花也散发芬芳，光与影构建的繁华，梦和梦交织的地方，还有安详的灯光、绵绵的地毯……就在这样的清晨醒来，忘了身在何处</p>
+                <a href="frontend/toroom.do">快速预定</a>
             </div>
             <div class="brief-img cleafix">
                 <img src="images/reservation-img.jpg" alt="">
@@ -285,8 +341,8 @@
                 <div class="major-list cleafix">
                     <div class="cleafix">
                         <div class="cleafix"><i class="iconfont icon-jiudian1 "></i></div>
-                        <h3>井装饰</h3>
-                        <p>我们非常小心我们的房间和所有的度假村装饰。所以，试试我们。</p>
+                        <h3>艺术装饰</h3>
+                        <p>建筑只是凝固的艺术，小七酒店更懂得生活的艺术</p>
                     </div>
                     <div class="cleafix">
                         <div class="cleafix"><i class="iconfont icon-jiuba"></i></div>
@@ -295,8 +351,8 @@
                     </div>
                     <div class="cleafix">
                         <div class="cleafix"><i class="iconfont icon-haoping"></i></div>
-                        <h3>5 星雷廷斯</h3>
-                        <p>阿托利是一个众所周知的机构，该机构是最好的五星级审查之一。</p>
+                        <h3>生活休闲港</h3>
+                        <p>热爱生活，更加专注工作，用心工作，用心享受生活</p>
                     </div>
                 </div>
             </div>
@@ -309,122 +365,8 @@
                 <span>房间</span>
                 <h3>房间和价格</h3>
             </div>
-            <div class="room-center cleafix">
-                <div class="content cleafix">
-                    <a href="#"><img src="images/room-img1.jpg" alt=""></a>
-                    <div class="text">
-                        <a href="#">
-                            <h3>单人房</h3>
-                        </a>
-                        <div class="rating">
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                        </div>
-                        <ul>
-                            <li>1111xx</li>
-                            <li> / 每晚</li>
-                        </ul>
+            <div class="room-center cleafix" id="roomList">
 
-                    </div>
-                </div>
-                <div class="content cleafix">
-                    <a href="#"><img src="images/room-img2.jpg" alt=""></a>
-                    <div class="text">
-                        <a href="#">
-                            <h3>单人房</h3>
-                        </a>
-                        <div class="rating">
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                        </div>
-                        <ul>
-                            <li>xx</li>
-                            <li> / 每晚</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content cleafix">
-                    <a href="#"><img src="images/room-img3.jpg" alt=""></a>
-                    <div class="text">
-                        <a href="#">
-                            <h3>单人房</h3>
-                        </a>
-                        <div class="rating">
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                        </div>
-                        <ul>
-                            <li>xx</li>
-                            <li> / 每晚</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content cleafix">
-                    <a href="#"><img src="images/room-img4.jpg" alt=""></a>
-                    <div class="text">
-                        <a href="#">
-                            <h3>单人房</h3>
-                        </a>
-                        <div class="rating">
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                        </div>
-                        <ul>
-                            <li>xx</li>
-                            <li> / 每晚</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content cleafix">
-                    <a href="#"><img src="images/room-img5.jpg" alt=""></a>
-                    <div class="text">
-                        <a href="#">
-                            <h3>单人房</h3>
-                        </a>
-                        <div class="rating">
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                        </div>
-                        <ul>
-                            <li>xx</li>
-                            <li> / 每晚</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content cleafix">
-                    <a href="#"><img src="images/room-img6.jpg" alt=""></a>
-                    <div class="text">
-                        <a href="#">
-                            <h3>单人房</h3>
-                        </a>
-                        <div class="rating">
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                            <i class="iconfont icon-xingxing"></i>
-                        </div>
-                        <ul>
-                            <li>xx</li>
-                            <li> / 每晚</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -433,82 +375,17 @@
         <div class="comment-content cleafix">
             <div class="room-title cleafix">
                 <span>推荐</span>
-                <h3>我们最新的推荐和我们的客户说什么</h3>
+                <h3>客户对我们的最新评论</h3>
             </div>
 
             <div class="content-list cleafix">
                 <div class="owl-stage-outer cleafix">
 
-                    <div class="owl-stage cleafix">
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>111111111小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="owl-stage cleafix" id="commentList">
 
-                        <div class="owl-item cleafix">
-                            <div class="testimonials-item cleafix">
-                                <i class="iconfont icon-pinglun"></i>
-                                <p>你可以很容易地从这个机构作出良好和容易最好的服务。这是我们最好的和关键的服务之一。</p>
-                                <ul>
-                                    <li><img src="images/testimonials-img1.jpg" alt=""></li>
-                                    <li>
-                                        <h3>小杰</h3>
-                                    </li>
-                                    <li><span>湖南省</span></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <div class="slide">
+                <div class="slide cleafix">
                     <button class="iconfont icon-left button-left"></button>
                     <button class="iconfont icon-arrow-right button-right"></button>
                 </div>

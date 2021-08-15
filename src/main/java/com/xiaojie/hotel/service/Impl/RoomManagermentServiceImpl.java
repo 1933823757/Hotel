@@ -2,10 +2,8 @@ package com.xiaojie.hotel.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiaojie.hotel.dao.FloorDao;
-import com.xiaojie.hotel.dao.RoomDao;
-import com.xiaojie.hotel.domian.Floor;
-import com.xiaojie.hotel.domian.Room;
+import com.xiaojie.hotel.dao.*;
+import com.xiaojie.hotel.domian.*;
 import com.xiaojie.hotel.service.RoomManagermentService;
 import com.xiaojie.hotel.util.DeleteFile;
 import com.xiaojie.hotel.vo.RoomImgPath;
@@ -17,6 +15,31 @@ import java.util.*;
 public class RoomManagermentServiceImpl implements RoomManagermentService {
     private FloorDao floorDao;
     private RoomDao roomDao;
+    private EngageDao engageDao;
+    private MoveRoomDao moveRoomDao;
+    private OrderInformAtionDao orderInformAtionDao;
+    private CustomerDao customerDao;
+    private CommentDao commentDao;
+
+    public void setCommentDao(CommentDao commentDao) {
+        this.commentDao = commentDao;
+    }
+
+    public void setCustomerDao(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
+
+    public void setOrderInformAtionDao(OrderInformAtionDao orderInformAtionDao) {
+        this.orderInformAtionDao = orderInformAtionDao;
+    }
+
+    public void setMoveRoomDao(MoveRoomDao moveRoomDao) {
+        this.moveRoomDao = moveRoomDao;
+    }
+
+    public void setEngageDao(EngageDao engageDao) {
+        this.engageDao = engageDao;
+    }
 
     public void setFloorDao(FloorDao floorDao) {
         this.floorDao = floorDao;
@@ -71,13 +94,43 @@ public class RoomManagermentServiceImpl implements RoomManagermentService {
         return floor;
     }
 
+    @Transactional
     @Override
     public boolean updateFloor(Floor floor) {
+        boolean flag = false;
+        //查询以前楼层房间名
+        Floor floor1 = floorDao.selectFloorById(floor.getId());
+        //出了更新楼层还得更新房间的类型
         int num = floorDao.updateFloorAll(floor);
-        if (num == 1) {
-            return true;
-        }
-        return false;
+             if (num == 1) {
+                 flag = true;
+             }
+            //查询总共要多少个
+            Integer count = roomDao.seletRoomByFloor(floor);
+            int num2 = roomDao.updateRoomByFlooId(floor);
+            if (count == num2){
+                flag = true;
+            }
+            //查询需要更改的数量
+            List<Engage> engageList = engageDao.getEngageByRoom(floor1.getRoomType());
+            if (engageList.size() != 0){
+                //实际更改的数量
+                int num3 = engageDao.updateEngageAllByRoom(engageList,floor.getRoomType());
+                if (num3 == 1){
+                    flag = true;
+                }
+            }
+            //查询需要更改的数量
+            List<MoveRoom> moveList = moveRoomDao.selectMoveRoomByEngage(floor1.getRoomType());
+            if (moveList.size() != 0){
+                //实际更改的数量
+                int num4 = moveRoomDao.updateMoveRoomByEngage(moveList,floor.getRoomType());
+                if (num4 == 1){
+                    flag = true;
+                }
+            }
+
+        return flag;
     }
 
     @Override
@@ -86,12 +139,55 @@ public class RoomManagermentServiceImpl implements RoomManagermentService {
         boolean flan = true;
         //查询需要删除的房间数
         int roomCount = roomDao.getDeleteCount(id);
+        //查询房间的id
+        List<Room> roomList = roomDao.getRoomId(id);
         //实际删除的个数
         int deleteRoom = roomDao.deleteRoom(id);
         if (roomCount == deleteRoom) {
-            flan = true;
-        }
+            //房间删除成功后还得把所有的照片删除
+            for(Room room:roomList){
+                DeleteFile.deleteFile(room.getRoomImgPath());
+            }
+            //查询需要删除预定信息的个数
+            Integer count = engageDao.getDeleteCount(roomList);
+            //实际删除预定信息的个数
+            int count2 = engageDao.deleteEngage(roomList);
+            if (count == count2){
+                flan = true;
+            }
+            //查询需要删除住宿的个数
+            Integer count3 = moveRoomDao.findMoveRoom(roomList);
+            //实际删除的个数
+            int num3 = moveRoomDao.deleteMoveROomByRoomType(roomList);
+            if (count3 == num3){
+                flan = true;
+                //删除订单信息
+                //查询需要删除的个数
+                Integer count4 = orderInformAtionDao.selectByRoomId(roomList);
+                //实际删除的个数
+                int num4 = orderInformAtionDao.deleteOrder(roomList);
+                if (count4 == num4){
+                    flan = true;
+                }
+                //删除客户记录表
+                //查询需要删除的个数
+                Integer count5 = customerDao.selectByRoomId(roomList);
+                //实际删除的个数
+                int num5 = customerDao.deleteByRoomId(roomList);
+                if (count5 == num5){
+                    flan = true;
+                }
+                //删除评论
+                //查询需要删除的个数
+                Integer count6 = commentDao.selectByRoomId(roomList);
+                //实际删除的个数
+                int num6 = commentDao.deleteByRoomId(roomList);
+                if (count6 == num6 ){
+                    flan = true;
+                }
+            }
 
+        }
         //实际删除的个数
         int deleteCoutn = floorDao.deleteFloor(id);
         //判断是否删除成功

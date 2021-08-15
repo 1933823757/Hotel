@@ -5,6 +5,23 @@
 
 <mapper namespace="com.xiaojie.hotel.dao.MoveRoomDao">
 
+    <!--根据engageId查询需要更改的条数-->
+    <select id="selectMoveRoomByEngage" resultType="moveroom">
+        select * from tbl_moveroom where roomType=#{roomType}
+    </select>
+    <!--实际更改的数量-->
+    <update id="updateMoveRoomByEngage">
+        <foreach collection="list" item="i" separator=";">
+            update tbl_moveroom
+            <set>
+                roomType=#{roomType}
+            </set>
+            <where>
+                id=#{i.id}
+            </where>
+        </foreach>
+    </update>
+
     <select id="selectMoveRoomByStage" resultType="moveroom">
         select * from tbl_moveroom where state in (#{stage},#{stage2})
     </select>
@@ -79,6 +96,20 @@
     <!--删除入住信息-->
     <delete id="deleteMoveROomById">
         delete from tbl_moveroom where id=#{id}
+    </delete>
+    <!--查询需要删除的个数-->
+    <select id="findMoveRoom" resultType="java.lang.Integer">
+        select count(*) from tbl_moveroom where roomType in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomType}
+        </foreach>
+    </select>
+    <!--实际删除的个数-->
+    <delete id="deleteMoveROomByRoomType">
+        delete from tbl_moveroom where roomType in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomType}
+        </foreach>
     </delete>
 
     <!--主页查询房间状态，利用左外连接查询-->

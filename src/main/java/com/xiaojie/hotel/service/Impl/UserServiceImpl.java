@@ -2,7 +2,10 @@ package com.xiaojie.hotel.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xiaojie.hotel.dao.CommentDao;
 import com.xiaojie.hotel.dao.UserDao;
+import com.xiaojie.hotel.domian.Comment;
+import com.xiaojie.hotel.domian.Manager;
 import com.xiaojie.hotel.domian.User;
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.DeleteFile;
@@ -18,6 +21,11 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+    private CommentDao commentDao;
+
+    public void setCommentDao(CommentDao commentDao) {
+        this.commentDao = commentDao;
+    }
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -162,6 +170,59 @@ public class UserServiceImpl implements UserService {
         }
         return map;
     }
+
+    @Override
+    public Map<String, Object> getCommentList(Comment comment, Integer pageNo1, Integer pageSize1) {
+        //分页
+        Map<String, Object> map = new HashMap<>();
+        PageHelper.startPage(pageNo1, pageSize1);
+        List<Comment> list = commentDao.getCommentList(comment);
+        PageInfo pageInfo = new PageInfo(list);
+        map.put("total", pageInfo.getTotal());
+        map.put("pages", pageInfo.getPages());
+        map.put("list", pageInfo.getList());
+        return map;
+    }
+
+    @Override
+    public Comment getCommentById(String id) {
+        Comment comment = commentDao.getCommentById(id);
+        return comment;
+    }
+
+    @Override
+    public Map<String, Object> updateComment(Comment comment) {
+        Map<String,Object> map = new HashMap<>();
+        boolean flag = false;
+        int num = commentDao.updateComment(comment);
+        if (num == 1){
+           flag=true;
+            map.put("title","修改成功");
+    }
+        else{
+            map.put("title","修改失败");
+        }
+        map.put("success",flag);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> delete(String[] id) {
+        Map<String,Object> map = new HashMap<>();
+        boolean flag = false;
+        int count = commentDao.delete(id);
+        if (count == id.length){
+            flag = true;
+            map.put("title","删除成功");
+        }else{
+            map.put("title","删除失败");
+        }
+        map.put("success",flag);
+
+        return map;
+    }
+
 
 
 }

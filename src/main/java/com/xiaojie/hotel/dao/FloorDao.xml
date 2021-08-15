@@ -47,5 +47,6 @@
 
     <select id="getFloorId" resultType="floor">
         select id,floorId,roomType from tbl_floor
+        order by floorId asc
     </select>
 </mapper>

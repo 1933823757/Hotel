@@ -9,6 +9,8 @@
            select count(*) from  tbl_room where floorId=#{id}
        </select>
 
+
+
         <!--查询需要删除的个数-->
         <select id="getDeleteCount" resultType="java.lang.Integer">
             select count(*) from  tbl_room where floorId in
@@ -16,6 +18,13 @@
                 #{i}
             </foreach>
         </select>
+    <!--查询需要删除的roomid-->
+    <select id="getRoomId" resultType="room">
+        select * from tbl_room where floorId in
+        <foreach collection="array" item="i" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </select>
     <!--实际删除个数-->
         <delete id="deleteRoom">
             delete from tbl_room where floorId in
@@ -86,6 +95,14 @@
         where id=#{id}
     </update>
 
+    <select id="seletRoomByFloor" resultType="java.lang.Integer">
+        select count(*) from tbl_room where floorId=#{id}
+    </select>
+    <!--通过楼层更新房间-->
+    <update id="updateRoomByFlooId">
+        update tbl_room set roomType=#{roomType} where floorId=#{id}
+    </update>
+
     <!--删除房间语句-->
     <delete id="deleteRoomById">
         delete from tbl_room where id in
@@ -123,5 +140,28 @@
             #{i.roomId}
         </foreach>
         order by roomId asc
+    </select>
+
+    <!--前端查询房间语句，查六条-->
+    <select id="getRooms" resultType="room">
+        select id,roomId,roomType,roomImgpath,roomPrice from tbl_room limit 0,6;
+    </select>
+    <!--前端分页查询房间-->
+    <select id="getRoomFenYe" resultType="room">
+        select roomSuggest,id,roomId,roomType,roomPrice,roomImgpath,floorId from tbl_room
+        where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+    </select>
+
+    <!--获取总统套房分页-->
+    <select id="getDeluse" resultType="room">
+        select roomSuggest,id,roomId,roomType,roomPrice,roomImgpath,floorId from tbl_room
+        where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+        and roomType like "%" #{roomType} "%"
     </select>
 </mapper>

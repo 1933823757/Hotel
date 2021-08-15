@@ -25,4 +25,8 @@ public interface UserDao {
     int updateUserAndImg(User user);
 
     int deleteUser(String[] id);
+
+    int updateUserNotPwd(User user);
+
+    int updateUserNOtImgAndPwd(User user);
 }

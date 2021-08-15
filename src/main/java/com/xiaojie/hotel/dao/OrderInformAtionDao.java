@@ -26,4 +26,12 @@ public interface OrderInformAtionDao {
     int selectMoney(String state);
 
     List<Map<String, Object>> selectMap(String state);
+
+    List<OrderInformAtion> selectByUserId(@Param("id") String id,@Param("state") String state);
+
+    OrderInformAtion select(String id);
+
+    Integer selectByRoomId(List<Room> roomList);
+
+    int deleteOrder(List<Room> list);
 }

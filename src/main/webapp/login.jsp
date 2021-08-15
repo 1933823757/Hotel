@@ -83,7 +83,7 @@
                             type: "post",
                             data: {
                                 "managername": $("#managername").val().trim(),
-                                "managerpassword": $("#managername").val().trim(),
+                                "managerpassword": $("#managerpassword").val().trim(),
                                 "captcha2": $("#captcha2").val().trim()
                             },
                             dataType: "json",

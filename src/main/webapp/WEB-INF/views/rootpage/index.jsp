@@ -45,6 +45,35 @@
 			$(this).children("a").css("color", "white");
 		});
 
+		$("#editBtn").click(function () {
+			var oldPwd = $("#oldPwd").val().trim()
+			var newPwd = $("#newPwd").val().trim()
+			var confirmPwd = $("#confirmPwd").val().trim()
+			if (oldPwd == '' && newPwd == '' && confirmPwd == ''){
+				alert("输入框不能为空")
+			} else{
+				if (newPwd == confirmPwd){
+					$.ajax({
+						url:"updateManager.do",
+						type:"get",
+						data:{
+						"oldPwd":oldPwd,
+						"newPwd":newPwd
+						},
+						dataType:"json",
+						success:function (data) {
+							if (data.success){
+								alert(data.title)
+							} else {
+								alert(data.title)
+							}
+						}
+					})
+				} else{
+					alert("确认密码错误")
+				}
+			}
+		})
 
 		window.open("putup/toindex.do", "workareaFrame")
 
@@ -77,12 +106,8 @@
 				</div>
 				<div class="modal-body">
 					<div style="position: relative; left: 40px;">
-						姓名：<b>张三</b><br><br>
-						登录帐号：<b>zhangsan</b><br><br>
-						组织机构：<b>1005，市场部，二级部门</b><br><br>
-						邮箱：<b>zhangsan@bjpowernode.com</b><br><br>
-						失效时间：<b>2017-02-14 10:10:10</b><br><br>
-						允许访问IP：<b>127.0.0.1,192.168.100.2</b>
+						姓名：<b>${manager.managerId}</b><br><br>
+						登录帐号：<b>${manager.managerName}</b><br><br>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -128,8 +153,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						onclick="window.location.href='../login.html';">更新</button>
+					<button type="button" class="btn btn-primary" id="editBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -151,7 +175,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						onclick="window.location.href='../login.html';">确定</button>
+						onclick="window.location.href='login.jsp';">确定</button>
 				</div>
 			</div>
 		</div>
@@ -171,8 +195,6 @@
 							class="caret" style="margin-right: 20px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</a>
 					<ul class="dropdown-menu  ulstyle">
-						<li><a href="../settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a>
-						</li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#myInformation"><span
 									class="glyphicon glyphicon-file"></span> 我的资料</a></li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#editPwdModal"><span
@@ -240,12 +262,23 @@
 				</li>
 				<li class="liClass">
 					<a href="#no5" class="collapsed" data-toggle="collapse"><span
-							class="glyphicon glyphicon-user"></span> 客户管理</a>
+							class="glyphicon glyphicon-lock"></span> 客户管理</a>
 
 					<ul id="no5" class="nav nav-pills nav-stacked collapse">
 						<li class="liClass"><a href="customer/tocustomer.do"
 								target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
 									class="glyphicon glyphicon-chevron-right"></span> 客户列表</a></li>
+					</ul>
+				</li>
+
+				<li class="liClass">
+					<a href="#no6" class="collapsed" data-toggle="collapse"><span
+							class="glyphicon glyphicon-comment"></span> 评论管理</a>
+
+					<ul id="no6" class="nav nav-pills nav-stacked collapse">
+						<li class="liClass"><a href="userlist/tocomment.do"
+											   target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
+								class="glyphicon glyphicon-chevron-right"></span> 评论列表</a></li>
 					</ul>
 				</li>
 
