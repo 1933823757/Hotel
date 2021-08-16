@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <script src="js/jquery-1.11.1-min.js"></script>
     <link rel="stylesheet" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
     <script src="usercss/materialMenu.min.js"></script>
     <title>个人中心</title>

@@ -18,7 +18,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_tgb8uoz038r.css">
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
-
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
 
     <!-- <%--日期插件--%> -->
     <link href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css"

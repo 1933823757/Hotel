@@ -13,6 +13,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <script src="js/jquery-1.11.1-min.js"></script>
     <link rel="stylesheet" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
     <link rel="stylesheet" href="css/usersetting/user.css">
     <title>用户信息</title>

@@ -12,7 +12,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     <script src="js/jquery-1.11.1-min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap_3.3.0/css/bootstrap.min.css">
     <script src="js/textyleF.js"></script>
-
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <script src="css/fenye/jqPaginator.js"></script>
   
 

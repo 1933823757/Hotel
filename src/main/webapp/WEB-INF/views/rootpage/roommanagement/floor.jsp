@@ -14,6 +14,7 @@
     <script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <%--分页插件--%>
     <link rel="stylesheet" type="text/css" href="js/bs_pagination/jquery.bs_pagination.min.css">
     <script type="text/javascript" src="js/bs_pagination/jquery.bs_pagination.min.js"></script>

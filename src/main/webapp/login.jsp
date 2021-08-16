@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/jquery-1.11.1-min.js"></script>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_12op6n1gh1yr.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <link href="css/AnimationStyle/style.css" rel="stylesheet">
     <link href="css/AnimationStyle/style1.css" rel="stylesheet">
     <link href="css/login/login.css" rel="stylesheet">

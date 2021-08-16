@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_fmjcjts8vzk.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <script src="js/jquery-1.11.1-min.js"></script>
     <link rel="stylesheet" href="css/CommonStyle/base.css">
  
@@ -247,10 +248,8 @@
                 <div class="middle-content cleafix">
                     <div class="middle-title cleafix">
                         <span>关于我们</span>
-                        <h2>我们有超过20%的全球经验,有很多理由选择我们</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique augue quis
-                            neque ornare fermentum. In sit amet mattis diam. Sed id aliquam nulla. In porttitor et
-                            turpis non pretium.</p>
+                        <h2>精心设计，营造一个远离喧嚣的避风港</h2>
+                        <p>我们意识到社会自身是建筑意念的主要来源，通过创造与交流来认知我们所生活的世界，并依据生命的功能诠释出具有生命力的形式。我们打破传统酒店场景，用品味卓越的生活空间、精彩纷呈的艺术文化活动，连接每一位追求品质生活方式的宾客，共同探索、发现并创造美好生活的各种可能。</p>
                     </div>
                     <ul class="middle-list">
                         <li>

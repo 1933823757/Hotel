@@ -14,6 +14,7 @@
     <script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <script src="bootstrap-fileinput/fileinput.min.js"></script>
     <script src="bootstrap-fileinput/zh.js"></script>
     <link rel="stylesheet" href="bootstrap-fileinput/fileinput.min.css">

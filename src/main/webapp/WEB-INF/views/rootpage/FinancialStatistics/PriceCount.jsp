@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="bootstrap_3.3.0/css/bootstrap.min.css">
     <script src="js/jquery-1.11.1-min.js"></script>
     <script src="bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
     <script src="ECharts/echarts.min.js"></script>

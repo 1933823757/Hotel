@@ -13,6 +13,7 @@
     <script src="js/textyleF.js"></script>
     <script src="css/fenye/jqPaginator.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap_3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet Icon" type=" image/x-icon" href="images/hotel.png">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2702840_2rfwrqa5xsn.css">
     <link rel="stylesheet" href="css/CommonStyle/base.css">
     <link rel="stylesheet" href="css/CommonStyle/reset.css">
