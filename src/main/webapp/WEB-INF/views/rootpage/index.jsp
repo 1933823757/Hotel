@@ -282,6 +282,16 @@
 								class="glyphicon glyphicon-chevron-right"></span> 评论列表</a></li>
 					</ul>
 				</li>
+				<li class="liClass">
+					<a href="#no7" class="collapsed" data-toggle="collapse"><span
+							class="glyphicon glyphicon-list-alt"></span> 订单报表</a>
+
+					<ul id="no7" class="nav nav-pills nav-stacked collapse">
+						<li class="liClass"><a href="order/toorder.do"
+											   target="workareaFrame">&nbsp;&nbsp;&nbsp;<span
+								class="glyphicon glyphicon-chevron-right"></span> 订单列表</a></li>
+					</ul>
+				</li>
 
 			</ul>
 

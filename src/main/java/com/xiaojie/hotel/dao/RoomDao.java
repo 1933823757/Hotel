@@ -51,4 +51,6 @@ public interface RoomDao {
 
 
     List<Room> getRoomId(String[] id);
+
+    List<Room> getRoomByFloorId(String roomType);
 }

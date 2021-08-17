@@ -1,6 +1,7 @@
 package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,4 +30,6 @@ public interface UserDao {
     int updateUserNotPwd(User user);
 
     int updateUserNOtImgAndPwd(User user);
+
+    int updateUserIdcard(@Param("idcard") String idCard, @Param("id") String id);
 }

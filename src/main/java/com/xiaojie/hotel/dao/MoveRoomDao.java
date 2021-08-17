@@ -3,6 +3,7 @@ package com.xiaojie.hotel.dao;
 import com.xiaojie.hotel.domian.Engage;
 import com.xiaojie.hotel.domian.MoveRoom;
 import com.xiaojie.hotel.domian.Room;
+import com.xiaojie.hotel.domian.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -39,4 +40,8 @@ public interface MoveRoomDao {
     Integer findMoveRoom(List<Room> roomList);
 
     int deleteMoveROomByRoomType(List<Room> roomList);
+
+    MoveRoom selectMove(String username);
+
+    int updateMoveByUser(@Param("user") User user,@Param("username") String username);
 }

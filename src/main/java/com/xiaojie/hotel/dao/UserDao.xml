@@ -81,4 +81,8 @@
         phone=#{phone},sex=#{sex},idcard=#{idcard},name=#{name}
         where id=#{id}
     </update>
+    <!--修改身份证-->
+    <update id="updateUserIdcard">
+        update tbl_user set idcard=#{idcard} where id=#{id}
+    </update>
 </mapper>

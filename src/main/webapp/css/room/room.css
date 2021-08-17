@@ -304,6 +304,7 @@
     font-family: 'Oxygen', sans-serif;
     display: inline-flex;
     position: relative;
+    top: -500px;
     left: 5%;
 }
 /* 分页按钮的样式 */

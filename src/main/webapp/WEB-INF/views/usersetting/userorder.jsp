@@ -18,7 +18,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     <style>
         html { overflow: hidden; }
         body{
-            background-color: rgb(211, 211, 211);
+            background-color: rgb(255, 255, 255);
         }
         .heard-box {
             width: 100%;

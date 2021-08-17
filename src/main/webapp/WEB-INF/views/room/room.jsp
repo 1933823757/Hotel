@@ -168,14 +168,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
             </div>
         </div>
-        <!-- 分页 -->
-        <nav class="pagination-outer" aria-label="Page navigation">
-            <ul class="pagination">
 
-            </ul>
-        </nav>
     </div>
+    <!-- 分页 -->
+    <nav class="pagination-outer" aria-label="Page navigation">
+        <ul class="pagination">
 
+        </ul>
+    </nav>
     <!-- 底部 -->
     <div class="bottom cleafix">
         <div class="cleafix">

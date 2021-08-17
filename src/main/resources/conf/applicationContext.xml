@@ -52,7 +52,11 @@
 
     <bean id="userService" class="com.xiaojie.hotel.service.Impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
-        <property name="commentDao" ref="commentDao"></property>
+        <property name="commentDao" ref="commentDao"/>
+        <property name="orderInformAtionDao" ref="orderInformAtionDao"/>
+        <property name="customerDao" ref="customerDao"/>
+        <property name="moveRoomDao" ref="moveRoomDao"/>
+        <property name="engageDao" ref="engageDao" />
     </bean>
     <bean id="managerService" class="com.xiaojie.hotel.service.Impl.ManagerServiceImpl">
         <property name="managerDao" ref="managerDao"/>
@@ -101,4 +105,10 @@
         </property>
     </bean>
     <bean id="mailSenderSrvServices" class="com.xiaojie.hotel.service.Impl.MailSenderSrvServiceImpl"></bean>
+    <bean id="orderService" class="com.xiaojie.hotel.service.Impl.OrderServiceImpl">
+        <property name="floorDao" ref="floorDao"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="roomDao" ref="roomDao"/>
+        <property name="orderInformAtionDao" ref="orderInformAtionDao"/>
+     </bean>
 </beans>

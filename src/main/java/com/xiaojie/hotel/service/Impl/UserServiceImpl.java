@@ -2,11 +2,8 @@ package com.xiaojie.hotel.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiaojie.hotel.dao.CommentDao;
-import com.xiaojie.hotel.dao.UserDao;
-import com.xiaojie.hotel.domian.Comment;
-import com.xiaojie.hotel.domian.Manager;
-import com.xiaojie.hotel.domian.User;
+import com.xiaojie.hotel.dao.*;
+import com.xiaojie.hotel.domian.*;
 import com.xiaojie.hotel.service.UserService;
 import com.xiaojie.hotel.util.DeleteFile;
 import com.xiaojie.hotel.util.MD5Util;
@@ -22,6 +19,26 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private CommentDao commentDao;
+    private EngageDao engageDao;
+    private MoveRoomDao moveRoomDao;
+    private OrderInformAtionDao orderInformAtionDao;
+    private CustomerDao customerDao;
+
+    public void setEngageDao(EngageDao engageDao) {
+        this.engageDao = engageDao;
+    }
+
+    public void setMoveRoomDao(MoveRoomDao moveRoomDao) {
+        this.moveRoomDao = moveRoomDao;
+    }
+
+    public void setOrderInformAtionDao(OrderInformAtionDao orderInformAtionDao) {
+        this.orderInformAtionDao = orderInformAtionDao;
+    }
+
+    public void setCustomerDao(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
 
     public void setCommentDao(CommentDao commentDao) {
         this.commentDao = commentDao;
@@ -138,7 +155,23 @@ public class UserServiceImpl implements UserService {
             if (flag){
                 map.put("success",flag);
                 map.put("title",user.getUsername()+"用户修改成功，密码请妥善保管");
-
+                //修改成功后，得要吧预定信息，入住信息，订单信息，客户信息都得修改
+                Engage engage = engageDao.getEngageByCname(newUser.getUsername());
+                if (engage != null){
+                    int num3 = engageDao.updateEngageByCname(user,user.getUsername());
+                }
+                MoveRoom moveRoom = moveRoomDao.selectMove(newUser.getUsername());
+                if (moveRoom != null){
+                    int num4 = moveRoomDao.updateMoveByUser(user,user.getUsername());
+                }
+                List<OrderInformAtion> list = orderInformAtionDao.selectByUserIdAll(newUser.getId());
+                if (list.size() >0){
+                    int num5 = orderInformAtionDao.updateOrderByUser(list,user);
+                }
+                Customer customer = customerDao.selectByUser(newUser.getUsername());
+                if (customer !=null){
+                    int num6 = customerDao.updateCustomerByUser(user,user.getUsername());
+                }
             }else{
                 map.put("success",flag);
                 map.put("title",user.getUsername()+"用户修改失败");

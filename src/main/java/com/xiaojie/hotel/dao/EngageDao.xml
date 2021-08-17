@@ -108,4 +108,11 @@
         update tbl_engage set idCard=#{idCard},close_time=#{close_time},c_name=#{c_name},c_tel=#{c_tel}
         where id=#{id}
     </update>
+
+    <select id="getEngageByCname" resultType="engage">
+        select * from tbl_engage where c_name=#{username}
+    </select>
+    <update id="updateEngageByCname">
+        update tbl_engage set c_name=#{user.username},c_tel=#{user.phone},idCard=#{user.idcard} where c_name=#{username}
+    </update>
 </mapper>

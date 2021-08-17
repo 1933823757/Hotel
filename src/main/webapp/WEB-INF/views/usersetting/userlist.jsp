@@ -19,7 +19,7 @@
     <title>个人中心</title>
     <style>
         body {
-            background-color: rgb(221, 219, 217);
+            background-color: rgb(255, 253, 251);
         }
 
         .wrapper{

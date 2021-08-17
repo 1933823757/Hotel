@@ -164,4 +164,9 @@
         </foreach>
         and roomType like "%" #{roomType} "%"
     </select>
+
+    <!--根据楼层id拿room信息-->
+    <select id="getRoomByFloorId" resultType="room">
+        select * from tbl_room where floorId=#{roomType}
+    </select>
 </mapper>

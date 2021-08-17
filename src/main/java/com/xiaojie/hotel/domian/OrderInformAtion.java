@@ -9,6 +9,24 @@ public class OrderInformAtion {
     private String totalPrice;
     private String userId;
     private String orderState;
+    private String roomType;
+    private String idcard;
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
 
     public String getOrderState() {
         return orderState;

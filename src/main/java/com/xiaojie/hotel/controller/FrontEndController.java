@@ -96,6 +96,10 @@ public class FrontEndController {
         String id = user.getId();
         engage.setId(id);
         Map<String,Object> map = putUpService.addEngage(engage);
+        if ((boolean)map.get("success")){
+            boolean flag = frontservice.updateUserIdCard(engage.getIdCard(),id);
+            map.put("success",flag);
+        }
         return map;
     }
 

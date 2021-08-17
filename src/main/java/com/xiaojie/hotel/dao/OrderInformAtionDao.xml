@@ -8,18 +8,18 @@
  <!--创建订单信息-->
     <insert id="addOrderInformAtion">
         insert into tbl_orderinformation
-        values(#{id},#{c_name},#{start_time},#{order_id},#{roomId},#{totalPrice},#{userId},#{orderState})
+        values(#{id},#{c_name},#{start_time},#{order_id},#{roomId},#{totalPrice},#{userId},#{orderState},#{idcard})
     </insert>
     <!--更新订单信息-->
     <update id="updateOrder">
         update tbl_orderinformation set
-        c_name=#{c_name},roomId=#{roomId},totalPrice=#{totalPrice}
+        c_name=#{c_name},roomId=#{roomId},totalPrice=#{totalPrice},idcard=#{idcard}
         where userId=#{id}
     </update>
     <!--没有更改房间时修改的订单语句-->
     <update id="updateOrderNotRoom">
           update tbl_orderinformation set
-        c_name=#{c_name},totalPrice=#{totalPrice}
+        c_name=#{c_name},totalPrice=#{totalPrice},idcard=#{idcard}
         where userId=#{id}
     </update>
 
@@ -30,7 +30,7 @@
 
     <!--更改姓名-->
     <update id="update">
-        update tbl_orderinformation set c_name=#{c_name} where userId=#{userId}
+        update tbl_orderinformation set c_name=#{c_name},idcard=#{idcard} where userId=#{userId}
     </update>
 
     <select id="getRoomType" resultType="com.xiaojie.hotel.vo.InvalidOder">
@@ -102,4 +102,59 @@
             #{i.id}
         </foreach>
     </delete>
+
+    <!--分页-->
+    <select id="getOrder" resultType="orderinformation">
+        select
+       r.roomType,
+        r.roomId as roomId,
+        o.c_name,
+        o.idcard,
+        o.order_id,
+        o.start_time,
+        o.totalPrice,
+        o.orderState,
+        o.id
+        from tbl_room r
+        join tbl_orderinformation o
+        on r.id=o.roomId
+        left join tbl_user u
+        on u.id=o.userId
+         left join tbl_moveroom m
+        on o.userId=m.engageId
+        <where>
+          <if test="list!=null and list.size()>0">
+            o.roomId in
+              <foreach collection="list" item="i" open="(" close=")" separator=",">
+                  #{i.id}
+              </foreach>
+          </if>
+            <if test="orderInformAtion.c_name!=null and orderInformAtion.c_name !=''">
+                and o.c_name like "%" #{orderInformAtion.c_name} "%"
+            </if>
+            <if test="orderInformAtion.order_id!=null and orderInformAtion.order_id !=''">
+                and o.order_id like "%" #{orderInformAtion.order_id} "%"
+            </if>
+            <if test="orderInformAtion.start_time!=null and orderInformAtion.start_time !=''">
+                and o.start_time like "%" #{orderInformAtion.start_time} "%"
+            </if>
+            <if test="orderInformAtion.orderState!=null and orderInformAtion.orderState !=''">
+                and o.start_time like "%" #{orderInformAtion.orderState} "%"
+            </if>
+        </where>
+          order by roomId asc
+    </select>
+
+    <select id="selectByUserIdAll" resultType="orderinformation">
+        select *from tbl_orderinformation where userId=#{id}
+    </select>
+    <update id="updateOrderByUser">
+        update tbl_orderinformation set c_name=#{user.username},idcard=#{user.idcard}
+        <where>
+            id in
+            <foreach collection="list" item="i" open="(" close=")" separator=",">
+                #{i.id}
+            </foreach>
+        </where>
+    </update>
 </mapper>

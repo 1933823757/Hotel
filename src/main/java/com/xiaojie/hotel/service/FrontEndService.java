@@ -29,4 +29,6 @@ public interface FrontEndService {
     List<OrderInformAtion> getOrderUser(String id);
 
     Map<String, Object> deleteOrder(String id);
+
+    boolean updateUserIdCard(String idCard,String id);
 }

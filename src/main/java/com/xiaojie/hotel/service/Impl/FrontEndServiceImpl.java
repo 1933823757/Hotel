@@ -214,5 +214,15 @@ public class FrontEndServiceImpl implements FrontEndService {
         return map;
     }
 
+    //更新用户身份证
+    @Override
+    public boolean updateUserIdCard(String idCard,String id) {
+        int num = userDao.updateUserIdcard(idCard,id);
+        if (num == 1){
+            return true;
+        }
+        return false;
+    }
+
 
 }

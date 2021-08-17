@@ -2,6 +2,7 @@ package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.OrderInformAtion;
 import com.xiaojie.hotel.domian.Room;
+import com.xiaojie.hotel.domian.User;
 import com.xiaojie.hotel.vo.InvalidOder;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,4 +35,10 @@ public interface OrderInformAtionDao {
     Integer selectByRoomId(List<Room> roomList);
 
     int deleteOrder(List<Room> list);
+
+    List<OrderInformAtion> getOrder(@Param("orderInformAtion") OrderInformAtion orderInformAtion, @Param("list") List<Room> list);
+
+    List<OrderInformAtion> selectByUserIdAll(String id);
+
+    int updateOrderByUser(@Param("list") List<OrderInformAtion> list,@Param("user") User user);
 }

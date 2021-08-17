@@ -70,4 +70,10 @@
             #{i.roomId}
         </foreach>
     </delete>
+    <select id="selectByUser" resultType="customer">
+        select * from tbl_customer where c_name=#{username}
+    </select>
+    <update id="updateCustomerByUser">
+        update tbl_customer set c_tel=#{user.phone},idCard=#{user.idcard},c_name=#{user.username} where c_name=#{username}
+    </update>
 </mapper>

@@ -2,6 +2,7 @@ package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.Engage;
 import com.xiaojie.hotel.domian.Room;
+import com.xiaojie.hotel.domian.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,8 @@ public interface EngageDao {
     Integer getDeleteCount(List<Room> roomList);
 
     int deleteEngage(List<Room> roomList);
+
+    Engage getEngageByCname(String username);
+
+    int updateEngageByCname(@Param("user") User user,@Param("username") String username);
 }

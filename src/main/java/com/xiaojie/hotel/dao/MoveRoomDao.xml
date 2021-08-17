@@ -117,4 +117,11 @@
         select r.roomType,m.state,r.roomId as c_name from tbl_room r LEFT JOIN tbl_moveroom m ON r.roomId=m.roomId
         order by c_name asc
     </select>
+    <select id="selectMove" resultType="moveroom">
+        select * from tbl_moveroom where c_name=#{username}
+    </select>
+    <update id="updateMoveByUser">
+        update tbl_moveroom set c_name=#{user.username},c_tel=#{user.phone},idCard=#{user.idcard}
+        where c_name=#{username}
+    </update>
 </mapper>

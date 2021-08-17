@@ -140,15 +140,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                         </ol>
 
                         <!-- 图片区-->
-                        <div class="carousel-inner" style="border-radius: 20px;" role="listbox">
+                        <div class="carousel-inner"  role="listbox">
                             <div class="item active">
-                                <img src="<%=imgpaths[0]%>" style="width: 700px; height: 400px;" alt="...">
+                                <img src="<%=imgpaths[0]%>" style="width: 700px; height: 500px;" alt="...">
                             </div>
                             <div class="item">
-                                <img src="<%=imgpaths[1]%>" style="width: 700px; height: 400px; " alt="...">
+                                <img src="<%=imgpaths[1]%>" style="width: 700px; height: 500px; " alt="...">
                             </div>
                             <div class="item">
-                                <img src="<%=imgpaths[2]%>" style="width: 700px; height: 400px;" alt="...">
+                                <img src="<%=imgpaths[2]%>" style="width: 700px; height: 500px;" alt="...">
                             </div>
                         </div>
 
@@ -248,6 +248,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
     $(function () {
         getComment()
+
         //提交审核按钮事件
         $("#commentBtn").click(function () {
             var comment = $("#comment").val()
@@ -373,8 +374,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                 var nowTime = show().replace(/\-/g, "")
                 var register = $register.val().replace(/\-/g, "")
                 var checkout = $checkout.val().replace(/\-/g, "")
+
+
+
                 if (register >= nowTime){
                     if (checkout >register) {
+                        if($("#idcard").val().length <=18){
                         $.ajax({
                             url:"frontend/addEngage.do",
                             type:"post",
@@ -393,13 +398,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                                     $("#register").val('')
                                     $("#checkout").val('')
                                     $("#idcard").val('')
-                                    alert("预定成功")
+                                    alert(data.title)
                                 } else{
-                                    alert("预定失败")
+                                    alert(data.title)
                                 }
                             }
                         })
                         return false
+                        }else{
+                            alert("身份证长度超过18位数")
+                            return false
+                        }
                 } else{
                         $register.attr("style", "  border: 2px solid red;")
                         return false
