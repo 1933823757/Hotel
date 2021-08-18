@@ -11,4 +11,6 @@ public interface OrderServices {
 
 
     Map<String, Object> getOrderAll(Integer valueOf, Integer valueOf1, String c_name, String order_id, String start_time, String orderState, String floorId);
+
+    Map<String, Object> deleteOrder(String[] id);
 }

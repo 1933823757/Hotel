@@ -41,4 +41,8 @@ public interface OrderInformAtionDao {
     List<OrderInformAtion> selectByUserIdAll(String id);
 
     int updateOrderByUser(@Param("list") List<OrderInformAtion> list,@Param("user") User user);
+
+    List<OrderInformAtion> selectById(String[] id);
+
+    int deleteOrderById(String[] id);
 }

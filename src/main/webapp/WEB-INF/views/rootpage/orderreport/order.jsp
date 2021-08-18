@@ -29,8 +29,60 @@
     $(function () {
         getRoomType()
 
+        //日期插件初始化
+        $(".time").datetimepicker({
+            minView: "month",
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: "bottom-left"
+        });
         $("#find-Btn").click(function () {
             pageList(1,10)
+        })
+
+        //单选框事件
+        $("input[name=qx]").click(function () {
+            $("input[name=dx]").prop("checked", this.checked)
+        })
+        $("#userlist").on("click", $("input[name=dx]"), function () {
+            $("input[name=qx]").prop("checked", $("input[name=dx]").length == $("input[name=dx]:checked").length)
+        })
+        //删除按钮事件
+        $("#deleteOrderBtn").click(function () {
+            if($("input[name=dx]:checked").length>0){
+                var $input =$("input[name=dx]:checked");
+                var param=''
+                for (var i=0;i<$input.length;i++){
+                    param+="id="+$input[i].value
+                    if (i<$input.length-1){
+                        param+="&"
+                    }
+                }
+
+                if (confirm("确定要删除吗？")) {
+                    $.ajax({
+                        url:"order/deleteOrder.do",
+                        type:"post",
+                        data: param,
+                        dataType:"json",
+                        success:function (data) {
+                            if (data.success){
+                                alert(data.title)
+                                $("input[name=dx]").prop("checked",false);
+                                pageList(1,10)
+                            } else {
+                                alert(data.title)
+                                $("input[name=dx]").prop("checked",false);
+                            }
+
+                        }
+                    })
+                }
+            }else{
+                alert("请选择你需要删除的记录")
+            }
         })
         })
     function getRoomType(){
@@ -140,7 +192,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">订单创建时间</div>
-                        <input class="form-control" type="text" id="start_time">
+                        <input class="form-control time" type="text" id="start_time">
                     </div>
                 </div>
                 <div class="form-group">
@@ -160,7 +212,7 @@
         <div class="btn-toolbar" role="toolbar"
              style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
             <div class="btn-group" style="position: relative; top: 18%;">
-                <button type="button" class="btn btn-danger"  id="deleteUserBtn">
+                <button type="button" class="btn btn-danger"  id="deleteOrderBtn">
                     <span class="glyphicon glyphicon-minus"></span> 删除订单
                 </button>
             </div>

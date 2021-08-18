@@ -1,6 +1,7 @@
 package com.xiaojie.hotel.dao;
 
 import com.xiaojie.hotel.domian.Customer;
+import com.xiaojie.hotel.domian.OrderInformAtion;
 import com.xiaojie.hotel.domian.Room;
 import com.xiaojie.hotel.domian.User;
 import org.apache.ibatis.annotations.Param;
@@ -36,4 +37,8 @@ public interface CustomerDao {
     Customer selectByUser(String username);
 
     int updateCustomerByUser(@Param("user") User user,@Param("username") String username);
+
+    int selectByOrder(List<OrderInformAtion> list);
+
+    int deleteCustomerByOrder(List<OrderInformAtion> list);
 }

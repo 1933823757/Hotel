@@ -76,4 +76,16 @@
     <update id="updateCustomerByUser">
         update tbl_customer set c_tel=#{user.phone},idCard=#{user.idcard},c_name=#{user.username} where c_name=#{username}
     </update>
+    <select id="selectByOrder" resultType="int">
+        select count(*) from tbl_customer where order_id in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.order_id}
+        </foreach>
+    </select>
+    <delete id="deleteCustomerByOrder">
+        delete from tbl_customer where order_id in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.order_id}
+        </foreach>
+    </delete>
 </mapper>

@@ -139,7 +139,7 @@
                 and o.start_time like "%" #{orderInformAtion.start_time} "%"
             </if>
             <if test="orderInformAtion.orderState!=null and orderInformAtion.orderState !=''">
-                and o.start_time like "%" #{orderInformAtion.orderState} "%"
+                and o.orderState like "%" #{orderInformAtion.orderState} "%"
             </if>
         </where>
           order by roomId asc
@@ -157,4 +157,17 @@
             </foreach>
         </where>
     </update>
+    <!--根据id数组查询-->
+    <select id="selectById" resultType="orderinformation">
+        select * from tbl_orderinformation where id in
+        <foreach collection="array" item="i" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </select>
+    <delete id="deleteOrderById">
+        delete from tbl_orderinformation where id in
+        <foreach collection="array" item="i" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </delete>
 </mapper>

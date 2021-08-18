@@ -110,5 +110,8 @@
         <property name="userDao" ref="userDao"/>
         <property name="roomDao" ref="roomDao"/>
         <property name="orderInformAtionDao" ref="orderInformAtionDao"/>
+        <property name="engageDao" ref="engageDao"/>
+        <property name="moveRoomDao" ref="moveRoomDao"/>
+        <property name="customerDao" ref="customerDao"/>
      </bean>
 </beans>

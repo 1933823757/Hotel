@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -35,5 +36,14 @@ public class OrderController {
     public Map getOrderAll(String pageNo, String pageSize, String floorId,String c_name,String order_id,String start_time,String orderState){
             Map<String,Object> map = orderService.getOrderAll(Integer.valueOf(pageNo), Integer.valueOf(pageSize),c_name,order_id,start_time,orderState,floorId);
             return map;
+    }
+
+    //订单删除
+    @RequestMapping("/deleteOrder.do")
+    @ResponseBody
+    public Map deleteOrder(HttpServletRequest request){
+        String[] id = request.getParameterValues("id");
+        Map<String,Object> map = orderService.deleteOrder(id);
+        return map;
     }
 }

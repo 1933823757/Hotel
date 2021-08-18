@@ -115,4 +115,17 @@
     <update id="updateEngageByCname">
         update tbl_engage set c_name=#{user.username},c_tel=#{user.phone},idCard=#{user.idcard} where c_name=#{username}
     </update>
+
+    <select id="selectByOrder" resultType="int">
+        select count(*) from tbl_engage where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+    </select>
+    <delete id="deleteEngageByOrder">
+        delete from tbl_engage where roomId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.roomId}
+        </foreach>
+    </delete>
 </mapper>

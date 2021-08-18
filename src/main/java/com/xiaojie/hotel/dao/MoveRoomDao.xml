@@ -124,4 +124,16 @@
         update tbl_moveroom set c_name=#{user.username},c_tel=#{user.phone},idCard=#{user.idcard}
         where c_name=#{username}
     </update>
+    <select id="selectMoveCount" resultType="int">
+        select  count(*) from tbl_moveroom where engageId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.userId}
+        </foreach>
+    </select>
+    <delete id="deleteMoveByOrder">
+        delete from  tbl_moveroom where engageId in
+        <foreach collection="list" item="i" open="(" close=")" separator=",">
+            #{i.userId}
+        </foreach>
+    </delete>
 </mapper>

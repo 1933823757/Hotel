@@ -41,6 +41,9 @@
             $("input[name=qx]").prop("checked", $("input[name=dx]").length == $("input[name=dx]:checked").length)
         })
 
+        $("#find-Btn").click(function () {
+            pageList(1,10)
+        })
         //删除按钮事件
         $("#deleteUserBtn").click(function () {
             if($("input[name=dx]:checked").length>0){
